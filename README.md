@@ -1,3 +1,19 @@
+
+
+# send object to child element
+```
+<ul>
+${this.persons.map((p) => html`
+  <li>
+  <!-- https://stackoverflow.com/questions/50248345/lit-element-with-object-type-properties-->
+  <person-element .person='${p}'><person-element>
+  </li>
+  `
+)}
+</ul>
+`
+```
+
 # The app
 https://scenaristeur.github.io/socialid-template/
 

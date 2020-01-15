@@ -36,7 +36,7 @@ class AppElement extends LitElement {
     col 1
     <left-element name="Left"></left-element>
     </div>
-    <div id="main" class="col">
+    <div id="main" class="col-6">
     col 2
     <main-element name="Main"></main-element>
     </div>

@@ -1,6 +1,6 @@
-import { LitElement, html } from 'lit-element';
+import { LitElement, html, css } from 'lit-element';
 
-import './login-element.js'
+import './navbar-element.js'
 
 class BannerElement extends LitElement {
 
@@ -14,11 +14,19 @@ class BannerElement extends LitElement {
     super();
     this.something = "Banner Element"
   }
+  static get styles() {
+    //https://lit-element.readthedocs.io/en/v0.6.5/_guide/styles/
+    return css`
+    /* Selects the host element */
+    :host {
+      width: 100%;
+    }
+    `;
+  }
 
   render(){
     return html`
-     <b>${this.something}</b>
-     <login-element name="Login"></login-element>
+    <navbar-element name="Navbar"></navbar>
     `;
   }
 

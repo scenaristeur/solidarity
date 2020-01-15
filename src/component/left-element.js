@@ -3,6 +3,7 @@ import { LitElement, html } from 'lit-element';
 import './people-element.js'
 import './rooms-element.js'
 import './chats-element.js'
+import './friends-element.js'
 
 class LeftElement extends LitElement {
 
@@ -23,6 +24,7 @@ class LeftElement extends LitElement {
     <people-element name="People"></people-element>
     <rooms-element name="Rooms"></rooms-element>
     <chats-element name="Chats"></chats-element>
+    <friends-element name="Friends"></friends-element>
     `;
   }
 
