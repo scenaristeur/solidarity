@@ -1,0 +1,19 @@
+{
+  "name": "Agora",
+  "short_name": "Agora",
+  "start_url": "./",
+  "background_color": "red",
+  "theme_color": "aliceblue",
+  "description": "Post to your POD and share on Agora's !",
+  "display": "fullscreen",
+  "orientation": "portrait-primary",
+  "related_applications": [{
+    "platform": "web",
+    "url": "https://scenaristeur.github.io/compagent-tuto/"
+  }],
+  "permissions": {
+    "desktop-notification": {
+      "description": "Needed for creating system notifications."
+    }
+  }
+}
