@@ -52,7 +52,6 @@ class FriendElement extends LitElement {
   async firstUpdated(){
     var app = this;
 
-
     var p = {}
     if (this.webId != null){
       //https://github.com/solid/query-ldflex/blob/master/demo/user.html
@@ -60,35 +59,42 @@ class FriendElement extends LitElement {
       const n = await data[this.webId].vcard$fn || p.webId;
       const img = await data[this.webId].foaf$img || "";
       const inbox = await data[this.webId].inbox;
-      const publicTypeIndex = await data[this.webId].publicTypeIndex
-      //  console.log(`${publicTypeIndex}`);
-
-      let instances = []
-      if (`${publicTypeIndex}` != "undefined"){
-
-        for await (const subject of data[publicTypeIndex].subjects){
-          //  console.log(`${subject}`);
-          if (`${publicTypeIndex}` != `${subject}`) {
-            const s = {subject: `${subject}`}
-            for await (const property of subject.properties)
-            {
-              if (`${property}` == "http://www.w3.org/ns/solid/terms#instance")    {
-                //  console.log( "--",`${property}`);
-                const instance = await data[subject][`${property}`]
-                //  console.log( "--nn",`${instance}`);
-                s.predicate = `${property}`
-                s.object = `${instance}`
-              }
-            }
-            instances.push(s)
-          }
-        }
-      }
-      p.instances = instances
       p.name = `${n}`
       p.img = `${img}`
       p.inbox = `${inbox}`
       //  p.publicIndex = `${publicTypeIndex}`
+      this.person = p
+      const publicTypeIndex = await data[this.webId].publicTypeIndex || "undefined"
+      //  console.log(`${publicTypeIndex}`);
+
+      let instances = []
+      try{
+        if (`${publicTypeIndex}` != "undefined"){
+
+          for await (const subject of data[publicTypeIndex].subjects){
+            //  console.log(`${subject}`);
+            if (`${publicTypeIndex}` != `${subject}`) {
+              const s = {subject: `${subject}`}
+              for await (const property of subject.properties)
+              {
+                if (`${property}` == "http://www.w3.org/ns/solid/terms#instance")    {
+                  //  console.log( "--",`${property}`);
+                  const instance = await data[subject][`${property}`]
+                  const classe = await data[subject].solid$forClass
+                  //  console.log( "--nn",`${instance}`);
+                  s.predicate = `${property}`
+                  s.object = `${instance}`
+                  s.classe = `${classe}`
+                }
+              }
+              instances.push(s)
+            }
+          }
+        }
+      }catch(e){
+        console.log(e)
+      }
+      p.instances = instances
       this.person = p
       console.log(this.person)
     }
@@ -112,9 +118,9 @@ class FriendElement extends LitElement {
   }
 
   details(e){
-    console.log(e, this.person.webId)
+    console.log( this.person.webId, this.person.instances)
     //  console.log(await data[this.webId])
-    this.agent.send("Messages", {action:"info", info:this.person.instances})
+    this.agent.send("Messages", {action:"info", info: this.person.instances})
   }
 
 }

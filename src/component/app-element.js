@@ -32,11 +32,11 @@ class AppElement extends LitElement {
     </div>
 
     <div id="main" class="row">
-    <div id="main" class="col">
+    <div id="main" class="col col-3">
     col 1
     <left-element name="Left"></left-element>
     </div>
-    <div id="main" class="col-6">
+    <div id="main" class="col col-md-6">
     col 2
     <main-element name="Main"></main-element>
     </div>

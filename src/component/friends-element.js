@@ -45,9 +45,9 @@ class FriendsElement extends LitElement {
   <b>${this.something}</b>
 
   <div class = "row">
-  ${this.friendsWebIds.map((fwi) => html`
+  ${this.friendsWebIds.map((fwi,index) => html`
     <div class = "col">
-    <friend-element .webId='${fwi}'><friend-element>
+    <friend-element .webId='${fwi}' name="Friend${index}"><friend-element>
     </div>
     `
   )}

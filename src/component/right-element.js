@@ -5,6 +5,7 @@ import './events-element.js'
 import './announcements-element.js'
 import './activity-element.js'
 
+
 class RightElement extends LitElement {
 
   static get properties() {
@@ -25,6 +26,7 @@ class RightElement extends LitElement {
     <events-element name="Events"></events-element>
     <announcements-element name="Announcements"></announcements-element>
     <activity-element name="Activity"></activity-element>
+
     `;
   }
 

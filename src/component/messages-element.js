@@ -31,7 +31,7 @@ class MessagesElement extends LitElement {
     var app = this;
     this.agent = new HelloAgent(this.name);
     this.agent.receive = function(from, message) {
-
+console.log(message)
       if (message.hasOwnProperty("action")){
         switch(message.action) {
           case "info":
