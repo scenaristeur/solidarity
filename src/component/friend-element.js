@@ -1,4 +1,5 @@
 import { LitElement, html, css } from 'lit-element';
+import { HelloAgent } from '../agents/hello-agent.js';
 
 import data from "@solid/query-ldflex";
 
@@ -6,6 +7,7 @@ class FriendElement extends LitElement {
 
   static get properties() {
     return {
+      name: {type: String},
       webId: {type: String},
       person: {type: Object}
     };
@@ -36,29 +38,83 @@ class FriendElement extends LitElement {
     <link href="css/fontawesome/css/all.css" rel="stylesheet">
     <link href="css/bootstrap/bootstrap.min.css" rel="stylesheet">
 
-    <a href="${this.webId}" target="_blank">
+    <button  @click="${this.details.bind(this)}">
     ${this.person.img.length > 0 ?
       html`<img src="${this.person.img}" alt="image">`
       :html`<i class="fas fa-user-circle fa-2x"></i>`
     }
-    </a>
+
     <small>${this.person.name}</small>
+    </button>
     `;
   }
 
   async firstUpdated(){
+    var app = this;
+
+
     var p = {}
     if (this.webId != null){
+      //https://github.com/solid/query-ldflex/blob/master/demo/user.html
       p.webId = `${this.webId}`
       const n = await data[this.webId].vcard$fn || p.webId;
       const img = await data[this.webId].foaf$img || "";
       const inbox = await data[this.webId].inbox;
+      const publicTypeIndex = await data[this.webId].publicTypeIndex
+      //  console.log(`${publicTypeIndex}`);
+
+      let instances = []
+      if (`${publicTypeIndex}` != "undefined"){
+
+        for await (const subject of data[publicTypeIndex].subjects){
+          //  console.log(`${subject}`);
+          if (`${publicTypeIndex}` != `${subject}`) {
+            const s = {subject: `${subject}`}
+            for await (const property of subject.properties)
+            {
+              if (`${property}` == "http://www.w3.org/ns/solid/terms#instance")    {
+                //  console.log( "--",`${property}`);
+                const instance = await data[subject][`${property}`]
+                //  console.log( "--nn",`${instance}`);
+                s.predicate = `${property}`
+                s.object = `${instance}`
+              }
+            }
+            instances.push(s)
+          }
+        }
+      }
+      p.instances = instances
       p.name = `${n}`
       p.img = `${img}`
       p.inbox = `${inbox}`
+      //  p.publicIndex = `${publicTypeIndex}`
       this.person = p
-    //  console.log(this.person)
+      console.log(this.person)
     }
+
+
+
+    this.agent = new HelloAgent(this.name);
+    this.agent.receive = function(from, message) {
+
+      if (message.hasOwnProperty("action")){
+        switch(message.action) {
+          case "info":
+          app.addInfo(from, message)
+          break;
+          default:
+          console.log("Unknown action ",message)
+        }
+      }
+    };
+
+  }
+
+  details(e){
+    console.log(e, this.person.webId)
+    //  console.log(await data[this.webId])
+    this.agent.send("Messages", {action:"info", info:this.person.instances})
   }
 
 }
