@@ -31,7 +31,11 @@ class ProfileElement extends LitElement {
     ${this.person.instances.map((i) => html`
       <div class = "row">
       <div class = "col">
-      ${i.object}<button type="button" class="btn btn-primary btn-sm" url="${i.object}" @click="${this.open}"> ${i.classe}</button
+
+      <button type="button"
+      class="btn btn-primary btn-sm"
+       url="${i.object}"
+       @click="${this.open}">${this.cutStorage(i.object)}</button>(${this.localName(i.classe)})
       </div>
       </div>
 
@@ -40,6 +44,19 @@ class ProfileElement extends LitElement {
 
     `;
   }
+
+cutStorage(str){
+
+  return str.replace(this.person.storage,"/")
+}
+
+localName(str){
+  var ln = str.substring(str.lastIndexOf('#')+1);
+  console.log(ln)
+  ln == str ? ln = str.substring(str.lastIndexOf('/')+1) : "";
+  return ln
+}
+
 
   firstUpdated(){
     var app = this;
@@ -83,9 +100,11 @@ class ProfileElement extends LitElement {
       const n = await data[this.webId].vcard$fn || p.webId;
       const img = await data[this.webId].foaf$img || "";
       const inbox = await data[this.webId].inbox;
+      const storage = await data[this.webId].storage;
       p.name = `${n}`
       p.img = `${img}`
       p.inbox = `${inbox}`
+        p.storage = `${storage}`
       //  p.publicIndex = `${publicTypeIndex}`
 
 

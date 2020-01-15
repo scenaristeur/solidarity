@@ -40,8 +40,8 @@ class FriendElement extends LitElement {
 
     <button  @click="${this.details.bind(this)}">
     ${this.person.img.length > 0 ?
-      html`<img src="${this.person.img}" alt="image">`
-      :html`<i class="fas fa-user-circle fa-2x"></i>`
+      html`<img src="${this.person.img}" title="${this.webId}" alt="image">`
+      :html`<i class="fas fa-user-circle fa-2x" title="${this.webId}"></i>`
     }
 
     <small>${this.person.name}</small>
@@ -56,7 +56,7 @@ class FriendElement extends LitElement {
     if (this.webId != null){
       //https://github.com/solid/query-ldflex/blob/master/demo/user.html
       p.webId = `${this.webId}`
-      const n = await data[this.webId].vcard$fn || p.webId;
+      const n = await data[this.webId].vcard$fn || p.webId.split("/")[2].split('.')[0];
       const img = await data[this.webId].foaf$img || "";
       const inbox = await data[this.webId].inbox;
       p.name = `${n}`
