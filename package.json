@@ -1,0 +1,32 @@
+{
+  "name": "socialid",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "webpack-dev-server -d --hot --config webpack.config.js --watch",
+    "build": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/scenaristeur/socialid.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/scenaristeur/socialid/issues"
+  },
+  "homepage": "https://github.com/scenaristeur/socialid#readme",
+  "devDependencies": {
+    "webpack": "^4.41.5",
+    "webpack-cli": "^3.3.10",
+    "webpack-dev-server": "^3.10.1"
+  },
+  "dependencies": {
+    "evejs": "github:scenaristeur/evejs",
+    "lit-element": "^2.2.1",
+    "solid-auth-client": "^2.4.1"
+  }
+}
