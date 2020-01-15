@@ -1,15 +1,15 @@
 {
-  "name": "Agora",
-  "short_name": "Agora",
+  "name": "Solidarity",
+  "short_name": "Solidarity",
   "start_url": "./",
   "background_color": "red",
   "theme_color": "aliceblue",
-  "description": "Post to your POD and share on Agora's !",
+  "description": "Solidarity !",
   "display": "fullscreen",
   "orientation": "portrait-primary",
   "related_applications": [{
     "platform": "web",
-    "url": "https://scenaristeur.github.io/compagent-tuto/"
+    "url": "https://scenaristeur.github.io/solidarity/"
   }],
   "permissions": {
     "desktop-notification": {
