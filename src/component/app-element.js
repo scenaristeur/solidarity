@@ -1,7 +1,11 @@
 import { LitElement, html } from 'lit-element';
 
-import './login-element.js'
-import './messages-element.js'
+import './banner-element.js'
+import './left-element.js'
+import './right-element.js'
+import './footer-element.js'
+import './main-element.js'
+
 
 class AppElement extends LitElement {
 
@@ -18,9 +22,37 @@ class AppElement extends LitElement {
 
   render(){
     return html`
-    Hello <b>${this.something}</b> from app-element !
-    <login-element name="Login"></login-element>
-    <messages-element name="Messages"></messages-element>
+    <link href="css/fontawesome/css/all.css" rel="stylesheet">
+    <link href="css/bootstrap/bootstrap.min.css" rel="stylesheet">
+
+    <div class="container-fluid">
+
+    <div id="banner" class="row">
+    <banner-element name="Banner"></banner-element>
+    </div>
+
+    <div id="main" class="row">
+    <div id="main" class="col">
+    col 1
+    <left-element name="Left"></left-element>
+    </div>
+    <div id="main" class="col">
+    col 2
+    <main-element name="Main"></main-element>
+    </div>
+    <div id="main" class="col">
+    col 3
+    <right-element name="Right"></right-element>
+    </div>
+    </div>
+
+    <div id="footer" class="row">
+    Footer
+    <footer-element name="Footer"></footer-element>
+    </div>
+
+    </div>
+
     `;
   }
 

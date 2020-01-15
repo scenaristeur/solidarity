@@ -18,14 +18,16 @@ class LoginElement extends LitElement {
 
   render(){
     return html`
+    <link href="css/fontawesome/css/all.css" rel="stylesheet">
+    <link href="css/bootstrap/bootstrap.min.css" rel="stylesheet">
     <!-- if this.webId == null , login button is diaplayed -->
     ${this.webId == null ?
       html`
-      <button @click=${this.login}>Login</button>
+      <button type="button" class="btn btn-primary" @click=${this.login}>Login</button>
       `
       : html`
       <!-- else logout button is displayed -->
-      <button @click=${this.logout}>Logout</button>
+      <button type="button" class="btn btn-primary" @click=${this.logout}>Logout</button>
       ${this.webId}
       `
     }
