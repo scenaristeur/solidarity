@@ -18,12 +18,12 @@ class MessagesElement extends LitElement {
   render(){
     return html`
     <p>${this.name}</p>
-  <!--  <pre class="pre-scrollable">-->
-    <ul id="messageslist" style="height: 20vh; overflow: auto">
+    <!--  <pre class="pre-scrollable">-->
+    <ul id="messageslist" style="height: 40vh; overflow: auto">
     ${this.messages.map((m) => html`<li><b>Agent ${m.from}</b> say "${m.message}"</li>`)}
     </ul>
 
-  <!--  </pre>-->
+    <!--  </pre>-->
     `;
   }
 
@@ -31,7 +31,7 @@ class MessagesElement extends LitElement {
     var app = this;
     this.agent = new HelloAgent(this.name);
     this.agent.receive = function(from, message) {
-console.log(message)
+    //  console.log(message)
       if (message.hasOwnProperty("action")){
         switch(message.action) {
           case "info":

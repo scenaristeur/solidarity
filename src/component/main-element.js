@@ -1,5 +1,6 @@
 import { LitElement, html } from 'lit-element';
 
+import './flow-element.js'
 import './messages-element.js'
 
 class MainElement extends LitElement {
@@ -18,7 +19,8 @@ class MainElement extends LitElement {
   render(){
     return html`
    <b>${this.something}</b>
-     <messages-element name="Messages"></messages-element>
+     <flow-element name="Flow"></flow-element>
+  <messages-element name="Messages"></messages-element>
     `;
   }
 

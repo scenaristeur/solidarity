@@ -34,8 +34,8 @@ class ProfileElement extends LitElement {
 
       <button type="button"
       class="btn btn-primary btn-sm"
-       url="${i.object}"
-       @click="${this.open}">${this.cutStorage(i.object)}</button>(${this.localName(i.classe)})
+      url="${i.object}"
+      @click="${this.open}">${this.cutStorage(i.object)}</button>(${this.localName(i.classe)})
       </div>
       </div>
 
@@ -45,17 +45,16 @@ class ProfileElement extends LitElement {
     `;
   }
 
-cutStorage(str){
+  cutStorage(str){
+    return str.replace(this.person.storage,"/")
+  }
 
-  return str.replace(this.person.storage,"/")
-}
-
-localName(str){
-  var ln = str.substring(str.lastIndexOf('#')+1);
-  console.log(ln)
-  ln == str ? ln = str.substring(str.lastIndexOf('/')+1) : "";
-  return ln
-}
+  localName(str){
+    var ln = str.substring(str.lastIndexOf('#')+1);
+    console.log(ln)
+    ln == str ? ln = str.substring(str.lastIndexOf('/')+1) : "";
+    return ln
+  }
 
 
   firstUpdated(){
@@ -104,7 +103,7 @@ localName(str){
       p.name = `${n}`
       p.img = `${img}`
       p.inbox = `${inbox}`
-        p.storage = `${storage}`
+      p.storage = `${storage}`
       //  p.publicIndex = `${publicTypeIndex}`
 
 

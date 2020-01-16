@@ -18,6 +18,7 @@ class FriendElement extends LitElement {
     this.webId = null
     this.person = {img:""}
   }
+
   static get styles() {
     //https://lit-element.readthedocs.io/en/v0.6.5/_guide/styles/
     return css`
@@ -38,7 +39,7 @@ class FriendElement extends LitElement {
     <link href="css/fontawesome/css/all.css" rel="stylesheet">
     <link href="css/bootstrap/bootstrap.min.css" rel="stylesheet">
 
-    <button  @click="${this.details.bind(this)}">
+    <button type="button" class="btn btn-info"  @click="${this.details.bind(this)}">
     ${this.person.img.length > 0 ?
       html`<img src="${this.person.img}" title="${this.webId}" alt="image">`
       :html`<i class="fas fa-user-circle fa-2x" title="${this.webId}"></i>`
@@ -56,12 +57,15 @@ class FriendElement extends LitElement {
     if (this.webId != null){
       //https://github.com/solid/query-ldflex/blob/master/demo/user.html
       p.webId = `${this.webId}`
+      console.log("###",p)
       const n = await data[this.webId].vcard$fn || p.webId.split("/")[2].split('.')[0];
-      const img = await data[this.webId].foaf$img || "";
+      const img = await data[this.webId].vcard$hasPhoto || "";
       const inbox = await data[this.webId].inbox;
+      const storage = await data[this.webId].storage;
       p.name = `${n}`
       p.img = `${img}`
       p.inbox = `${inbox}`
+      p.storage = `${storage}`
       //  p.publicIndex = `${publicTypeIndex}`
       this.person = p
       const publicTypeIndex = await data[this.webId].publicTypeIndex || "undefined"
@@ -120,7 +124,8 @@ class FriendElement extends LitElement {
   details(e){
     console.log( this.person.webId, this.person.instances)
     //  console.log(await data[this.webId])
-    this.agent.send("Messages", {action:"info", info: this.person.instances})
+    this.agent.send("Messages", {action:"info", info: this.person})
+    this.agent.send("Flow", {action:"personChanged", person: this.person})
   }
 
 }

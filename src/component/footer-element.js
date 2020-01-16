@@ -1,5 +1,7 @@
 import { LitElement, html } from 'lit-element';
 
+
+
 class FooterElement extends LitElement {
 
   static get properties() {
@@ -16,6 +18,8 @@ class FooterElement extends LitElement {
   render(){
     return html`
      <b>${this.something}</b>
+     Bla bla
+
     `;
   }
 

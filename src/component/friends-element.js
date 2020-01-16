@@ -45,9 +45,10 @@ class FriendsElement extends LitElement {
   <b>${this.something}</b>
 
   <div class = "row">
+
   ${this.friendsWebIds.map((fwi,index) => html`
     <div class = "col">
-    <friend-element .webId='${fwi}' name="Friend${index}"><friend-element>
+    <friend-element webId='${fwi}' name="Friend${index}"></friend-element>
     </div>
     `
   )}
@@ -77,6 +78,7 @@ async webIdChanged(webId){
   this.webId = webId
   if (webId != null){
     this.friendsWebIds = []
+    this.friendsWebIds.push(await data.user)
     for await (const friend of data.user.friends){
       this.friendsWebIds = [... this.friendsWebIds, friend]
     }
