@@ -53,7 +53,7 @@ class FlowElement extends LitElement {
       `;
     }
 
-    async open(e){
+    async opentestdate(e){
       var url = e.target.getAttribute("url")
       this.classe = e.target.getAttribute("classe")
       console.log(url)
@@ -111,7 +111,7 @@ this.documents = documents*/
 }
 
 
-async openWITHDOCS(e){
+async open(e){
   var url = e.target.getAttribute("url")
   this.classe = e.target.getAttribute("classe")
   console.log(url)
