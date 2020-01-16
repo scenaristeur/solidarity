@@ -95,9 +95,9 @@ class DocumentElement extends LitElement {
           var values = []
           for await (const val of data[this.url][`${property}`])
           {
-            console.log( "--", `${val}`);
+          //  console.log( "--", `${val}`);
             values.push(`${val}`)
-            console.log("!!",values)
+          //  console.log("!!",values)
           }
 
           var d = {property: `${property}` , values: values}
@@ -129,8 +129,9 @@ class DocumentElement extends LitElement {
 
       localName(str){
         var ln = str.substring(str.lastIndexOf('#')+1);
-        console.log(ln)
         ln == str ? ln = str.substring(str.lastIndexOf('/')+1) : "";
+        ln == "me" ? ln = str : "";
+//          console.log(ln)
         return ln
       }
 

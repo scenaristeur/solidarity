@@ -12,7 +12,8 @@ class FlowElement extends LitElement {
       name: {type: String},
       something: {type: String},
       person: {type: Object},
-      documents:  {type: Object}
+      documents:  {type: Object},
+      classe: {type: String},
     };
   }
 
@@ -21,6 +22,7 @@ class FlowElement extends LitElement {
     this.something = "Flow Element"
     this.person = {instances: []}
     this.documents = []
+    this.classe = ""
   }
 
   render(){
@@ -36,13 +38,14 @@ class FlowElement extends LitElement {
       <button type="button"
       class="btn btn-primary btn-sm"
       url="${i.object}"
+      classe = "${i.classe}"
       @click="${this.open}">${this.cutStorage(i.object)}</button>(${this.localName(i.classe)})
       </div>
       </div>
       `
     )}
 
-    ${this.documents.length} documents
+    ${this.documents.length} documents of type ${this.classe}
 
     ${this.documents.map((d, index) => html`
       <document-element url="${d}" name="Document${index}">.</document-element>
@@ -50,66 +53,118 @@ class FlowElement extends LitElement {
       `;
     }
 
-    async open(e){
+    async openZAZAZAZ(e){
       var url = e.target.getAttribute("url")
+      this.classe = e.target.getAttribute("classe")
       console.log(url)
-      let documents = []
-        this.documents = []
-      for await (const subject of data[url].subjects){
-        console.log(`${subject}`);
-        const doc = `${subject}`
-        documents.push(doc)
-      }
+      var folder = url.substring(0,url.lastIndexOf('/')+1)
+      console.log("FOLDER",folder)
+      // find tast chat file
+      var dateObj = new Date();
+      var month = ("0" + dateObj.getUTCMonth() + 1).slice(-2); //months from 1-12
+      var day = ("0" + dateObj.getUTCDate()).slice(-2);
+      var year = dateObj.getUTCFullYear();
 
-      this.documents = documents
-    }
 
-    cutStorage(str){
-      return str.replace(this.person.storage,"/")
-    }
+      var path = folder+[year,month,day+1,""].join('/')
 
-    localName(str){
-      var ln = str.substring(str.lastIndexOf('#')+1);
-      console.log(ln)
-      ln == str ? ln = str.substring(str.lastIndexOf('/')+1) : "";
-      return ln
-    }
 
-    firstUpdated(){
-      var app = this;
-      this.agent = new HelloAgent(this.name);
-      console.log(this.agent)
-      this.agent.receive = function(from, message) {
-        //  console.log("messah",message)
-        if (message.hasOwnProperty("action")){
-          //  console.log(message)
-          switch(message.action) {
-            case "webIdChanged":
-            app.webIdChanged(message.webId)
-            break;
-            case "personChanged":
-            app.personChanged(message.person)
-            break;
-            default:
-            console.log("Unknown action ",message)
-          }
-        }
-      };
-    }
 
-    personChanged(person){
-      this.person = person
-    }
+      let chatfile = await (data[path]['ldp$contains']).catch(
+        (err) => {
+          console.log(err);
+        })
+        console.log("ChatFile",`${chatfile}`);
 
-    webIdChanged(webId){
-      this.webId = webId
-      if (webId != null){
-        this.updateProfile();
-      }else{
+        /*  for await (const year of data[folder]['ldp$contains']){
+        console.log("YEAR",`${year}`);
+        if ( `${year}` != url.substring(0, url.lastIndexOf('#')+1)){
 
+        for await (const month of data[`${year}`]['ldp$contains']){
+        console.log("month", `${year}`, `${month}`);
+        var days = []
+        for await (const day of data[`${month}`]['ldp$contains']){
+        console.log("day", `${year}`, `${month}`, `${day}`);
+        days.push(this.localName(`${day}`.slice(0, -1)))
+        console.log(days.sort())
       }
     }
+  }
+}*/
+/*
+let documents = []
+this.documents = []
+for await (const participation of data[url]['http://www.w3.org/2005/01/wf/flow#participation']){
+console.log(`${participation}`);
+const doc = `${participation}`
+documents.push(doc)
+}
+console.log(documents)
+this.documents = documents*/
+}
+
+
+async open(e){
+var url = e.target.getAttribute("url")
+this.classe = e.target.getAttribute("classe")
+console.log(url)
+let documents = []
+this.documents = []
+for await (const subject of data[url].subjects){
+console.log(`${subject}`);
+const doc = `${subject}`
+documents.push(doc)
+}
+
+this.documents = documents
+}
+
+cutStorage(str){
+  return str.replace(this.person.storage,"/")
+}
+
+localName(str){
+  var ln = str.substring(str.lastIndexOf('#')+1);
+  console.log(ln)
+  ln == str ? ln = str.substring(str.lastIndexOf('/')+1) : "";
+  return ln
+}
+
+firstUpdated(){
+  var app = this;
+  this.agent = new HelloAgent(this.name);
+  console.log(this.agent)
+  this.agent.receive = function(from, message) {
+    //  console.log("messah",message)
+    if (message.hasOwnProperty("action")){
+      //  console.log(message)
+      switch(message.action) {
+        case "webIdChanged":
+        app.webIdChanged(message.webId)
+        break;
+        case "personChanged":
+        app.personChanged(message.person)
+        break;
+        default:
+        console.log("Unknown action ",message)
+      }
+    }
+  };
+}
+
+personChanged(person){
+  this.person = person
+}
+
+webIdChanged(webId){
+  this.webId = webId
+  if (webId != null){
+    this.updateProfile();
+  }else{
 
   }
+}
 
-  customElements.define('flow-element', FlowElement);
+}
+
+customElements.define('flow-element', FlowElement);
