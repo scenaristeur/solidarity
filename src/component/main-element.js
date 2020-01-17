@@ -18,9 +18,9 @@ class MainElement extends LitElement {
 
   render(){
     return html`
-   <b>${this.something}</b>
-     <flow-element name="Flow"></flow-element>
-  <messages-element name="Messages"></messages-element>
+    <b>${this.something}</b>
+    <flow-element name="Flow"></flow-element>
+    <messages-element name="Messages"></messages-element>
     `;
   }
 

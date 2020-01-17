@@ -57,7 +57,7 @@ class FriendElement extends LitElement {
     if (this.webId != null){
       //https://github.com/solid/query-ldflex/blob/master/demo/user.html
       p.webId = `${this.webId}`
-      console.log("###",p)
+    //  console.log("###",p)
       const n = await data[this.webId].vcard$fn || p.webId.split("/")[2].split('.')[0];
       const img = await data[this.webId].vcard$hasPhoto || "";
       const inbox = await data[this.webId].inbox;
@@ -100,7 +100,7 @@ class FriendElement extends LitElement {
       }
       p.instances = instances
       this.person = p
-      console.log(this.person)
+    //  console.log(this.person)
     }
 
 

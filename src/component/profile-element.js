@@ -38,10 +38,8 @@ class ProfileElement extends LitElement {
       @click="${this.open}">${this.cutStorage(i.object)}</button>(${this.localName(i.classe)})
       </div>
       </div>
-
       `
     )}
-
     `;
   }
 
