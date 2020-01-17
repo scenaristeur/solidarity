@@ -9,6 +9,7 @@ your browser must open on http://localhost:9000
 
 
 ## Chat from mashlib-dev  / workspaces/solid-panes/Documentation/conventions.md
+https://github.com/solid/solid-panes/blob/master/Documentation/conventions.md#chat
 
 To create a chat conversation, create a document, e.g., `/chat.ttl`, and add the following triples to it:
 
@@ -60,6 +61,13 @@ Note that there is no need to make `/long-chat/2019/04/17/chat.ttl` discoverable
 
 Also note that here too, for the chat conversation as a whole, we use `dc:created` and `dc:author`, whereas for the individual chat messages we use `dct:created` and `foaf:maker`.
 
+
+
+
+# other solid-chat
+https://github.com/dindy/solid-discussion-app
+
+https://arquisoft.github.io/dechat_en2a
 
 
 # send object to child element
