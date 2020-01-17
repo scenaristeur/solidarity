@@ -14,6 +14,7 @@ class FlowElement extends LitElement {
       person: {type: Object},
       documents:  {type: Object},
       classe: {type: String},
+      discover: {type: Object}
     };
   }
 
@@ -23,12 +24,13 @@ class FlowElement extends LitElement {
     this.person = {instances: []}
     this.documents = []
     this.classe = ""
+    this.discover = {years:[], months:[], days: []}
   }
 
   render(){
     return html`
     <h4>${this.something}</h4>
-    ${this.person.name}
+    ${this.person.name}<br>
 
 
     ${this.person.instances.map((i) => html`
@@ -46,55 +48,203 @@ class FlowElement extends LitElement {
     )}
 
     ${this.documents.length} documents of type ${this.classe}
-
-    ${this.documents.map((d, index) => html`
-      <document-element url="${d}" name="Document${index}">.</document-element>
+    <br>
+    ${this.discover.years.map((y) => html `
+      <button year=${y} @click="${this.setCurrentYear}">${y}</button> |
       `)}
-      `;
+      <br>
+      ${this.discover.months.map((m) => html `
+        <button month=${m} @click="${this.setCurrentMonth}">${m}</button> |
+        `)}
+        <br>
+        ${this.discover.days.map((d) => html `
+          <button day=${d}  @click="${this.setCurrentDay}">${d}</button> |
+          `)}
+
+
+          ${this.documents.map((d, index) => html`
+            <document-element url="${d}" name="Document${index}">.</document-element>
+            `)}
+            `;
+          }
+
+
+          async  setCurrentYear(e){
+            var y = e.target.getAttribute('year')
+            console.log(y)
+            this.discover.year = y
+            await this.showChat()
+          }
+
+          async setCurrentMonth(e){
+            var m = e.target.getAttribute('month')
+            console.log(m)
+            this.discover.month = m
+            await this.showChat()
+          }
+          async setCurrentDay(e){
+            var d = e.target.getAttribute('day')
+            console.log(d)
+            this.discover.day = d
+            await this.showChat()
+          }
+
+
+
+          async open(e){
+            var app = this
+            var url = e.target.getAttribute("url")
+            this.classe = e.target.getAttribute("classe")
+            console.log(url)
+            var folder = url.substring(0,url.lastIndexOf('/')+1)
+            console.log("FOLDER",folder)
+            console.log(url.substring(0, url.lastIndexOf('#')+1))
+            //YEAR
+            var years = []
+            for await (const year of data[folder]['ldp$contains']){
+              console.log("YEAR",`${year}`);
+              if ( `${year}`.endsWith('/')){
+                var localyear = this.localName(`${year}`.slice(0, -1))
+                years.push(localyear)
+              }
+            }
+            console.log(years)
+            var last_year = Math.max(...years)
+
+            //MONTH
+            var months = []
+            for await (const month of data[folder+last_year+'/']['ldp$contains']){
+              console.log("MONTH",`${month}`);
+              if ( `${month}`.endsWith('/')){
+                var localmonth = this.localName(`${month}`.slice(0, -1))
+                months.push(localmonth)
+              }
+            }
+            console.log(months)
+            var last_month = ("0" + Math.max(...months)).slice(-2)
+
+            //DAY
+            var days = []
+            for await (const day of data[folder+last_year+'/'+last_month+'/']['ldp$contains']){
+              console.log("DAY",`${day}`);
+              if ( `${day}`.endsWith('/')){
+                var localday = this.localName(`${day}`.slice(0, -1))
+                days.push(localday)
+              }
+            }
+            console.log(days)
+            var last_day = ("0" + Math.max(...days)).slice(-2)
+            console.log("Last day",last_day)
+
+            this.discover.years = years.sort()
+            this.discover.months = months.sort()
+            this.discover.days = days.sort()
+            this.discover.year = last_year
+            this.discover.month = last_month
+            this.discover.day = last_day
+            this.discover.folder = folder
+            this.discover.url = url
+            console.log(this.discover)
+
+            await this.showChat()
+
+            /*  for await (const month of data[`${year}`]['ldp$contains']){
+            console.log("month", `${year}`, `${month}`);
+            var days = []
+            for await (const day of data[`${month}`]['ldp$contains']){
+            console.log("day", `${year}`, `${month}`, `${day}`);
+            days.push(this.localName(`${day}`.slice(0, -1)))
+            console.log(days.sort())
+          }
+        }
+        */
+
+      }
+
+
+      async showChat(){
+        var app = this
+        var path = this.discover.folder+[this.discover.year,this.discover.month,this.discover.day,""].join('/')
+        console.log(path)
+        let chatfile = await data[path]['ldp$contains'];
+        console.log("ChatFile",`${chatfile}`);
+
+        this.documents =[]
+        var docs = []
+        for await (const subject of data[chatfile].subjects){
+          console.log("subject",`${subject}`);
+          if ( `${subject}` != app.discover.url){
+            /*  var doc = []
+            for await (const property of data[`${subject}`].properties)
+            {
+            var values = []
+            for await (const val of data[`${subject}`][`${property}`])
+            {
+            //  console.log( "--", `${val}`);
+            values.push(`${val}`)
+            //  console.log("!!",values)
+          }
+          var d = {property: `${property}` , values: values}
+          doc.push(d)
+        }
+
+        var m = {}
+        m.subject = `${subject}`
+        m.properties = doc*/
+
+        docs = [... docs, `${subject}`]
+        console.log(docs)
+      }
     }
-
-    async opentestdate(e){
-      var url = e.target.getAttribute("url")
-      this.classe = e.target.getAttribute("classe")
-      console.log(url)
-      var folder = url.substring(0,url.lastIndexOf('/')+1)
-      console.log("FOLDER",folder)
-      // find tast chat file
-
-
-
-      //  var path = folder+[year,month,day+1,""].join('/')
-      var lastmod = await data[folder]['http://purl.org/dc/terms/modified']
-
-      console.log("lastmod",`${lastmod}`);
-      var dateObj = new Date(lastmod);
-      var month = ("0" + dateObj.getUTCMonth() + 1).slice(-2); //months from 1-12
-      var day = ("0" + dateObj.getUTCDate()).slice(-2);
-      var year = dateObj.getUTCFullYear();
-
-      var path = folder+[year,month,day,""].join('/')
-      console.log(path)
-      let chatfile = await data[path]['ldp$contains'];
-      console.log("ChatFile",`${chatfile}`);
-
-      /*let chatfile = await (data[path]['ldp$contains']).catch(
-      (err) => {
-      console.log(err);
-    })
-    console.log("ChatFile",`${chatfile}`);*/
-
-    /*  for await (const year of data[folder]['ldp$contains']){
-    console.log("YEAR",`${year}`);
-    if ( `${year}` != url.substring(0, url.lastIndexOf('#')+1)){
-
-    for await (const month of data[`${year}`]['ldp$contains']){
-    console.log("month", `${year}`, `${month}`);
-    var days = []
-    for await (const day of data[`${month}`]['ldp$contains']){
-    console.log("day", `${year}`, `${month}`, `${day}`);
-    days.push(this.localName(`${day}`.slice(0, -1)))
-    console.log(days.sort())
+    console.log(docs)
+    this.documents = docs
+    this.requestUpdate()
   }
+
+
+
+  async open2(e){
+    var url = e.target.getAttribute("url")
+    this.classe = e.target.getAttribute("classe")
+    console.log(url)
+    var folder = url.substring(0,url.lastIndexOf('/')+1)
+    console.log("FOLDER",folder)
+    // find tast chat file
+
+
+
+    //  var path = folder+[year,month,day+1,""].join('/')
+    var lastmod = await data[folder]['http://purl.org/dc/terms/modified']
+
+    console.log("lastmod",`${lastmod}`);
+    var dateObj = new Date(lastmod);
+    var month = ("0" + dateObj.getUTCMonth() + 1).slice(-2); //months from 1-12
+    var day = ("0" + dateObj.getUTCDate()).slice(-2);
+    var year = dateObj.getUTCFullYear();
+
+    var path = folder+[year,month,day,""].join('/')
+    console.log(path)
+    let chatfile = await data[path]['ldp$contains'];
+    console.log("ChatFile",`${chatfile}`);
+
+    /*let chatfile = await (data[path]['ldp$contains']).catch(
+    (err) => {
+    console.log(err);
+  })
+  console.log("ChatFile",`${chatfile}`);*/
+
+  /*  for await (const year of data[folder]['ldp$contains']){
+  console.log("YEAR",`${year}`);
+  if ( `${year}` != url.substring(0, url.lastIndexOf('#')+1)){
+
+  for await (const month of data[`${year}`]['ldp$contains']){
+  console.log("month", `${year}`, `${month}`);
+  var days = []
+  for await (const day of data[`${month}`]['ldp$contains']){
+  console.log("day", `${year}`, `${month}`, `${day}`);
+  days.push(this.localName(`${day}`.slice(0, -1)))
+  console.log(days.sort())
+}
 }
 }
 }*/
@@ -111,7 +261,7 @@ this.documents = documents*/
 }
 
 
-async open(e){
+async open1(e){
   var url = e.target.getAttribute("url")
   this.classe = e.target.getAttribute("classe")
   console.log(url)
@@ -157,6 +307,14 @@ firstUpdated(){
       }
     }
   };
+  var dateObj = new Date();
+  var month = ("0" + dateObj.getUTCMonth() + 1).slice(-2); //months from 1-12
+  var day = ("0" + dateObj.getUTCDate()).slice(-2);
+  var year = dateObj.getUTCFullYear();
+  this.discover.year = year
+  this.discover.month = month
+  this.discover.day = day
+
 }
 
 personChanged(person){
