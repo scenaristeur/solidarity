@@ -7,6 +7,8 @@ npm run start
 ```
 your browser must open on http://localhost:9000
 
+# interessant stacking sticky
+https://codepen.io/ncerminara/full/VdLpzd
 
 ## Chat from mashlib-dev  / workspaces/solid-panes/Documentation/conventions.md
 https://github.com/solid/solid-panes/blob/master/Documentation/conventions.md#chat

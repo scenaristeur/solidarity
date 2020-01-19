@@ -5,6 +5,7 @@ import data from "@solid/query-ldflex";
 
 import './document-element.js'
 import './chat-line-element.js'
+import './input-element.js'
 
 class FlowElement extends LitElement {
 
@@ -82,17 +83,22 @@ class FlowElement extends LitElement {
 
           ${this.discover.classe != "http://www.w3.org/ns/pim/meeting#LongChat" ?
           html`
+
           ${this.documents.map((d, index) => html`
             <document-element url="${d}" name="Document${index}">.</document-element>
             `)}
             `
             :html`
+              <div style="height: 400px; overflow-y: scroll;">
             ${this.documents.map((d, index) => html`
               <ul class="list-group">
               <chat-line-element url="${d}" name="ChatLine${index}">.</chat-line-element>
               </ul>
 
               `)}
+              </div>
+                  <input-element name="Input" .discover=${this.discover}></input-element>
+
               `}
 
               `;
