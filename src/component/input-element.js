@@ -28,7 +28,7 @@ class InputElement extends LitElement {
 
     <div class="form-group">
     <!--<label for="exampleFormControlTextarea1">Example textarea</label>-->
-    <textarea class="form-control" id="textarea"  placeholder="Say something" rows="2"></textarea>
+    <textarea class="form-control" id="textarea" @keyup=${this.keyup} placeholder="Say something" rows="2"></textarea>
     <div class="input-group-append">
     <div class="form-check form-check-inline">
     <input class="form-check-input type-radio" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="InstantMessage" checked>
@@ -51,6 +51,9 @@ class InputElement extends LitElement {
     </div>
     `;
   }
+
+
+
 
 
   async send(){
@@ -80,11 +83,10 @@ class InputElement extends LitElement {
       await data.from(url)[index]['http://www.w3.org/2005/01/wf/flow#message'].add(namedNode(url))
 
       var postType = this.shadowRoot.querySelector('input[name="inlineRadioOptions"]:checked').value
-      console.log(postType)
-      await data[url].rdfs$type.add(namedNode('http://rdfs.org/sioc/types#'+postType))
-
-
-
+      if (postType != "InstantMessage"){
+        await data[url].rdfs$type.add(namedNode('http://rdfs.org/sioc/types#'+postType))
+      }
+        
       //  await data[url].set(namedNode(index))['http://www.w3.org/2005/01/wf/flow#message'].add(namedNode(url))
 
       /*
@@ -100,6 +102,17 @@ class InputElement extends LitElement {
     }
 
 
+  }
+
+  keyup(e){
+    //  console.log(e)
+    //  console.log(e.keyCode)
+    if (e.keyCode === 13) {
+      // Cancel the default action, if needed
+      e.preventDefault();
+      // Trigger the button element with a click
+      this.send()
+    }
   }
 
 

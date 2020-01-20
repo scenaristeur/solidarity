@@ -3,6 +3,10 @@ import { LitElement, html } from 'lit-element';
 import { HelloAgent } from '../agents/hello-agent.js';
 import data from "@solid/query-ldflex";
 
+import './document-element.js'
+import './chat-line-element.js'
+import './input-element.js'
+
 class DocumentElement extends LitElement {
 
   static get properties() {
