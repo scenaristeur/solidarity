@@ -31,7 +31,7 @@ class FlowElement extends LitElement {
     this.documents = []
     this.classe = ""
     this.discover = {years:[], months:[], days: []}
-    this.info = "Select a feed below"
+    this.info = "Choose a chat in the ChatsElement panel. Those chats are stored in the https://solidarity.inrupt.net/public/ folder."
     this.lang=navigator.language
     this.scrolled = false
     this.webId = "https://solidarity.inrupt.net/profile/card#me"
@@ -40,14 +40,12 @@ class FlowElement extends LitElement {
   render(){
     return html`
     <link href="css/bootstrap/bootstrap.min.css" rel="stylesheet">
-    <h4>${this.something}</h4>
-    ${this.person.name}<br>
 
     <div class="alert alert-primary" role="alert">
     ${this.info}
-    ${this.webId}
+<!--    ${this.webId}-->
     </div>
-
+<!--
     ${this.person.instances.map((i) => html`
       <div class = "row">
       <button type="button"
@@ -58,7 +56,7 @@ class FlowElement extends LitElement {
       </div>
       ` )}
 
-      <br>
+      <br>-->
       ${this.discover.years.map((y) =>
         html `
         <button type="button"
@@ -130,14 +128,9 @@ class FlowElement extends LitElement {
                 await this.showChat()
               }
 
-              async open(e){
+              async open(){
                 var app = this
 
-                this.resetDiscover()
-                this.discover.url = e.target.getAttribute("url")
-                this.discover.classe = e.target.getAttribute("classe")
-                this.discover.folder = this.discover.url.substring(0,this.discover.url.lastIndexOf('/')+1)
-                //  console.log(this.discover)
                 switch(this.discover.classe) {
                   case "http://www.w3.org/ns/pim/meeting#LongChat":
                   app.socket = null
@@ -242,7 +235,7 @@ class FlowElement extends LitElement {
                 await data.clearCache()
                 let chatfile = await data[path]['ldp$contains'];
                 //  console.log("ChatFile",`${chatfile}`);
-                this.info = "Looking for "+chatfile
+                this.info = "Looking for chatfile"
                 this.documents = []
                 var docs = []
                 var discovurl = app.discover.url
@@ -305,7 +298,8 @@ class FlowElement extends LitElement {
             }
 
             cutStorage(str){
-              return str.replace(this.person.storage,"/")
+              var splitted = str.split("/")
+              return splitted[4]
             }
 
             localName(str){
@@ -315,7 +309,11 @@ class FlowElement extends LitElement {
               return ln
             }
 
-
+discoverChanged(discover){
+  this.discover = discover
+  console.log(discover)
+  this.open()
+}
 
             async   firstUpdated(){
               var app = this;
@@ -324,10 +322,10 @@ class FlowElement extends LitElement {
               this.agent.receive = function(from, message) {
                 if (message.hasOwnProperty("action")){
                   switch(message.action) {
-                    /*  case "webIdChanged":
-                    app.webIdChanged(message.webId)
+                      case "discoverChanged":
+                    app.discoverChanged(message.discover)
                     break;
-                    case "personChanged":
+                  /*  case "personChanged":
                     app.personChanged(message.person)
                     break;*/
                     default:

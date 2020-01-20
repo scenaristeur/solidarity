@@ -23,7 +23,7 @@ class LeftElement extends LitElement {
     <b>${this.something}</b>
     <people-element name="People"></people-element>
     <rooms-element name="Rooms"></rooms-element>
-    <chats-element name="Chats"></chats-element>
+    <chats-element name="Chats"  webId="https://solidarity.inrupt.net/profile/card#me"></chats-element>
     <!--<profile-element name="Profile"></profile-element>-->
     `;
   }
