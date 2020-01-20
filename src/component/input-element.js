@@ -32,19 +32,19 @@ class InputElement extends LitElement {
     <textarea class="form-control" id="textarea"  placeholder="Say something" rows="2"></textarea>
     <div class="input-group-append">
     <div class="form-check form-check-inline">
-    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1" checked>
+    <input class="form-check-input type-radio" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="InstantMessage" checked>
     <label class="form-check-label" for="inlineRadio1">Chat</label>
     </div>
     <div class="form-check form-check-inline">
-    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+    <input class="form-check-input type-radio" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="WikiArticle">
     <label class="form-check-label" for="inlineRadio2">Topic</label>
     </div>
     <div class="form-check form-check-inline">
-    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3">
+    <input class="form-check-input type-radio" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="Question">
     <label class="form-check-label" for="inlineRadio3">Question</label>
     </div>
     <div class="form-check form-check-inline">
-    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio4" value="option4">
+    <input class="form-check-input type-radio" type="radio" name="inlineRadioOptions" id="inlineRadio4" value="Poll">
     <label class="form-check-label" for="inlineRadio3">Poll</label>
     </div>
     <button id="send" class="btn btn-primary" type="button" @click="${this.send}">Send</button>
@@ -55,6 +55,8 @@ class InputElement extends LitElement {
 
 
   async send(){
+
+
     var content = this.shadowRoot.getElementById("textarea").value.trim()
     console.log(content)
     if (content.length > 0){
@@ -76,7 +78,15 @@ class InputElement extends LitElement {
       await data[url].dct$created.add(date)
       await data[url].sioc$content.add(content)
       await data[url].foaf$maker.add(namedNode(`${webid}`))
-    //  await data[url].set(namedNode(index))['http://www.w3.org/2005/01/wf/flow#message'].add(namedNode(url))
+      await data.from(url)[index].flow$message.add(namedNode(url))
+
+      var postType = this.shadowRoot.querySelector('input[name="inlineRadioOptions"]:checked').value
+      console.log(postType)
+      await data[url].rdfs$type.add(namedNode('http://rdfs.org/sioc/types#'+postType))
+
+
+
+      //  await data[url].set(namedNode(index))['http://www.w3.org/2005/01/wf/flow#message'].add(namedNode(url))
 
       /*
       https://github.com/solid/solid-panes/blob/master/Documentation/conventions.md#chat

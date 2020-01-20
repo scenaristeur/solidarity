@@ -1,3 +1,5 @@
+// load thumbnail instead of full image https://github.com/blueimp/JavaScript-Load-Image#demo
+
 import { LitElement, html, css } from 'lit-element';
 import { HelloAgent } from '../agents/hello-agent.js';
 
@@ -41,7 +43,12 @@ class FriendElement extends LitElement {
 
     <button type="button" class="btn btn-info"  @click="${this.details.bind(this)}">
     ${this.person.img.length > 0 ?
-      html`<img src="${this.person.img}" title="${this.webId}" alt="image">`
+      html`
+      <!-- REduce the profile image https://images.weserv.nl/docs/-->
+      <img src="//images.weserv.nl/?url=${this.person.img}&w=32&h=32" title="${this.webId}" alt="Can not access image profile">
+      <!--<img src="${this.person.img}" title="${this.webId}" alt="image">-->
+
+      `
       :html`<i class="fas fa-user-circle fa-2x" title="${this.webId}"></i>`
     }
 
@@ -57,7 +64,7 @@ class FriendElement extends LitElement {
     if (this.webId != null){
       //https://github.com/solid/query-ldflex/blob/master/demo/user.html
       p.webId = `${this.webId}`
-    //  console.log("###",p)
+      //  console.log("###",p)
       const n = await data[this.webId].vcard$fn || p.webId.split("/")[2].split('.')[0];
       const img = await data[this.webId].vcard$hasPhoto || "";
       const inbox = await data[this.webId].inbox;
@@ -100,7 +107,7 @@ class FriendElement extends LitElement {
       }
       p.instances = instances
       this.person = p
-    //  console.log(this.person)
+      //  console.log(this.person)
     }
 
 
