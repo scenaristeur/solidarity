@@ -52,17 +52,16 @@ class InputElement extends LitElement {
     `;
   }
 
-
-
-
-
   async send(){
-
-
+    try {
+      var webid = await data.user
+      console.log(`${webid}`)
+    }catch(e){
+      alert(e)
+    }
+      
     var content = this.shadowRoot.getElementById("textarea").value.trim()
-    console.log(content)
     if (content.length > 0){
-
       var dateObj = new Date();
       var messageId = "#Msg"+dateObj.getTime()
       var month = ("0" + dateObj.getUTCMonth() + 1).slice(-2); //months from 1-12
@@ -70,52 +69,26 @@ class InputElement extends LitElement {
       var year = dateObj.getUTCFullYear();
       var path = this.discover.folder+[year, month, day, ""].join("/")
       var url = path+"chat.ttl"+messageId
-      console.log(url)
       var date = dateObj.toISOString()
-      console.log(date)
-      var webid = await data.user
-      console.log(`${webid}`)
       var index = this.discover.folder+"index.ttl#this"
-      console.log(index)
       await data[url].dct$created.add(date)
       await data[url].sioc$content.add(content)
       await data[url].foaf$maker.add(namedNode(`${webid}`))
       await data.from(url)[index]['http://www.w3.org/2005/01/wf/flow#message'].add(namedNode(url))
-
       var postType = this.shadowRoot.querySelector('input[name="inlineRadioOptions"]:checked').value
       if (postType != "InstantMessage"){
         await data[url].rdfs$type.add(namedNode('http://rdfs.org/sioc/types#'+postType))
       }
-        
-      //  await data[url].set(namedNode(index))['http://www.w3.org/2005/01/wf/flow#message'].add(namedNode(url))
-
-      /*
-      https://github.com/solid/solid-panes/blob/master/Documentation/conventions.md#chat
-      </long-chat/2019/04/17/chat.ttl#Msg1555487418787> dct:created  "2019-04-17T07:50:18Z"^^XML:dateTime .
-      </long-chat/2019/04/17/chat.ttl#Msg1555487418787> sioc:content "hi" .
-      </long-chat/2019/04/17/chat.ttl#Msg1555487418787> foaf:maker   </profile/card#me> .
-      </long-chat/index.ttl#this>                       flow:message </long-chat/2019/04/17/chat.ttl#Msg1555487418787> .
-      */
       this.shadowRoot.getElementById("textarea").value = ""
-
       this.shadowRoot.getElementById("inlineRadio1").checked = true
     }
-
-
   }
 
   keyup(e){
-    //  console.log(e)
-    //  console.log(e.keyCode)
     if (e.keyCode === 13) {
-      // Cancel the default action, if needed
       e.preventDefault();
-      // Trigger the button element with a click
       this.send()
     }
   }
-
-
 }
-
 customElements.define('input-element', InputElement);

@@ -20,7 +20,7 @@ class MainElement extends LitElement {
   render(){
     return html`
     <b>${this.something}</b>
-    <flow-element name="Flow"></flow-element>
+    <flow-element name="Flow" webId="https://solidarity.inrupt.net/profile/card#me"></flow-element>
 
 
     `;

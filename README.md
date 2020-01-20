@@ -63,7 +63,11 @@ Note that there is no need to make `/long-chat/2019/04/17/chat.ttl` discoverable
 
 Also note that here too, for the chat conversation as a whole, we use `dc:created` and `dc:author`, whereas for the individual chat messages we use `dct:created` and `foaf:maker`.
 
-
+# input-element , send data
+await data[url].dct$created.add(date)
+await data[url].sioc$content.add(content)
+await data[url].foaf$maker.add(namedNode(`${webid}`))
+await data.from(url)[index]['http://www.w3.org/2005/01/wf/flow#message'].add(namedNode(url))
 
 
 # other solid-chat

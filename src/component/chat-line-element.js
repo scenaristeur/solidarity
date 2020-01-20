@@ -10,8 +10,14 @@ class ChatLineElement extends LitElement {
       name: {type: String},
       something: {type: String},
       url: {type: String},
-      doc: {type: Array},
-            lang: {type: String},
+      other: {type: Array},
+      lang: {type: String},
+      maker: {type: String},
+      date: {type: String},
+      content: {type: String},
+      type: {type: String},
+      makername: {type: String},
+      makerimg: {type: String}
     };
   }
 
@@ -19,8 +25,14 @@ class ChatLineElement extends LitElement {
     super();
     this.something = "Doc Element"
     this.url = ""
-    this.doc = []
-      this.lang=navigator.language
+    this.other = []
+    this.lang=navigator.language
+    this.maker = "http://xmlns.com/foaf/0.1/maker"
+    this.date = "http://purl.org/dc/terms/created"
+    this.content = "http://rdfs.org/sioc/ns#content"
+    this.type = "rdfs:type"
+    this.makername = "webid.vcard$fn"
+    this.makerimg = ""
   }
 
   render(){
@@ -28,45 +40,42 @@ class ChatLineElement extends LitElement {
     <link href="css/fontawesome/css/all.css" rel="stylesheet">
     <link href="css/bootstrap/bootstrap.min.css" rel="stylesheet">
 
-    <li class="list-group-item">
 
-    ${this.doc.map((d) => html`
+    <li class="list-group-item small">
 
-      ${this.localName(d.property) == "created" ?
-      html`Date : ${new Date(d.values[0]).toLocaleTimeString(this.lang)}`
-      :html``
+    <div class="row">
+    <div class="col-1">
+    <a href="${this.maker}" target="_blank">
+    ${this.makerimg.length > 0 ?
+      html`<img src="//images.weserv.nl/?url=${this.makerimg}&w=32&h=32" title="${this.makerimg}">`
+      :html`<i class="fas fa-user-circle fa-2x" title="${this.makername}"></i>`
     }
-    ${this.localName(d.property) == "maker" ?
-    html`${this.maker(d.values[0])}`
+    <br>
+    ${this.makername}</a>
+    </div>
+
+    <div class="col">
+
+    ${this.content}
+    <!--  <div class="row">
+    ${this.other.map((d) => html`
+      Other : ${d.property} ${d.values}<br>`
+    )}
+    </div>-->
+    </div>
+
+    <div class="col-2">
+    ${new Date(this.date).toLocaleTimeString(this.lang)}<br>
+    ${this.type != "rdfs:type" && this.type != "undefined" ?
+    html `${this.localName(this.type)}<br>`
     :html``
   }
-  ${this.localName(d.property) == "content" ?
-  html`${this.localName(d.values[0])}`
-  :html``
-}
-
-<p class="card-text">
-${d.values.map((v) => html`
+  </div>
+  </div>
 
 
-  ${((this.localName(d.property) != "content") && (this.localName(d.property) != "created") && (this.localName(d.property) != "maker")) ?
-  html` <!--   ${this.localName(d.property)} :
-  <a href="${v}" target="_blank">${this.localName(v)}</a>-->
-  1 ${d.property} : ${v}
-  <br>
-  `
-  :html`
-
-  `
-}
-
-`)}
-</p>
-
-`)}
-
-</li>
-`;
+  </li>
+  `;
 }
 
 firstUpdated(){
@@ -87,13 +96,6 @@ firstUpdated(){
 }
 
 
-maker(webId){
-/*  <!--${this.getName(webId)} -->*/
-  return html  `
-  <small><a href=${webId} target="_blank">${webId}</a></small>
-
-  `
-}
 
 
 async getName(webId){
@@ -103,29 +105,55 @@ async getName(webId){
 }
 
 async updateDocument(){
-  var doc = []
-  this.doc=[]
+  var app = this
+  var doc=[]
   for await (const property of data[this.url].properties)
   {
-    var values = []
-    for await (const val of data[this.url][`${property}`])
-    {
-      /*if(`${val}` == "http:/schema.org/AgreeAction" && `${val}` == "http:/schema.org/DisagreeAction"){
-      d.likeAction = true
-    }*/
+  //  console.log("Prop",`${property}`)
+    switch(`${property}`) {
+      case "http://xmlns.com/foaf/0.1/maker":
+      var maker = await data[this.url][`${property}`]
+      var makername = await data[`${maker}`].vcard$fn
+      var makerimg = await data[`${maker}`].vcard$hasPhoto || "";
+      app.maker = `${maker}`
+      app.makername = `${makername}`
+      app.makerimg = `${makerimg}`
+      break;
+      case "http://purl.org/dc/terms/created":
+      var date = await data[this.url][`${property}`]
+      app.date = `${date}`
+      break;
+      case "http://rdfs.org/sioc/ns#content":
+      var content = await data[this.url][`${property}`]
+      app.content = `${content}`
+      break;
+      case "http://www.w3.org/2000/01/rdf-schema#type":
+      var type = await data[this.url][`${property}`]
+      app.type = `${type}`
+      break;
+      default:
+    //  console.log("default", this.url)
+      var values = []
+      for await (const val of data[this.url][`${property}`])
+      {
+        /*if(`${val}` == "http:/schema.org/AgreeAction" && `${val}` == "http:/schema.org/DisagreeAction"){
+        d.likeAction = true
+      }*/
+      values.push(`${val}`)
+      console.log(`${values}`)
+    }
 
-    values.push(`${val}`)
+    this.other = [... this.other, {property: `${property}` , values: values}]
   }
-  var d = {property: `${property}` , values: values}
-  doc.push(d)
+
 }
-this.doc = doc
+
 }
 
 localDate(d){
-//  console.log(d)
+  //  console.log(d)
   d = new Date(d).toLocaleTimeString(this.lang)
-//  console.log(d)
+  //  console.log(d)
   return d
 }
 localName(str){

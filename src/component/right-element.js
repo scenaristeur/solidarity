@@ -4,7 +4,7 @@ import './news-element.js'
 import './events-element.js'
 import './announcements-element.js'
 import './activity-element.js'
-import './friends-element.js'
+//import './friends-element.js'
 
 
 class RightElement extends LitElement {
@@ -23,7 +23,7 @@ class RightElement extends LitElement {
   render(){
     return html`
     <b>${this.something}</b>
-    <friends-element name="Friends"></friends-element>
+<!--    <friends-element name="Friends"></friends-element>-->
     <news-element name="News"></news-element>
     <events-element name="Events"></events-element>
     <announcements-element name="Announcements"></announcements-element>
