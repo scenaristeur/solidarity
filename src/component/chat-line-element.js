@@ -10,7 +10,8 @@ class ChatLineElement extends LitElement {
       name: {type: String},
       something: {type: String},
       url: {type: String},
-      doc: {type: Array}
+      doc: {type: Array},
+            lang: {type: String},
     };
   }
 
@@ -19,6 +20,7 @@ class ChatLineElement extends LitElement {
     this.something = "Doc Element"
     this.url = ""
     this.doc = []
+      this.lang=navigator.language
   }
 
   render(){
@@ -29,12 +31,13 @@ class ChatLineElement extends LitElement {
     <li class="list-group-item">
 
     ${this.doc.map((d) => html`
+
       ${this.localName(d.property) == "created" ?
-      html`Date : ${this.localName(d.values[0])} `
+      html`Date : ${new Date(d.values[0]).toLocaleTimeString(this.lang)}`
       :html``
     }
     ${this.localName(d.property) == "maker" ?
-    html`By : <a href="${d.values[0]}" target="_blank">${this.localName(d.values[0])}</a>`
+    html`${this.maker(d.values[0])}`
     :html``
   }
   ${this.localName(d.property) == "content" ?
@@ -57,16 +60,10 @@ ${d.values.map((v) => html`
   `
 }
 
-
-
 `)}
 </p>
 
-
 `)}
-
-
-
 
 </li>
 `;
@@ -89,6 +86,22 @@ firstUpdated(){
   this.updateDocument()
 }
 
+
+maker(webId){
+/*  <!--${this.getName(webId)} -->*/
+  return html  `
+  <small><a href=${webId} target="_blank">${webId}</a></small>
+
+  `
+}
+
+
+async getName(webId){
+  const n = await data[webId].vcard$fn || webId.split("/")[2].split('.')[0];
+  console.log("Nom", `${n}`)
+  return `${n}`
+}
+
 async updateDocument(){
   var doc = []
   this.doc=[]
@@ -98,27 +111,34 @@ async updateDocument(){
     for await (const val of data[this.url][`${property}`])
     {
       /*if(`${val}` == "http:/schema.org/AgreeAction" && `${val}` == "http:/schema.org/DisagreeAction"){
-        d.likeAction = true
-      }*/
+      d.likeAction = true
+    }*/
 
-      values.push(`${val}`)
-     }
-    var d = {property: `${property}` , values: values}
-    doc.push(d)
+    values.push(`${val}`)
   }
-  this.doc = doc
+  var d = {property: `${property}` , values: values}
+  doc.push(d)
+}
+this.doc = doc
 }
 
+localDate(d){
+//  console.log(d)
+  d = new Date(d).toLocaleTimeString(this.lang)
+//  console.log(d)
+  return d
+}
 localName(str){
   if(str != undefined){
     var ln = str.substring(str.lastIndexOf('#')+1);
     ln == str ? ln = str.substring(str.lastIndexOf('/')+1) : "";
-    ln == "me" ? ln = str : "";
+    //  ln == "me" ? ln =  : "";
   }else{
     ln = "--"
   }
   return ln
 }
+
 
 }
 

@@ -18,6 +18,8 @@ class FlowElement extends LitElement {
       classe: {type: String},
       discover: {type: Object},
       info: {type: String},
+      lang: {type: String},
+      scrolled: {type: Boolean}
     };
   }
 
@@ -29,6 +31,8 @@ class FlowElement extends LitElement {
     this.classe = ""
     this.discover = {years:[], months:[], days: []}
     this.info = "Select a friend to view his feeds ->"
+    this.lang=navigator.language
+    this.scrolled = false
   }
 
   render(){
@@ -89,7 +93,7 @@ class FlowElement extends LitElement {
             `)}
             `
             :html`
-              <div style="height: 400px; overflow-y: scroll;">
+            <div id="scroller" @scroll="${this.onScroll}" style="height: 400px; overflow-y: scroll;">
             ${this.documents.map((d, index) => html`
               <ul class="list-group">
               <chat-line-element url="${d}" name="ChatLine${index}">.</chat-line-element>
@@ -97,7 +101,7 @@ class FlowElement extends LitElement {
 
               `)}
               </div>
-                  <input-element name="Input" .discover=${this.discover}></input-element>
+              <input-element name="Input" .discover=${this.discover}></input-element>
 
               `}
 
@@ -136,7 +140,9 @@ class FlowElement extends LitElement {
               //  console.log(this.discover)
               switch(this.discover.classe) {
                 case "http://www.w3.org/ns/pim/meeting#LongChat":
+                app.socket = null
                 await  this.openLongChat()
+                app.subscribe()
                 break;
                 case "http://schema.org/TextDigitalDocument":
                 case "http://schema.org/MediaObject":
@@ -147,7 +153,34 @@ class FlowElement extends LitElement {
               this.info=this.documents.length+" documents of type "+this.discover.classe
             }
 
+
+            async subscribe(){
+              var app = this
+              var websocket = "wss://"+this.discover.url.split('/')[2];
+              var url = this.discover.folder+[this.discover.year,this.discover.month,this.discover.day,"chat.ttl"].join('/')
+
+              app.socket = new WebSocket(websocket);
+              app.socket.onopen = function() {
+                const d = new Date();
+                var now = d.toLocaleTimeString(app.lang)
+                this.send('sub '+url);
+                console.log("subscribe to ",websocket, url)
+                app.agent.send('Messages',  {action:"info", info: now+"[souscription] "+url});
+              };
+              app.socket.onmessage = function(msg) {
+                console.log(msg)
+                if (msg.data && msg.data.slice(0, 3) === 'pub') {
+                  //  app.notification("nouveau message Socialid")
+                  app.openLongChat()
+                }
+              };
+
+
+            }
+
+
             async openLongChat(e){
+              console.log("openChat")
               var app = this
               var folder = this.discover.folder
               //YEAR
@@ -195,7 +228,7 @@ class FlowElement extends LitElement {
               this.discover.day = last_day
 
               //  console.log(this.discover)
-              this.documents =[]
+              //  this.documents =[]
               await this.showChat()
               this.info=this.documents.length+" documents of type "+this.discover.classe
             }
@@ -205,13 +238,14 @@ class FlowElement extends LitElement {
               var app = this
               var path = this.discover.folder+[this.discover.year,this.discover.month,this.discover.day,""].join('/')
               //  console.log(path)
+              console.log("Clear",await data.clearCache())
               let chatfile = await data[path]['ldp$contains'];
               //  console.log("ChatFile",`${chatfile}`);
               this.info = "Looking for "+chatfile
 
               var docs = []
               for await (const subject of data[chatfile].subjects){
-                //console.log("subject",`${subject}`);
+                console.log("subject",`${subject}`);
                 if ( `${subject}` != app.discover.url){
                   docs = [... docs, `${subject}`]
                   //console.log(docs)
@@ -220,13 +254,39 @@ class FlowElement extends LitElement {
               //  console.log(docs)
               this.documents = docs
               this.requestUpdate()
+
+              //  setInterval(this.updateScroll(scroller),1000);
+
               this.info=this.documents.length+" documents of type "+this.discover.classe
+this.scroll = false;
+              this.updateScroll();
+
               /*  if (this.documents.length < 10 && this.discover.loop > 0){
               this.discover.day --
               this.discover.loop --
               console.log(this.discover)
               this.showChat()
             }*/
+          }
+
+          updateScroll(){
+            console.log("timout")
+            var app = this
+            var scroller = app.shadowRoot.getElementById("scroller")
+            setTimeout(function() {
+              console.log("scroll", app.scrolled, scroller.scrollTop, scroller.clientHeight)
+              var scrolltemp = app.scrolled
+              if(app.scrolled ==false && scroller.scrollTop < scroller.scrollHeight){
+                scroller.scrollTop = scroller.scrollHeight;
+                console.log(scroller.scrollTop)
+              }
+              app.scrolled = scrolltemp
+            }, 5000);
+          }
+
+          onScroll(){
+            this.scrolled=true;
+          //  console.log(this.scrolled)
           }
 
           async openDefault(e){
@@ -253,8 +313,11 @@ class FlowElement extends LitElement {
             return ln
           }
 
+
+
           firstUpdated(){
             var app = this;
+
             this.agent = new HelloAgent(this.name);
             //  console.log(this.agent)
             this.agent.receive = function(from, message) {

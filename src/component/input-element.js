@@ -24,7 +24,6 @@ class InputElement extends LitElement {
     <link href="css/bootstrap/bootstrap.min.css" rel="stylesheet">
     <!--<script src="vendor/jquery/jquery.slim.min.js"></script>
     <script src="js/bootstrap.bundle.min.js"></script>-->
-    <h4>${this.something}</h4>
 
 
     <div class="form-group">
@@ -78,7 +77,7 @@ class InputElement extends LitElement {
       await data[url].dct$created.add(date)
       await data[url].sioc$content.add(content)
       await data[url].foaf$maker.add(namedNode(`${webid}`))
-      await data.from(url)[index].flow$message.add(namedNode(url))
+      await data.from(url)[index]['http://www.w3.org/2005/01/wf/flow#message'].add(namedNode(url))
 
       var postType = this.shadowRoot.querySelector('input[name="inlineRadioOptions"]:checked').value
       console.log(postType)
@@ -96,6 +95,8 @@ class InputElement extends LitElement {
       </long-chat/index.ttl#this>                       flow:message </long-chat/2019/04/17/chat.ttl#Msg1555487418787> .
       */
       this.shadowRoot.getElementById("textarea").value = ""
+
+      this.shadowRoot.getElementById("inlineRadio1").checked = true
     }
 
 
