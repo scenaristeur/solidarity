@@ -17,10 +17,13 @@ class MessagesElement extends LitElement {
   }
   render(){
     return html`
+    <link href="css/bootstrap/bootstrap.min.css" rel="stylesheet">
     <p>${this.name}</p>
     <!--  <pre class="pre-scrollable">-->
-    <ul id="messageslist" style="height: 40vh; overflow: auto">
-    ${this.messages.map((m) => html`<li><b>Agent ${m.from}</b> say "${m.message}"</li>`)}
+    <ul id="messageslist" style="height: 30vh; overflow: auto" class="list-group">
+    ${this.messages.map((m) => html`
+      <li class="list-group-item small"><b>${m.from}</b>: "${m.message}"</li>
+      `)}
     </ul>
 
     <!--  </pre>-->
@@ -46,7 +49,7 @@ class MessagesElement extends LitElement {
 
   addInfo(from, message){
     this.messages.reverse()
-    this.messages = [... this.messages, {message: JSON.stringify(message), from: from}]
+    this.messages = [... this.messages, {message: JSON.stringify(message.info), from: from}]
     this.messages.reverse()
   }
 

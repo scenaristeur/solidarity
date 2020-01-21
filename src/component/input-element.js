@@ -1,6 +1,7 @@
 import { LitElement, html } from 'lit-element';
 import data from "@solid/query-ldflex";
 import { namedNode } from '@rdfjs/data-model';
+import { HelloAgent } from '../agents/hello-agent.js';
 
 class InputElement extends LitElement {
 
@@ -9,7 +10,8 @@ class InputElement extends LitElement {
       name: {type: String},
       something: {type: String},
       discover: {type: Object},
-      postType: {type: String}
+      postType: {type: String},
+      replyTo: {type: String}
     };
   }
 
@@ -18,6 +20,7 @@ class InputElement extends LitElement {
     this.something = "Input Element"
     this.discover = {}
     this.postType = "InstantMessage"
+    this.replyTo = ""
   }
 
   render(){
@@ -37,6 +40,23 @@ class InputElement extends LitElement {
 
     <div class="form-group">
     <!--<label for="exampleFormControlTextarea1">Example textarea</label>-->
+
+
+    ${this.replyTo.length > 0 ?
+      html `<div class="input-group mb-3">
+      <div class="input-group-prepend">
+      <span class="input-group-text">Reply To</span>
+      </div>
+      <input type="text" class="form-control" placeholder="Reply to" aria-label="Reply to" aria-describedby="basic-addon2" value="${this.replyTo}">
+      <div class="input-group-append">
+      <button class="btn btn-primary btn-sm" @click="${this.clearReplyTo}">
+      <i class="fas fa-window-close"></i>
+      </button>
+      </div>
+      </div>`
+      :html``
+    }
+
     <textarea class="form-control" id="textarea" @keyup=${this.keyup} placeholder="Say something" rows="2"></textarea>
 
 
@@ -77,6 +97,34 @@ class InputElement extends LitElement {
     </div>
     </div>
     `;
+  }
+
+
+  firstUpdated(){
+    var app = this;
+    this.agent = new HelloAgent(this.name);
+    this.agent.receive = function(from, message) {
+      if (message.hasOwnProperty("action")){
+        switch(message.action) {
+          case "reply":
+          app.reply(message.replyTo)
+          break;
+          default:
+          console.log("Unknown action ",message)
+        }
+      }
+    };
+
+  }
+
+
+  reply(replyTo){
+    console.log(replyTo)
+    this.replyTo = replyTo
+  }
+
+  clearReplyTo(){
+    this.replyTo = ""
   }
 
   changePostType(e){
@@ -124,8 +172,16 @@ class InputElement extends LitElement {
       if (this.postType != "InstantMessage"){
         await data[url].rdfs$type.add(namedNode('http://rdfs.org/sioc/types#'+this.postType))
       }
+
+      if (this.replyTo.length >0){
+        await data[url].rdfs$type.add(namedNode('https://schema.org/Comment'))
+        await data[url].schema$parentItem.add(namedNode(this.replyTo)) // schema$parentItem plante le chat solid
+        await data[this.replyTo].schema$comment.add(namedNode(url))
+        this.replyTo = ""
+      }
+
       this.shadowRoot.getElementById("textarea").value = ""
-    //  this.shadowRoot.getElementById("inlineRadio1").checked = true
+      //  this.shadowRoot.getElementById("inlineRadio1").checked = true
 
     }
     //reinit buttons

@@ -33,21 +33,20 @@ class AppElement extends LitElement {
 
     <div id="main" class="row">
     <div id="main" class="col col-3">
-    col 1
     <left-element name="Left"></left-element>
     </div>
     <div id="main" class="col col-md-6">
-    col 2
+
     <main-element name="Main"></main-element>
     </div>
     <div id="main" class="col">
-    col 3
+
     <right-element name="Right"></right-element>
     </div>
     </div>
 
     <div id="footer" class="row">
-    Footer
+
     <footer-element name="Footer"></footer-element>
     </div>
 
