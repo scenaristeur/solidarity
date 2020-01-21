@@ -1,4 +1,48 @@
+
+
 <!doctype html>
+<html>
+<head>
+  <!-- Polyfills only needed for Firefox and Edge. -->
+  <script src="https://unpkg.com/@webcomponents/webcomponentsjs@latest/webcomponents-loader.js"></script>
+  <script src="vendor/eve.custom.js"></script>
+</head>
+<body>
+  <!-- Works only on browsers that support Javascript modules like
+       Chrome, Safari, Firefox 60, Edge 17 -->
+  <script type="module">
+    import {LitElement, html, css} from 'https://unpkg.com/lit-element/lit-element.js?module';
+
+    class MyElement extends LitElement {
+
+      static get properties() {
+        return {
+          mood: {type: String}
+        }
+      }
+
+      static get styles() {
+        return css`.mood { color: green; }`;
+      }
+
+      render() {
+        return html`Web Components are <span class="mood">${this.mood}</span>!`;
+      }
+    }
+
+    customElements.define('my-element', MyElement);
+  </script>
+
+  <my-element mood="great"></my-element>
+
+  <app-element name="App"><br><br>Solidarity is uploading its 2.4M app-element. <br> Please wait a moment...</app-element>
+  <script src="app-mini.js" type="module"></script>
+
+</body>
+</html>
+
+
+<!--<!doctype html>
 <html lang="en">
 <head>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
@@ -16,4 +60,4 @@
   </footer>
 </body>
 
-</html>
+</html>-->
