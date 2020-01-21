@@ -4,7 +4,6 @@ import './login-element.js'
 import './chats-element.js'
 import './messages-element.js'
 import './flow-element.js'
-import './main-element.js'
 
 
 class AppElement extends LitElement {
