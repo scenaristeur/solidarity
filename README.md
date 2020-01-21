@@ -76,6 +76,9 @@ https://github.com/dindy/solid-discussion-app
 https://arquisoft.github.io/dechat_en2a
 
 
+# a Voir, lit-element with webpack
+https://vaadin.com/learn/tutorials/lit-element/starting-a-lit-element-project
+
 # send object to child element
 ```
 <ul>
