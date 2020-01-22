@@ -29,7 +29,7 @@ class ChatElement extends LitElement {
     this.documents = []
     this.classe = ""
     this.discover = {years:[], months:[], days: []}
-    this.info = "Choose a chat in the ChatsElement panel."+
+    this.info = "Choose 'Solidarity (LongChat)' in the ChatsElement panel."+
     " Those chats are stored in the https://solidarity.inrupt.net/public/ folder."+
     " You can also click on one of your friends to see his chats in ChatsElement"
     this.lang=navigator.language

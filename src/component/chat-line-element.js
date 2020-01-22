@@ -215,7 +215,7 @@ class ChatLineElement extends LitElement {
       position: absolute;
       left: 0;
       bottom: -15px;
-      color: rgba(255,255,255,0.5);
+      color: rgba(0,0,0,0.5);
       font-size: 10px;
     }
     .msg_time_send{
@@ -288,7 +288,7 @@ class ChatLineElement extends LitElement {
       ${this.types.length > 0 ?
         html `
         ${this.types.map((t, index) => html`
-          <button>${this.localName(t)}</button>
+          <button type="button" class="btn btn-outline-dark btn-sm">${this.localName(t)}</button>
           `)}`
           :html``
         }
@@ -340,8 +340,7 @@ class ChatLineElement extends LitElement {
         html`<img class="rounded-circle user_img_msg" src="//images.weserv.nl/?url=${this.makerimg}&w=32&h=32" title="${this.makerimg}" alt="no image">`
         :html`<i class="fas fa-user-circle fa-2x" title="${this.makername}"></i>`
       }
-      <br>
-      <small>${this.makername}</small></a>
+      </a>
       </div>
       </div>
       `
@@ -353,8 +352,8 @@ class ChatLineElement extends LitElement {
         html`<img class="rounded-circle user_img_msg" src="//images.weserv.nl/?url=${this.makerimg}&w=32&h=32" title="${this.makerimg}" alt="no image">`
         :html`<i class="fas fa-user-circle fa-2x" title="${this.makername}"></i>`
       }
-      <br>
-      <small>${this.makername}</small></a>
+
+      </a>
       </div>
       <div class="msg_cotainer">
 
@@ -362,13 +361,13 @@ class ChatLineElement extends LitElement {
       ${this.types.length > 0 ?
         html `
         ${this.types.map((t, index) => html`
-          <button>${this.localName(t)}</button>
+          <button type="button" class="btn btn-outline-dark btn-sm">${this.localName(t)}</button>
           `
         )}
         `
         :html``
       }</div>
-
+      <small><b>${this.makername} : </b></small>
       ${this.content}
       <!--<span id="action_menu_btn" @click="${this.openmenu}" menu="menuPrincipal"><i class="fas fa-plus"  menu="menuPrincipal"></i></span>
       <div id="menuPrincipal" class="action_menu d-none" >
@@ -451,9 +450,14 @@ class ChatLineElement extends LitElement {
   async updateDocument(){
     var app = this
     var doc=[]
-    var webid = await data.user
-    console.log(`${webid}`)
-    this.webId=`${webid}`
+    try {
+      var webid = await data.user
+      console.log(`${webid}`)
+      this.webId=`${webid}`
+    }catch(e){
+      this.webId = null
+    }
+
 
     //filtre les messages
     if (this.url.split('#')[1].startsWith('Msg')){
