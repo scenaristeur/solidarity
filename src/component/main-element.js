@@ -1,6 +1,7 @@
 import { LitElement, html } from 'lit-element';
 
-import './flow-element.js'
+//import './flow-element.js'
+import './chat-element.js'
 
 
 
@@ -19,9 +20,11 @@ class MainElement extends LitElement {
 
   render(){
     return html`
-    <b>${this.something}</b>
-    <flow-element name="Flow" webId="https://solidarity.inrupt.net/profile/card#me"></flow-element>
 
+    <chat-element name="Chat" chatOwner="https://solidarity.inrupt.net/profile/card#me"></chat-element>
+
+    <!--<flow-element name="Flow" webId="https://solidarity.inrupt.net/profile/card#me"></flow-element>
+-->
 
     `;
   }

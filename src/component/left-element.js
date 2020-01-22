@@ -6,6 +6,7 @@ import './chats-element.js'
 //import './profile-element.js'
 import './messages-element.js'
 
+
 class LeftElement extends LitElement {
 
   static get properties() {
@@ -22,6 +23,7 @@ class LeftElement extends LitElement {
   render(){
     return html`
     <b>${this.something}</b>
+
     <people-element name="People"></people-element>
     <rooms-element name="Rooms"></rooms-element>
     <chats-element name="Chats"  webId="https://solidarity.inrupt.net/profile/card#me"></chats-element>

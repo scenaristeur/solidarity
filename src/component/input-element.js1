@@ -40,6 +40,8 @@ class InputElement extends LitElement {
 
     <div class="form-group">
     <!--<label for="exampleFormControlTextarea1">Example textarea</label>-->
+
+
     ${this.replyTo.length > 0 ?
       html `<div class="input-group mb-3">
       <div class="input-group-prepend">
@@ -55,17 +57,13 @@ class InputElement extends LitElement {
       :html``
     }
 
-    <div class="input-group">
-    <div class="input-group-append">
-    <span class="input-group-text attach_btn"><i class="fas fa-paperclip"></i></span>
-    </div>
-    <textarea name="" class="form-control type_msg"  id="textarea" @keyup=${this.keyup} placeholder="Type your message..."></textarea>
-    <div class="input-group-append">
-    <span class="input-group-text send_btn"><i class="fas fa-location-arrow"></i></span>
-    </div>
-    </div>
+    <textarea class="form-control" id="textarea" @keyup=${this.keyup} placeholder="Say something" rows="2"></textarea>
+
+
 
     <div class="input-group-append">
+
+
     <div class="col-sm-7 col-md-7">
     <div class="input-group">
     <label class="form-check-label" for="radioBtn">Send as</label>

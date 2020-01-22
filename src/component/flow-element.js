@@ -13,7 +13,7 @@ class FlowElement extends LitElement {
     return {
       name: {type: String},
       something: {type: String},
-      person: {type: Object},
+      pod: {type: Object},
       documents:  {type: Object},
       classe: {type: String},
       discover: {type: Object},
@@ -27,7 +27,7 @@ class FlowElement extends LitElement {
   constructor() {
     super();
     this.something = "Flow Element"
-    this.person = {instances: []}
+    this.pod = {instances: []}
     this.documents = []
     this.classe = ""
     this.discover = {years:[], months:[], days: []}
@@ -46,7 +46,7 @@ class FlowElement extends LitElement {
     <!--    ${this.webId}-->
     </div>
     <!--
-    ${this.person.instances.map((i) => html`
+    ${this.pod.instances.map((i) => html`
     <div class = "row">
     <button type="button"
     class="btn btn-primary btn-sm instance"
@@ -55,8 +55,8 @@ class FlowElement extends LitElement {
     @click="${this.open}">${this.cutStorage(i.object)}</button>(${this.localName(i.classe)})
     </div>
     ` )}
-
     <br>-->
+
     ${this.discover.years.map((y) =>
       html `
       <button type="button"
@@ -92,7 +92,7 @@ class FlowElement extends LitElement {
             :html`
             <div id="scroller" @scroll="${this.onScroll}" style="height: 400px; overflow-y: scroll;">
             <ul class="list-group">
-            ${this.documents.map((d, index) => html`          
+            ${this.documents.map((d, index) => html`
               ${d.split('#')[1].startsWith('Msg') ?
               html `<chat-line-element url="${d}" name="ChatLine${index}">.</chat-line-element>`
               :html ``
@@ -327,8 +327,8 @@ class FlowElement extends LitElement {
                 case "discoverChanged":
                 app.discoverChanged(message.discover)
                 break;
-                /*  case "personChanged":
-                app.personChanged(message.person)
+                /*  case "podChanged":
+                app.podChanged(message.pod)
                 break;*/
                 default:
                 console.log("Unknown action ",message)
@@ -369,7 +369,7 @@ class FlowElement extends LitElement {
             p.inbox = `${inbox}`
             p.storage = `${storage}`
             //  p.publicIndex = `${publicTypeIndex}`
-            //  this.person = p
+            //  this.pod = p
             const publicTypeIndex = await data[this.webId].publicTypeIndex || "undefined"
             //  console.log(`${publicTypeIndex}`);
 
@@ -401,8 +401,8 @@ class FlowElement extends LitElement {
               console.log(e)
             }
             p.instances = instances
-            this.person = p
-            console.log(this.person)
+            this.pod = p
+            console.log(this.pod)
 
           }
         }

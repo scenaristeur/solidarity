@@ -2,9 +2,10 @@ import { LitElement, html } from 'lit-element';
 
 import './banner-element.js'
 import './left-element.js'
-import './right-element.js'
+//import './right-element.js'
 import './footer-element.js'
 import './main-element.js'
+import './contact-element.js'
 
 
 class AppElement extends LitElement {
@@ -31,17 +32,20 @@ class AppElement extends LitElement {
     <banner-element name="Banner"></banner-element>
     </div>
 
-    <div id="main" class="row">
-    <div id="main" class="col col-3">
-    <left-element name="Left"></left-element>
+    <div  class="row">
+    <div  class="col col-3">
+      <contact-element name="Contact"></contact-element>
     </div>
-    <div id="main" class="col col-md-6">
+    <div  class="col col-md-6">
 
     <main-element name="Main"></main-element>
     </div>
-    <div id="main" class="col">
+    <div  class="col  col-3">
 
-    <right-element name="Right"></right-element>
+<!-- left element passé à droite ???
+<right-element name="Right"></right-element> -->
+  <left-element name="Left"></left-element>
+
     </div>
     </div>
 
