@@ -256,7 +256,7 @@ class ContactsElement extends LitElement {
     <!--
     <div class="container-fluid h-100">
     <div class="row justify-content-center h-100">-->
-    <div class="col-12 chat"><div class="card mb-sm-3 mb-md-0 contacts_card">
+    <div class="col-12 chat"><div class="card contacts_card">
     <div class="card-header">
     <div class="input-group">
     <input type="text" placeholder="Search..." name="" class="form-control search">

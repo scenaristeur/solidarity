@@ -38,7 +38,7 @@ class NavbarElement extends LitElement {
 
     <!-- Black with white text -->
     <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-    <a class="navbar-brand" href="#">Logo</a>
+    <a class="navbar-brand" href="#">Solidarity</a>
 
     <!-- Toggler/collapsibe Button -->
     <button class="navbar-toggler p-0 border-0" type="button" @click="${this.toggleOffCanvas.bind(this)}">
@@ -61,9 +61,6 @@ class NavbarElement extends LitElement {
     <li class="nav-item">
     <a class="nav-link" href="#" @click="${this.clickmenu.bind(this)}">Link</a>
     </li>
-    <li>
-    <login-element name="Login"></login-element>
-    </li>
     </ul>
     </div>
     </nav>
@@ -77,10 +74,7 @@ class NavbarElement extends LitElement {
     <a class="nav-link" href="#">A propos</a>
     </li>
     <li class="nav-item">
-    <a class="nav-link" href="#">Services</a>
-    </li>
-    <li class="nav-item">
-    <a class="nav-link" href="#">Contact</a>
+    <login-element name="Login"></login-element>
     </li>
     </ul>
 

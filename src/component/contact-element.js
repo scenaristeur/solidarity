@@ -134,8 +134,8 @@ class ContactElement extends LitElement {
       background-color: rgba(0,0,0,0.3);
     }
     .user_img{
-      height: 70px;
-      width: 70px;
+      height: 50px;
+      width: 50px;
       border:1.5px solid #f5f6fa;
 
     }
@@ -147,8 +147,8 @@ class ContactElement extends LitElement {
     }
     .img_cont{
       position: relative;
-      height: 70px;
-      width: 70px;
+      height: 40px;
+      width: 40px;
     }
     .img_cont_msg{
       height: 40px;
@@ -156,12 +156,12 @@ class ContactElement extends LitElement {
     }
     .online_icon{
       position: absolute;
-      height: 15px;
-      width:15px;
+      height: 10px;
+      width:10px;
       background-color: #4cd137;
       border-radius: 50%;
-      bottom: 0.2em;
-      right: 0.4em;
+      bottom: -0.3em;
+      right: -0.4em;
       border:1.5px solid white;
     }
     .offline{
@@ -288,7 +288,7 @@ li{
           <!--<img src="${this.pod.img}" title="${this.webId}" alt="image">-->
 
           `
-          :html`<i class="fas fa-user-circle fa-4x" title="${this.webId}"></i>`
+          :html`<i class="fas fa-user-circle fa-3x" title="${this.webId}"></i>`
         }
           <span class="online_icon"></span>
         </div>

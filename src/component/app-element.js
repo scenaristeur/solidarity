@@ -6,6 +6,7 @@ import './left-element.js'
 import './footer-element.js'
 import './main-element.js'
 import './contacts-element.js'
+import './chats-element.js'
 
 
 class AppElement extends LitElement {
@@ -33,8 +34,9 @@ class AppElement extends LitElement {
     </div>
 
     <div  class="row">
-    <div  class="col col-3">
+    <div  class="col col-lg-3">
     <contacts-element name="Contacts"></contacts-element>
+    <chats-element name="Chats"  webId="https://solidarity.inrupt.net/profile/card#me"></chats-element>
     </div>
     <div  class="col col-md-6">
 
