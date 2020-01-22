@@ -109,6 +109,9 @@ class ChatsElement extends LitElement {
                   case "webIdChanged":
                   app.webIdChanged(message.webId)
                   break;
+                  case "podChanged":
+                  app.podChanged(message.pod)
+                  break;
                   default:
                   console.log("Unknown action ",message)
                 }
@@ -116,7 +119,13 @@ class ChatsElement extends LitElement {
             };
           }
 
-
+webIdChanged(webId){
+  this.webId = webId
+  console.log(webId)
+  if (this.webId != null){
+    this.init()
+  }
+}
 
           async    init(){
             var p = {}

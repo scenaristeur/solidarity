@@ -56,13 +56,13 @@ class InputElement extends LitElement {
     }
 
     <div class="input-group">
-    <div class="input-group-append">
+    <!--<div class="input-group-append">
     <span class="input-group-text attach_btn"><i class="fas fa-paperclip"></i></span>
-    </div>
+    </div>-->
     <textarea name="" class="form-control type_msg"  id="textarea" @keyup=${this.keyup} placeholder="Type your message..."></textarea>
-    <div class="input-group-append">
+    <!--<div class="input-group-append">
     <span class="input-group-text send_btn"><i class="fas fa-location-arrow"></i></span>
-    </div>
+    </div>-->
     </div>
 
     <div class="input-group-append">
@@ -70,13 +70,13 @@ class InputElement extends LitElement {
     <div class="input-group">
     <label class="form-check-label" for="radioBtn">Send as</label>
     <div id="radioBtn" class="btn-group">
-
     <a class="btn btn-primary notActive" value="InstantMessage" @click="${this.changePostType}">Chat</a>
     <a class="btn btn-primary notActive" value="WikiArticle" @click="${this.changePostType}">Topic</a>
     <a class="btn btn-primary notActive" value="Question" @click="${this.changePostType}">Question</a>
     <a class="btn btn-primary notActive" value="Poll" @click="${this.changePostType}">Poll</a>
     </div>
     </div>
+
     </div>
 
     <!--  <div class="form-check form-check-inline">

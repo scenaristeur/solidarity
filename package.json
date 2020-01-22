@@ -1,5 +1,5 @@
 {
-  "name": "socialid",
+  "name": "solidarity",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -10,15 +10,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/scenaristeur/socialid.git"
+    "url": "git+https://github.com/scenaristeur/solidarity.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/scenaristeur/socialid/issues"
+    "url": "https://github.com/scenaristeur/solidarity/issues"
   },
-  "homepage": "https://github.com/scenaristeur/socialid#readme",
+  "homepage": "https://github.com/scenaristeur/solidarity#readme",
   "devDependencies": {
     "webpack": "^4.41.5",
     "webpack-cli": "^3.3.10",

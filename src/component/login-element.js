@@ -41,6 +41,7 @@ class LoginElement extends LitElement {
         this.webId=null
         this.agent.send('Messages',  {action:"info", info:"Not logged"});
         this.agent.send('Friends',  {action:"webIdChanged", webId: this.webId});
+            this.agent.send('Contacts',  {action:"webIdChanged", webId: this.webId});
       //  this.agent.send('Chat',  {action:"webIdChanged", webId: this.webId});
 
       //  this.agent.send('Profile',  {action:"webIdChanged", webId: this.webId});
@@ -49,6 +50,7 @@ class LoginElement extends LitElement {
         this.webId = session.webId
         this.agent.send('Messages',  {action:"info", info:"Login "+this.webId});
         this.agent.send('Friends',  {action:"webIdChanged", webId: this.webId});
+        this.agent.send('Contacts',  {action:"webIdChanged", webId: this.webId});
       //  this.agent.send('Chat',  {action:"webIdChanged", webId: this.webId});
         //this.agent.send('Profile',  {action:"webIdChanged", webId: this.webId});
       }
