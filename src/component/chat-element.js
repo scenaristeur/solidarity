@@ -56,7 +56,7 @@ class ChatElement extends LitElement {
       margin-bottom: auto;
     }
     .card{
-      height: 80vh;
+      height: 90vh;
       border-radius: 15px !important;
       background-color: rgba(0,0,0,0.3) !important;
     }
@@ -275,10 +275,7 @@ class ChatElement extends LitElement {
     <div class="row justify-content-center h-100">
     -->
     <div class="col-12 chat">
-    <div class="col alert alert-primary" role="alert">
-    ${this.info}
-    <!--    ${this.chatOwner}-->
-    </div>
+
     <div class="card">
     <div class="card-header msg_head">
     <div class="d-flex bd-highlight">
@@ -294,7 +291,10 @@ class ChatElement extends LitElement {
     <span><i class="fas fa-video"></i></span>
     <span><i class="fas fa-phone"></i></span>
     </div>-->
-
+    <div class="col alert alert-primary" role="alert">
+    ${this.info}
+    <!--    ${this.chatOwner}-->
+    </div>
 
 
     </div>
@@ -411,7 +411,7 @@ class ChatElement extends LitElement {
         case "http://www.w3.org/ns/pim/meeting#LongChat":
         app.socket = null
         await  this.openLongChat()
-        //    app.subscribe()
+            app.subscribe()
         break;
         case "http://schema.org/TextDigitalDocument":
         case "http://schema.org/MediaObject":

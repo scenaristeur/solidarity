@@ -34,15 +34,20 @@ class AppElement extends LitElement {
     </div>
 
     <div  class="row">
-    <div  class="col col-lg-3">
-    <contacts-element name="Contacts"></contacts-element>
+    <div class="col">
+    <div>
     <chats-element name="Chats"  webId="https://solidarity.inrupt.net/profile/card#me"></chats-element>
+    </div>
+
+    <contacts-element name="Contacts"></contacts-element>
+
+
     </div>
     <div  class="col col-md-6">
 
     <main-element name="Main"></main-element>
     </div>
-    <div  class="col  col-3">
+    <div  class="col  col-md-3">
 
     <!-- left element passé à droite ???
     <right-element name="Right"></right-element> -->

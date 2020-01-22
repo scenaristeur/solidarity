@@ -18,7 +18,7 @@ class ContactElement extends LitElement {
   constructor() {
     super();
     this.webId = null
-    this.pod = {img:""}
+    this.pod = {img:"", instances: []}
   }
 
   static get styles() {
@@ -285,8 +285,6 @@ li{
           html`
           <!-- REduce the profile image https://images.weserv.nl/docs/-->
           <img class="rounded-circle user_img" src="//images.weserv.nl/?url=${this.pod.img}&w=70&h=70" title="${this.webId}" alt="Can not access image profile">
-          <!--<img src="${this.pod.img}" title="${this.webId}" alt="image">-->
-
           `
           :html`<i class="fas fa-user-circle fa-3x" title="${this.webId}"></i>`
         }
@@ -294,7 +292,7 @@ li{
         </div>
         <div class="user_info">
           <span>${this.pod.name}</span>
-          <p>online</p>
+          <p>online, ${this.pod.instances.length} instances</p>
         </div>
       </div>
     </li>
@@ -319,7 +317,7 @@ li{
       p.inbox = `${inbox}`
       p.storage = `${storage}`
       //  p.publicIndex = `${publicTypeIndex}`
-      this.pod = p
+
       const publicTypeIndex = await data[this.webId].publicTypeIndex || "undefined"
       //  console.log(`${publicTypeIndex}`);
 
@@ -358,7 +356,6 @@ li{
 
 
     this.agent = new HelloAgent(this.name);
-    console.log(this.agent)
     this.agent.receive = function(from, message) {
 
       if (message.hasOwnProperty("action")){

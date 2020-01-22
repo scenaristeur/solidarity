@@ -59,7 +59,7 @@ class InputElement extends LitElement {
     <!--<div class="input-group-append">
     <span class="input-group-text attach_btn"><i class="fas fa-paperclip"></i></span>
     </div>-->
-    <textarea name="" class="form-control type_msg"  id="textarea" @keyup=${this.keyup} placeholder="Type your message..."></textarea>
+    <textarea name="" class="form-control type_msg"  id="textarea" @keydown=${this.keydown} placeholder="Type your message..."></textarea>
     <!--<div class="input-group-append">
     <span class="input-group-text send_btn"><i class="fas fa-location-arrow"></i></span>
     </div>-->
@@ -67,7 +67,7 @@ class InputElement extends LitElement {
 
     <div class="input-group-append">
     <div class="col-sm-7 col-md-7">
-    <div class="input-group">
+    <div class="input-group ">
     <label class="form-check-label" for="radioBtn">Send as</label>
     <div id="radioBtn" class="btn-group">
     <a class="btn btn-primary notActive" value="InstantMessage" @click="${this.changePostType}">Chat</a>
@@ -151,51 +151,51 @@ class InputElement extends LitElement {
     try {
       var webid = await data.user
       console.log(`${webid}`)
+
+
+      var content = this.shadowRoot.getElementById("textarea").value.trim()
+      if (content.length > 0){
+        var dateObj = new Date();
+        var messageId = "#Msg"+dateObj.getTime()
+        var month = ("0" + dateObj.getUTCMonth() + 1).slice(-2); //months from 1-12
+        var day = ("0" + dateObj.getUTCDate()).slice(-2);
+        var year = dateObj.getUTCFullYear();
+        var path = this.discover.folder+[year, month, day, ""].join("/")
+        var url = path+"chat.ttl"+messageId
+        var date = dateObj.toISOString()
+        var index = this.discover.folder+"index.ttl#this"
+        await data[url].dct$created.add(date)
+        await data[url].sioc$content.add(content)
+        await data[url].foaf$maker.add(namedNode(`${webid}`))
+        await data.from(url)[index]['http://www.w3.org/2005/01/wf/flow#message'].add(namedNode(url))
+        //  var postType = this.shadowRoot.querySelector('input[name="inlineRadioOptions"]:checked').value
+        if (this.postType != "InstantMessage"){
+          await data[url].rdfs$type.add(namedNode('http://rdfs.org/sioc/types#'+this.postType))
+        }
+
+        if (this.replyTo.length >0){
+          await data[url].rdfs$type.add(namedNode('https://schema.org/Comment'))
+          await data[url].schema$parentItem.add(namedNode(this.replyTo)) // schema$parentItem plante le chat solid
+          await data[this.replyTo].schema$comment.add(namedNode(url))
+          this.replyTo = ""
+        }
+
+        this.shadowRoot.getElementById("textarea").value = ""
+        //  this.shadowRoot.getElementById("inlineRadio1").checked = true
+
+      }
+      //reinit buttons
+      this.postType = "InstantMessage"
+      var buttons = this.shadowRoot.querySelectorAll("#radioBtn a")
+      buttons.forEach(function(b){
+        console.log(b)
+        b.classList.remove("active")
+        b.classList.add("notActive")
+      })
+
     }catch(e){
       alert(e)
     }
-
-    var content = this.shadowRoot.getElementById("textarea").value.trim()
-    if (content.length > 0){
-      var dateObj = new Date();
-      var messageId = "#Msg"+dateObj.getTime()
-      var month = ("0" + dateObj.getUTCMonth() + 1).slice(-2); //months from 1-12
-      var day = ("0" + dateObj.getUTCDate()).slice(-2);
-      var year = dateObj.getUTCFullYear();
-      var path = this.discover.folder+[year, month, day, ""].join("/")
-      var url = path+"chat.ttl"+messageId
-      var date = dateObj.toISOString()
-      var index = this.discover.folder+"index.ttl#this"
-      await data[url].dct$created.add(date)
-      await data[url].sioc$content.add(content)
-      await data[url].foaf$maker.add(namedNode(`${webid}`))
-      await data.from(url)[index]['http://www.w3.org/2005/01/wf/flow#message'].add(namedNode(url))
-      //  var postType = this.shadowRoot.querySelector('input[name="inlineRadioOptions"]:checked').value
-      if (this.postType != "InstantMessage"){
-        await data[url].rdfs$type.add(namedNode('http://rdfs.org/sioc/types#'+this.postType))
-      }
-
-      if (this.replyTo.length >0){
-        await data[url].rdfs$type.add(namedNode('https://schema.org/Comment'))
-        await data[url].schema$parentItem.add(namedNode(this.replyTo)) // schema$parentItem plante le chat solid
-        await data[this.replyTo].schema$comment.add(namedNode(url))
-        this.replyTo = ""
-      }
-
-      this.shadowRoot.getElementById("textarea").value = ""
-      //  this.shadowRoot.getElementById("inlineRadio1").checked = true
-
-    }
-    //reinit buttons
-    this.postType = "InstantMessage"
-    var buttons = this.shadowRoot.querySelectorAll("#radioBtn a")
-    buttons.forEach(function(b){
-      console.log(b)
-      b.classList.remove("active")
-      b.classList.add("notActive")
-    })
-
-
   }
 
 
@@ -203,7 +203,7 @@ class InputElement extends LitElement {
 
 
 
-  keyup(e){
+  keydown(e){
     if (e.keyCode === 13) {
       e.preventDefault();
       this.send()

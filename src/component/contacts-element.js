@@ -256,13 +256,20 @@ class ContactsElement extends LitElement {
     <!--
     <div class="container-fluid h-100">
     <div class="row justify-content-center h-100">-->
-    <div class="col-12 chat"><div class="card contacts_card">
+    <div id="contacts" class="col-12 chat d-none d-lg-block">
+    <div class="card contacts_card">
     <div class="card-header">
     <div class="input-group">
     <input type="text" placeholder="Search..." name="" class="form-control search">
     <div class="input-group-prepend">
     <span class="input-group-text search_btn"><i class="fas fa-search"></i></span>
     </div>
+
+    <button class="btn btn-primary btn-sm d-lg-none" @click="${this.close}">
+    <i class="fas fa-window-close " ></i></button>
+
+
+
     </div>
     </div>
     <div class="card-body contacts_body">
@@ -273,97 +280,92 @@ class ContactsElement extends LitElement {
       <ul class="contacts">
       ${this.friendsWebIds.map((fwi,index) => html`
         <contact-element webId='${fwi}' name="Contact${index}"></contact-element>
+        `)}
+
+        <!--
+        <li class="active">
+        <div class="d-flex bd-highlight">
+        <div class="img_cont">
+        <img src="" class="rounded-circle user_img">
+        <span class="online_icon"></span>
+        </div>
+        <div class="user_info">
+        <span>Khalid</span>
+        <p>Kalid is online</p>
+        </div>
+        </div>
+        </li>
+        <li>
+        <div class="d-flex bd-highlight">
+        <div class="img_cont">
+        <img src="" class="rounded-circle user_img">
+        <span class="online_icon offline"></span>
+        </div>
+        <div class="user_info">
+        <span>Taherah Big</span>
+        <p>Taherah left 7 mins ago</p>
+        </div>
+        </div>
+        </li>
+        -->
+
+        </ul>
         `
-      )}
-
-      <!--
-      <li class="active">
-      <div class="d-flex bd-highlight">
-      <div class="img_cont">
-      <img src="" class="rounded-circle user_img">
-      <span class="online_icon"></span>
-      </div>
-      <div class="user_info">
-      <span>Khalid</span>
-      <p>Kalid is online</p>
-      </div>
-      </div>
-      </li>
-      <li>
-      <div class="d-flex bd-highlight">
-      <div class="img_cont">
-      <img src="" class="rounded-circle user_img">
-      <span class="online_icon offline"></span>
-      </div>
-      <div class="user_info">
-      <span>Taherah Big</span>
-      <p>Taherah left 7 mins ago</p>
-      </div>
-      </div>
-      </li>
-      -->
-
-      </ul>
-      `
-      :html` You must login to see your friends
-      `}
+        :html`You must login to see your friends`}
 
 
 
-      </div>
-      <div class="card-footer"></div>
-      </div></div>
-      <!--
-      </div>
-      </div>-->
+        </div>
+        <div class="card-footer"></div>
+        </div></div>
 
+        <!--
+        </div>
+        </div>-->
 
-
-
-
-
-
-
-
-
-
-
-      `;
-    }
-
-    firstUpdated(){
-      var app = this;
-      this.agent = new HelloAgent(this.name);
-      console.log(this.agent)
-      this.agent.receive = function(from, message) {
-        //  console.log("messah",message)
-        if (message.hasOwnProperty("action")){
-          //  console.log(message)
-          switch(message.action) {
-            case "webIdChanged":
-            app.webIdChanged(message.webId)
-            break;
-            default:
-            console.log("Unknown action ",message)
-          }
-        }
-      };
-    }
-
-    async webIdChanged(webId){
-      this.webId = webId
-      console.log(this.webId)
-      if (webId != null){
-        this.friendsWebIds = []
-        this.friendsWebIds.push(await data.user)
-        for await (const friend of data.user.friends){
-          this.friendsWebIds = [... this.friendsWebIds, friend]
-        }
-      }else{
-        this.friendsWebIds = []
+        `;
       }
+
+      firstUpdated(){
+        var app = this;
+        this.agent = new HelloAgent(this.name);
+        console.log(this.agent)
+        this.agent.receive = function(from, message) {
+          //  console.log("messah",message)
+          if (message.hasOwnProperty("action")){
+            //  console.log(message)
+            switch(message.action) {
+              case "webIdChanged":
+              app.webIdChanged(message.webId)
+              break;
+              case "openContacts":
+              console.log(app.shadowRoot.getElementById("contacts"))
+              app.shadowRoot.getElementById("contacts").classList.remove("d-none")
+              break;
+              default:
+              console.log("Unknown action ",message)
+            }
+          }
+        };
+      }
+
+      close(){
+        this.shadowRoot.getElementById("contacts").classList.add("d-none")
+      }
+      async webIdChanged(webId){
+        this.webId = webId
+        console.log(this.webId)
+        if (webId != null){
+          this.friendsWebIds = []
+          this.friendsWebIds.push(await data.user)
+          for await (const friend of data.user.friends){
+            this.friendsWebIds = [... this.friendsWebIds, friend]
+          }
+        }else{
+          this.friendsWebIds = []
+        }
+      }
+
     }
 
-  }
-
-  customElements.define('contacts-element', ContactsElement);
+    customElements.define('contacts-element', ContactsElement);

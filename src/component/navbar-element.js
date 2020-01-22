@@ -1,6 +1,6 @@
 //https://www.w3schools.com/bootstrap4/bootstrap_navbar.asp
 import { LitElement, html, css} from 'lit-element';
-
+import { HelloAgent } from '../agents/hello-agent.js';
 import './login-element.js'
 
 class NavbarElement extends LitElement {
@@ -39,7 +39,7 @@ class NavbarElement extends LitElement {
     <!-- Black with white text -->
     <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
     <a class="navbar-brand" href="#">Solidarity</a>
-
+  <login-element name="Login"></login-element>
     <!-- Toggler/collapsibe Button -->
     <button class="navbar-toggler p-0 border-0" type="button" @click="${this.toggleOffCanvas.bind(this)}">
     <span class="navbar-toggler-icon"></span>
@@ -52,8 +52,8 @@ class NavbarElement extends LitElement {
     <!-- Navbar links -->
     <div class="navbar-collapse offcanvas-collapse" id="collapsibleNavbar">
     <ul class="navbar-nav">
-    <li class="nav-item">
-    <a class="nav-link" href="#" @click="${this.clickmenu.bind(this)}">Link</a>
+    <li class="nav-item  d-lg-none">
+    <a class="nav-link" href="#" @click="${this.clickmenu.bind(this)}">Friends</a>
     </li>
     <li class="nav-item">
     <a class="nav-link" href="#" @click="${this.clickmenu.bind(this)}">Link</a>
@@ -65,7 +65,7 @@ class NavbarElement extends LitElement {
     </div>
     </nav>
 
-
+<!--
     <ul class="nav">
     <li class="nav-item">
     <a class="nav-link active" href="#">Accueil</a>
@@ -73,21 +73,39 @@ class NavbarElement extends LitElement {
     <li class="nav-item">
     <a class="nav-link" href="#">A propos</a>
     </li>
-    <li class="nav-item">
-    <login-element name="Login"></login-element>
-    </li>
-    </ul>
+
+    </ul>-->
 
 
     `;
   }
   clickmenu(e){
     console.log(e)
+    this.toggleOffCanvas(e)
+    this.agent.send("Contacts", {action: "openContacts"})
   }
   toggleOffCanvas(e){
     //  console.log(e) //
     //  console.log(this.shadowRoot.getElementById("navbarsExampleDefault").className)
     this.shadowRoot.getElementById("collapsibleNavbar").classList.toggle("open");
+  }
+
+  firstUpdated(){
+    var app = this;
+    this.agent = new HelloAgent(this.name);
+    this.agent.receive = function(from, message) {
+    //  console.log("messah",message)
+      if (message.hasOwnProperty("action")){
+      //  console.log(message)
+        switch(message.action) {
+          case "webIdChanged":
+          app.webIdChanged(message.webId)
+          break;
+          default:
+          console.log("Unknown action ",message)
+        }
+      }
+    };
   }
 }
 
