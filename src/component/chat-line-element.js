@@ -452,7 +452,7 @@ class ChatLineElement extends LitElement {
           if (this.url.split('#')[1].startsWith('Msg')){
             for await (const property of data[this.url].properties)
             {
-              console.log("Prop",`${property}`)
+            //  console.log("Prop",`${property}`)
               switch(`${property}`) {
                 case "http://xmlns.com/foaf/0.1/maker":
                 var maker = await data[this.url][`${property}`]
@@ -473,7 +473,7 @@ class ChatLineElement extends LitElement {
                 case "http://www.w3.org/2000/01/rdf-schema#type":
                 for await (const type of data[this.url][`${property}`])
                 {
-                  console.log("Type",`${type}`)
+                //  console.log("Type",`${type}`)
                   app.types = [... app.types, `${type}`]
                 }
                 break;
@@ -485,7 +485,7 @@ class ChatLineElement extends LitElement {
                 case "http://schema.org/comment":
                 for await (const comment of data[this.url][`${property}`])
                 {
-                  console.log("Comment",`${comment}`)
+                //  console.log("Comment",`${comment}`)
                   app.comments = [... app.comments, `${comment}`]
                 }
                 break;
