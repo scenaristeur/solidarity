@@ -1,7 +1,7 @@
 import { LitElement, html } from 'lit-element';
 
 import './banner-element.js'
-import './left-element.js'
+import './right-element.js'
 //import './right-element.js'
 import './footer-element.js'
 import './main-element.js'
@@ -51,7 +51,7 @@ class AppElement extends LitElement {
 
     <!-- left element passé à droite ???
     <right-element name="Right"></right-element> -->
-    <left-element name="Left"></left-element>
+    <right-element name="Right"></right-element>
 
     </div>
     </div>

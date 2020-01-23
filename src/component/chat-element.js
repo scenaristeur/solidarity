@@ -1,5 +1,5 @@
 import { LitElement, html } from 'lit-element';
-
+//https://bootsnipp.com/tags/chat/4
 import { HelloAgent } from '../agents/hello-agent.js';
 import data from "@solid/query-ldflex";
 
@@ -43,7 +43,7 @@ class ChatElement extends LitElement {
     <link href="css/fontawesome/css/all.css" rel="stylesheet">
 
     <style>
-    body,html{
+    #chat{
       height: 100%;
       margin: 0;
       background: #7F7FD5;
@@ -67,7 +67,6 @@ class ChatElement extends LitElement {
     }
     .msg_card_body{
       overflow-y: auto;
-      background-color: #dddde1
     }
     .card-header{
       border-radius: 15px 15px 0 0 !important;
@@ -274,7 +273,7 @@ class ChatElement extends LitElement {
     <div class="container-fluid h-100">
     <div class="row justify-content-center h-100">
     -->
-    <div class="col-12 chat">
+    <div id="chat" class="col-12 chat">
 
     <div class="card">
     <div class="card-header msg_head">

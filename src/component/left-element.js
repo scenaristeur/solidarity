@@ -1,10 +1,9 @@
 import { LitElement, html } from 'lit-element';
 
-import './people-element.js'
-//import './rooms-element.js'
-//import './chats-element.js'
-//import './profile-element.js'
-import './messages-element.js'
+import './news-element.js'
+import './events-element.js'
+import './announcements-element.js'
+import './activity-element.js'
 //import './friends-element.js'
 
 
@@ -18,17 +17,21 @@ class LeftElement extends LitElement {
 
   constructor() {
     super();
+    this.something = "Left Element"
   }
 
   render(){
     return html`
-  <!--  <friends-element name="Friends"></friends-element>-->
-    <!--    <people-element name="People"></people-element>
-    <rooms-element name="Rooms"></rooms-element>-->
-  <!--  <chats-element name="Chats"  webId="https://solidarity.inrupt.net/profile/card#me"></chats-element>-->
-    <!--<profile-element name="Profile"></profile-element>-->
-    <messages-element name="Messages"></messages-element>
+    <b>${this.something}</b>
+<!--    <friends-element name="Friends"></friends-element>-->
+    <news-element name="News"></news-element>
+    <events-element name="Events"></events-element>
+    <announcements-element name="Announcements"></announcements-element>
+    <activity-element name="Activity"></activity-element>
+
     `;
   }
+
 }
+
 customElements.define('left-element', LeftElement);

@@ -37,8 +37,8 @@ class LoginElement extends LitElement {
     `;
   }
 
-   firstUpdated(){
-     var app = this
+  firstUpdated(){
+    var app = this
     this.agent = new HelloAgent(this.name);
     auth.trackSession(async function(session) {
       if (!session){
@@ -46,6 +46,7 @@ class LoginElement extends LitElement {
         app.agent.send('Messages',  {action:"info", info:"Not logged"});
         app.agent.send('Friends',  {action:"webIdChanged", webId: app.webId});
         app.agent.send('Contacts',  {action:"webIdChanged", webId: app.webId});
+        app.agent.send('Inbox',  {action:"webIdChanged", webId: app.webId});
         app.fullname = ""
         //  this.agent.send('Chat',  {action:"webIdChanged", webId: this.webId});
 
@@ -56,6 +57,7 @@ class LoginElement extends LitElement {
         app.agent.send('Messages',  {action:"info", info:"Login "+app.webId});
         app.agent.send('Friends',  {action:"webIdChanged", webId: app.webId});
         app.agent.send('Contacts',  {action:"webIdChanged", webId: app.webId});
+        app.agent.send('Inbox',  {action:"webIdChanged", webId: app.webId});
         app.fullname = await data[app.webId].vcard$fn || app.webId.split("/")[2].split('.')[0];
         //  this.agent.send('Chat',  {action:"webIdChanged", webId: this.webId});
         //this.agent.send('Profile',  {action:"webIdChanged", webId: this.webId});

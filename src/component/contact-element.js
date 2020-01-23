@@ -268,36 +268,47 @@ class ContactElement extends LitElement {
       }
     }
 
-/*adapt revoir le css au dessus */
-li{
-  width: 100% !important;
-  padding: 5px 10px;
-  margin-bottom: 15px !important;
-}
+    /*adapt revoir le css au dessus */
+    li{
+      width: 100% !important;
+      padding: 5px 10px;
+      margin-bottom: 15px !important;
+    }
 
     </style>
 
     <li ><!--class="active"-->
-      <div class="d-flex bd-highlight" @click="${this.details.bind(this)}">
-        <div class="img_cont">
+    <div class="d-flex bd-highlight" >
+    <div class="img_cont" @click="${this.details.bind(this)}">
 
-        ${this.pod.img.length > 0 ?
-          html`
-          <!-- REduce the profile image https://images.weserv.nl/docs/-->
-          <img class="rounded-circle user_img" src="//images.weserv.nl/?url=${this.pod.img}&w=70&h=70" title="${this.webId}" alt="Can not access image profile">
-          `
-          :html`<i class="fas fa-user-circle fa-3x" title="${this.webId}"></i>`
-        }
-          <span class="online_icon"></span>
-        </div>
-        <div class="user_info">
-          <span>${this.pod.name}</span>
-          <p>online, ${this.pod.instances.length} instances</p>
-        </div>
-      </div>
+    ${this.pod.img.length > 0 ?
+      html`
+      <!-- REduce the profile image https://images.weserv.nl/docs/-->
+      <img class="rounded-circle user_img" src="//images.weserv.nl/?url=${this.pod.img}&w=70&h=70" title="${this.webId}" alt="Can not access image profile">
+      `
+      :html`<i class="fas fa-user-circle fa-3x" title="${this.webId}"></i>`
+    }
+    <span class="online_icon"></span>
+    </div>
+    <div class="user_info">
+    <span @click="${this.details.bind(this)}">${this.pod.name}</span>
+    <p>online</p>
+    <button @click="${this.details.bind(this)}">  ${this.pod.instances.length} instances </button>
+    <button @click="${this.sendMail}">  <i class="far fa-envelope"></i></button>
+    </div>
+    <div>
+
+    </div>
+    </div>
     </li>
 
     `;
+  }
+
+
+
+  sendMail(){
+    this.agent.send("Inbox", {action:"mailTo", pod: this.pod})
   }
 
   async firstUpdated(){
@@ -356,6 +367,7 @@ li{
 
 
     this.agent = new HelloAgent(this.name);
+  //  console.log(this.agent)
     this.agent.receive = function(from, message) {
 
       if (message.hasOwnProperty("action")){
@@ -375,7 +387,7 @@ li{
     console.log( this.pod.webId, this.pod.instances)
     //  console.log(await data[this.webId])
     this.agent.send("Messages", {action:"info", info: this.pod})
-//    this.agent.send("Flow", {action:"podChanged", pod: this.pod})
+    //    this.agent.send("Flow", {action:"podChanged", pod: this.pod})
     this.agent.send("Chats", {action:"webIdChanged", webId: this.pod.webId})
   }
 
