@@ -11,7 +11,8 @@ class InputElement extends LitElement {
       something: {type: String},
       discover: {type: Object},
       postType: {type: String},
-      replyTo: {type: String}
+      replyTo: {type: String},
+      notifDestInbox: {type: String}
     };
   }
 
@@ -21,6 +22,7 @@ class InputElement extends LitElement {
     this.discover = {}
     this.postType = "InstantMessage"
     this.replyTo = ""
+    this.notifDestInbox = ""
   }
 
   render(){
@@ -107,6 +109,7 @@ class InputElement extends LitElement {
     this.agent = new HelloAgent(this.name);
     this.agent.receive = function(from, message) {
       if (message.hasOwnProperty("action")){
+        console.log(message)
         switch(message.action) {
           case "reply":
           app.reply(message.replyTo)
@@ -120,13 +123,17 @@ class InputElement extends LitElement {
   }
 
 
-  reply(replyTo){
+  async reply(replyTo){
     console.log(replyTo)
-    this.replyTo = replyTo
+    this.replyTo = replyTo.url
+    var notifDestInbox = await data[replyTo.maker].inbox
+    this.notifDestInbox = `${notifDestInbox}`
+    console.log(this.notifDestInbox)
   }
 
   clearReplyTo(){
     this.replyTo = ""
+    this.notifDestInbox =""
   }
 
   changePostType(e){
@@ -151,7 +158,7 @@ class InputElement extends LitElement {
     try {
       var webid = await data.user
       console.log(`${webid}`)
-
+      this.webId = `${webid}`
 
       var content = this.shadowRoot.getElementById("textarea").value.trim()
       if (content.length > 0){
@@ -177,7 +184,7 @@ class InputElement extends LitElement {
           await data[url].rdfs$type.add(namedNode('https://schema.org/Comment'))
           await data[url].schema$parentItem.add(namedNode(this.replyTo)) // schema$parentItem plante le chat solid
           await data[this.replyTo].schema$comment.add(namedNode(url))
-          this.replyTo = ""
+
         }
 
         this.shadowRoot.getElementById("textarea").value = ""
@@ -193,13 +200,52 @@ class InputElement extends LitElement {
         b.classList.add("notActive")
       })
 
+      try{
+        // post notification
+        var message = {}
+        message.recipient =  this.notifDestInbox
+        message.title = "Solidarity notification reply"
+        message.content = "A new reply has been posted on Solidarity about your post ' "+this.replyTo+" '. \n You can find it here : ' "+url+"."
+
+        if( message.recipient.length > 0){
+          message.date = new Date(Date.now())
+          message.id = message.date.getTime()
+          message.sender = this.webId
+          message.url = message.recipient+message.id+".ttl"
+          await this.buildMessage(message)
+          this.replyTo = ""
+        }else{
+          alert("Recipient  empty")
+        }
+
+
+
+      }catch(e){
+        alert(e)
+      }
+
+
     }catch(e){
       alert(e)
     }
   }
 
 
-
+  async   buildMessage(message){
+    var mess = message.url
+    console.log(message)
+    try{
+      await data[mess].schema$text.add(message.content);
+      await data[mess].rdfs$label.add(message.title)
+      await data[mess].schema$dateSent.add(message.date.toISOString())
+      await data[mess].rdf$type.add(namedNode('https://schema.org/Message'))
+      await data[mess].schema$sender.add(namedNode(this.webId))
+      var notif = message.recipient+"log.ttl#"+message.id
+      await data[notif].schema$message.add(namedNode(mess))
+    }catch(e){
+      alert(e)
+    }
+  }
 
 
 

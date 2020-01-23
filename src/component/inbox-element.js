@@ -3,6 +3,7 @@ import { LitElement, html } from 'lit-element';
 import { HelloAgent } from '../agents/hello-agent.js';
 import data from "@solid/query-ldflex";
 import { namedNode } from '@rdfjs/data-model';
+import auth from 'solid-auth-client';
 
 
 
@@ -47,6 +48,7 @@ class InboxElement extends LitElement {
     <th><div>Title</div></th>
     <th><div>Content</div></th>
     <th><div>Date</div></th>
+    <th><div>Action</div></th>
     </tr>
 
     ${messages.reverse().map((m) => html`${this.templateMessageEntete(m)}`)}
@@ -106,9 +108,9 @@ class InboxElement extends LitElement {
     :html`
     <h6>${this.webId}</h6>
 
-<!--
+    <!--
     <button type="button" class="btn btn-primary btn-sm" @click="${this.toggleWrite}"><i class="fa fa-pen"></i></button>
--->
+    -->
 
     <button @click="${this.notifyMe}">Notify me!</button>
 
@@ -134,7 +136,7 @@ class InboxElement extends LitElement {
 }
 
 toggleWrite(){
-    this.agent.send("Dialog", {action : "toggle", params: "toggleWrite"})
+  this.agent.send("Dialog", {action : "toggle", params: "toggleWrite"})
 }
 
 
@@ -193,7 +195,7 @@ subscribe(websocket){
   app.socket.onmessage = async function(msg) {
     if (msg.data && msg.data.slice(0, 3) === 'pub') {
       await data.clearCache()
-      app.notification("nouveau message Socialid")
+      app.notification("Solidarity message")
       app.readInbox()
     }
   };
@@ -236,6 +238,10 @@ templateMessageEntete(m){
   <td><a href="${m.url}" target="_blank">${m.label}</a></td>
   <td>${m.text}</td>
   <td>${m.date}</td>
+  <td>
+  <button class="btn btn-primary btn-sm"  url="${m.url}" @click=${this.delete}>
+  <i url="${m.url}" class="far fa-trash-alt"></i></button>
+  </td>
   </tr>
   `
 }
@@ -244,6 +250,48 @@ write(e){
   this.recipient = e.target.getAttribute("inbox")
   this.shadowRoot.getElementById("writePan").style.display = "block"
   this.shadowRoot.getElementById("to").value=this.recipient
+}
+
+async delete(e){
+  var url = e.target.getAttribute("url")
+  console.log("delete",url)
+
+  //https://github.com/inrupt/generator-solid-react/blob/1902a0483754f6b2df4d3eb040c9991cc2c92663/generators/app/templates/src/utils/ldflex-helper.js#L20
+  try {
+    try{
+      var id = url.split("/").pop().split('.')[0]
+      console.log(this.log, id)
+      var path = this.log+"#"+id
+      await data.from(this.log)[path]['schema:message'].delete(namedNode(url))
+    }catch (e) {
+      throw e;
+    }
+    return await auth.fetch(url, { method: 'DELETE' });
+  } catch (e) {
+    throw e;
+  }
+
+
+
+
+  /**
+  * Deletes a game from a contains predicate in a specific url
+  * @param {String} gameUrl Game to delete
+  * @param {String} documentUrl URL of the document with a contains predicate
+  */
+  //  const deleteGameFromContains = async (gameUrl, documentUrl) => {
+  //    await ldflex[documentUrl]['schema:hasPart'].delete(namedNode(gameUrl));
+  //  };
+
+
+  // https://github.com/inrupt/generator-solid-react/blob/1902a0483754f6b2df4d3eb040c9991cc2c92663/generators/app/templates/src/containers/TicTacToe/GameListPage/children/List/list.component.js#L106
+  //  await data[documentUrl]['schema:hasPart'].delete(namedNode(gameUrl));
+  //https://github.com/inrupt/generator-solid-react/blob/1902a0483754f6b2df4d3eb040c9991cc2c92663/generators/app/templates/src/containers/TicTacToe/GameListPage/children/List/list.component.js#L161
+  //else await ldflexHelper.deleteFile(url);
+  //console.log(  await data.from(url)[url]['http://schema.org/sender'].delete().pathExpression); //.pathExpression
+  //  <https://spoggy.solid.community/inbox/1579788273324.ttl> <http://schema.org/sender> <https://spoggy.solid.community/profile/card#me>.
+
+
 }
 
 
@@ -281,6 +329,8 @@ async readInbox(){
       messages = [... messages, m]
       this.messages = messages
       this.requestUpdate()
+    }else{
+      this.log = `${url}`
     }
   }
 

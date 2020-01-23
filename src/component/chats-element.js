@@ -37,7 +37,7 @@ class ChatsElement extends LitElement {
     ${this.pod.instances.map((i) => html`
       <li><div class = "row">
       <button type="button"
-      class="btn btn-primary btn-sm instance"
+      class="btn btn-primary btn-lg instance"
       url="${i.object}"
       classe = "${i.classe}"
       @click="${this.open}">${this.cutStorage(i.object)}</button>(${this.localName(i.classe)})

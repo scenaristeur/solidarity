@@ -352,7 +352,7 @@ class ChatElement extends LitElement {
       <!--   <ul class="list-group">-->
       ${this.documents.map((d, index) => html`
         ${d.split('#')[1].startsWith('Msg') ?
-        html `<chat-line-element url="${d}" name="ChatLine${index}" chatOwner="${this.chatOwner}">.</chat-line-element>`
+        html `<chat-line-element url="${d}"  chatOwner="${this.chatOwner}">.</chat-line-element>`
         :html ``
       }
       `)}

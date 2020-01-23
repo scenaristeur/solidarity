@@ -431,8 +431,8 @@ class ChatLineElement extends LitElement {
         }
 
         reply(e){
-          console.log(this.url)
-          this.agent.send("Input", {action: "reply", replyTo: this.url})
+          console.log(this.url, this.agent, this.maker)
+          this.agent.send("Input", {action: "reply", replyTo: {url: this.url, maker: this.maker}})
         }
 
 

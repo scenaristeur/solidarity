@@ -183,10 +183,6 @@ class PostDialogElement extends LitElement {
       message.id = message.date.getTime()
       message.sender = this.webId
       message.url = message.recipient+message.id+".ttl"
-
-      //  this.shadowRoot.getElementById("writePan").style.display = "none"
-
-
       this.buildMessage(message)
     }else{
       alert("Recipient or title or content is empty")
