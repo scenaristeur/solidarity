@@ -308,7 +308,8 @@ class ContactElement extends LitElement {
 
 
   sendMail(){
-    this.agent.send("Inbox", {action:"mailTo", pod: this.pod})
+  //  this.agent.send("Inbox", {action:"mailTo", pod: this.pod})
+      this.agent.send("Dialog", {action : "toggle", params: {action:"mailTo", pod: this.pod}})
   }
 
   async firstUpdated(){

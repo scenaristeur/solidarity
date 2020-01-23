@@ -329,7 +329,6 @@ class ContactsElement extends LitElement {
       firstUpdated(){
         var app = this;
         this.agent = new HelloAgent(this.name);
-        console.log(this.agent)
         this.agent.receive = function(from, message) {
           //  console.log("messah",message)
           if (message.hasOwnProperty("action")){

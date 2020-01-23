@@ -4,6 +4,8 @@ import { HelloAgent } from '../agents/hello-agent.js';
 import data from "@solid/query-ldflex";
 import { namedNode } from '@rdfjs/data-model';
 
+
+
 class InboxElement extends LitElement {
 
   static get properties() {
@@ -15,6 +17,7 @@ class InboxElement extends LitElement {
       //  messagesFiles: {type: Array},
       messages: {type: Array},
       lang: {type: String},
+
     };
   }
 
@@ -26,6 +29,7 @@ class InboxElement extends LitElement {
     this.messages = []
     //  this.messagesFiles = []
     this.lang=navigator.language
+
   }
 
   render(){
@@ -102,6 +106,10 @@ class InboxElement extends LitElement {
     :html`
     <h6>${this.webId}</h6>
 
+<!--
+    <button type="button" class="btn btn-primary btn-sm" @click="${this.toggleWrite}"><i class="fa fa-pen"></i></button>
+-->
+
     <button @click="${this.notifyMe}">Notify me!</button>
 
     ${messageList(this.messages)}
@@ -109,6 +117,7 @@ class InboxElement extends LitElement {
     <!------------------->
 
     ${friendList(this.friends)}
+
     <div id="writePan">
 
     <input id="to" placeholder="Recipient" size="51"></input><br>
@@ -123,6 +132,11 @@ class InboxElement extends LitElement {
 
   `;
 }
+
+toggleWrite(){
+    this.agent.send("Dialog", {action : "toggle", params: "toggleWrite"})
+}
+
 
 firstUpdated(){
   var app = this;
@@ -232,49 +246,14 @@ write(e){
   this.shadowRoot.getElementById("to").value=this.recipient
 }
 
+
+
 mailTo(pod){
   console.log(pod)
   this.shadowRoot.getElementById("writePan").style.display = "block"
   this.shadowRoot.getElementById("to").value=pod.inbox
 }
 
-async send(){
-  var message = {}
-  message.date = new Date(Date.now())
-  message.id = message.date.getTime()
-  message.sender = this.webId
-  message.recipient = this.shadowRoot.getElementById("to").value.trim()
-  message.content = this.shadowRoot.getElementById("messageContent").value.trim()
-  message.title = this.shadowRoot.getElementById("title").value.trim()
-  message.url = message.recipient+message.id+".ttl"
-  this.shadowRoot.getElementById("to").value = ""
-  this.shadowRoot.getElementById("title").value = ""
-  this.shadowRoot.getElementById("messageContent").value = ""
-  this.shadowRoot.getElementById("writePan").style.display = "none"
-  if(message.content.length > 0 && message.title.length > 0 && message.recipient.length > 0){
-
-    this.buildMessage(message)
-  }else{
-    alert("Recipient or title or content is empty")
-  }
-
-}
-
-async   buildMessage(message){
-  var mess = message.url
-  console.log(message)
-  try{
-    await data[mess].schema$text.add(message.content);
-    await data[mess].rdfs$label.add(message.title)
-    await data[mess].schema$dateSent.add(message.date.toISOString())
-    await data[mess].rdf$type.add(namedNode('https://schema.org/Message'))
-    await data[mess].schema$sender.add(namedNode(this.webId))
-    var notif = message.recipient+"log.ttl#"+message.id
-    await data[notif].schema$message.add(namedNode(mess))
-  }catch(e){
-    alert(e)
-  }
-}
 
 notification(notificationMessage){
   var notification = new Notification(notificationMessage);
@@ -300,10 +279,11 @@ async readInbox(){
 
       //messages.push(message)
       messages = [... messages, m]
+      this.messages = messages
+      this.requestUpdate()
     }
   }
-  this.messages = messages
-  this.requestUpdate()
+
   /*this.messages.sort(function(a, b) { //tri par date
   return a - b;
 });*/
