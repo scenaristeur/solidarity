@@ -20,7 +20,8 @@ class ChatLineElement extends LitElement {
       makername: {type: String},
       makerimg: {type: String},
       comments: {type: Array},
-      parentItem: {type: Array}
+      parentItem: {type: Array},
+      discover: {type: Object}
     };
   }
 
@@ -39,6 +40,7 @@ class ChatLineElement extends LitElement {
     this.makerimg = ""
     this.comments = []
     this.parentItem = ""
+    this.discover = {}
   }
 
   render(){
@@ -435,7 +437,8 @@ class ChatLineElement extends LitElement {
 
         reply(e){
           console.log(this.url, this.agent, this.maker)
-          this.agent.send("Input", {action: "reply", replyTo: {url: this.url, maker: this.maker}})
+          //this.agent.send("Input", {action: "reply", replyTo: {url: this.url, maker: this.maker}})
+          this.agent.send("Dialog", {action : "toggle", params: {action:"reply", replyTo: {url: this.url, maker: this.maker, discover: this.discover}}})
         }
 
 

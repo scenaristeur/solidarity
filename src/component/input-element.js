@@ -134,6 +134,7 @@ class InputElement extends LitElement {
     var notifDestInbox = await data[replyTo.maker].inbox
     this.notifDestInbox = `${notifDestInbox}`
     console.log(this.notifDestInbox)
+    this.discover = replyTo.discover
   }
 
   clearReplyTo(){

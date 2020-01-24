@@ -366,7 +366,7 @@ class ChatElement extends LitElement {
       <!--   <ul class="list-group">-->
       ${this.documents.map((d, index) => html`
         ${d.split('#')[1].startsWith('Msg') ?
-        html `<chat-line-element url="${d}"  chatOwner="${this.chatOwner}">.</chat-line-element>`
+        html `<chat-line-element url="${d}"  chatOwner="${this.chatOwner}" .discover="${this.discover}">.</chat-line-element>`
         :html ``
       }
       `)}
@@ -527,6 +527,7 @@ class ChatElement extends LitElement {
     await this.showChat()
     this.info=this.documents.length+" "+this.localName(this.discover.classe)+" at "
     this.agent.send('Fab',  {action:"discoverChanged", discover: this.discover});
+  //  this.agent.send('Input',  {action:"discoverChanged", discover: this.discover});
   }
 
 

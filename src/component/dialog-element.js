@@ -58,6 +58,10 @@ class DialogElement extends LitElement {
       this.postVisible = !this.postVisible
       this.agent.send("PostDialog", params)
       break;
+      case "reply":
+      this.inputVisible = !this.inputVisible
+      this.agent.send("Input", params)
+      break;
       default:
       console.log(params, "non pris en compte")
     }

@@ -128,7 +128,7 @@ class FabElement extends LitElement {
 
   discoverChanged(discover){
     this.discover = discover
-    console.log(this.discover)
+  //  console.log(this.discover)
   }
 
   toggleFab(){
@@ -136,7 +136,7 @@ class FabElement extends LitElement {
   }
 
   toggleWrite(){
-    console.log("toggleWrite", this.discover)
+  //  console.log("toggleWrite", this.discover)
     this.agent.send("Dialog", {action : "toggleWrite", discover: this.discover})
 
   }
