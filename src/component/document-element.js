@@ -30,7 +30,7 @@ class DocumentElement extends LitElement {
     <link href="css/fontawesome/css/all.css" rel="stylesheet">
     <link href="css/bootstrap/bootstrap.min.css" rel="stylesheet">
     <h4>${this.something}</h4>
-    <div class="card" style="width: 18rem;">
+    <div class="card"> <!-- style="width: 18rem;"-->
     <img src="" class="card-img-top" alt="...">
     <div class="card-body">
     <h5 class="card-title">Card title</h5>
@@ -43,7 +43,10 @@ class DocumentElement extends LitElement {
         </p>
         `)}
         <small>${this.url}</small>
-        <a href="#" class="btn btn-primary">Go somewhere</a>
+        <a class="btn btn-primary btn-sm" href="https://scenaristeur.github.io/spoggy-simple/?source=${this.url}" target="_blank">
+        <i class="fas fa-project-diagram"></i>
+        </a>
+      <!--  <a href="#" class="btn btn-primary">Go somewhere</a> -->
         </div>
         </div>
         `;

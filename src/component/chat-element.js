@@ -29,9 +29,9 @@ class ChatElement extends LitElement {
     this.documents = []
     this.classe = ""
     this.discover = {years:[], months:[], days: []}
-    this.info = "Choose 'Solidarity (LongChat)' in the ChatsElement panel."+
-    " Those chats are stored in the https://solidarity.inrupt.net/public/ folder."+
-    " You can also click on one of your friends to see his chats in ChatsElement"
+    this.info = "Choose 'Solidarity' channel in the Channels. "+
+    "Or check your contact's channels. "+
+    "Data is at https://solidarity.inrupt.net/public/"
     this.lang=navigator.language
     this.scrolled = false
     this.chatOwner = "https://solidarity.inrupt.net/profile/card#me"
@@ -273,8 +273,9 @@ class ChatElement extends LitElement {
     <div class="container-fluid h-100">
     <div class="row justify-content-center h-100">
     -->
-    <div id="chat" class="col-12 chat">
 
+    <div id="chat" class="col-12 chat">
+    <h4>Chat</h4>
     <div class="card">
     <div class="card-header msg_head">
     <div class="d-flex bd-highlight">
@@ -335,6 +336,17 @@ class ChatElement extends LitElement {
       @click="${this.setCurrentDay}">${d}</button>
       `
     )}
+
+    ${this.discover.folder != undefined ?
+      html`
+      <a class="btn btn-primary btn-sm" href="https://scenaristeur.github.io/spoggy-simple/?source=${this.discover.folder}" target="_blank">
+      <i class="fas fa-project-diagram"></i>
+      </a>
+      `
+      :html``
+    }
+
+
     </div>
 
 
@@ -362,7 +374,12 @@ class ChatElement extends LitElement {
 
       </div>
       <div class="card-footer">
-      <input-element name="Input" .discover=${this.discover}></input-element>
+      ${this.discover.folder != undefined ?
+        html `<input-element name="Input" .discover=${this.discover}></input-element>
+        `
+        :html ``
+      }
+
       </div>
       </div>
       </div>
@@ -410,7 +427,7 @@ class ChatElement extends LitElement {
         case "http://www.w3.org/ns/pim/meeting#LongChat":
         app.socket = null
         await  this.openLongChat()
-            app.subscribe()
+        app.subscribe()
         break;
         case "http://schema.org/TextDigitalDocument":
         case "http://schema.org/MediaObject":

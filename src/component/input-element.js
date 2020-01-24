@@ -185,6 +185,30 @@ class InputElement extends LitElement {
           await data[url].schema$parentItem.add(namedNode(this.replyTo)) // schema$parentItem plante le chat solid
           await data[this.replyTo].schema$comment.add(namedNode(url))
 
+          try{
+            // post notification
+            var message = {}
+            message.recipient =  this.notifDestInbox
+            message.title = "Solidarity notification reply"
+            message.content = "A new reply has been posted on Solidarity about your post ' "+this.replyTo+" '. \n You can find it here : ' "+url+"."
+
+            if( message.recipient.length > 0){
+              message.date = new Date(Date.now())
+              message.id = message.date.getTime()
+              message.sender = this.webId
+              message.url = message.recipient+message.id+".ttl"
+              await this.buildMessage(message)
+              this.replyTo = ""
+            }else{
+              alert("Recipient  empty")
+            }
+
+
+
+          }catch(e){
+            alert(e)
+          }
+
         }
 
         this.shadowRoot.getElementById("textarea").value = ""
@@ -200,29 +224,7 @@ class InputElement extends LitElement {
         b.classList.add("notActive")
       })
 
-      try{
-        // post notification
-        var message = {}
-        message.recipient =  this.notifDestInbox
-        message.title = "Solidarity notification reply"
-        message.content = "A new reply has been posted on Solidarity about your post ' "+this.replyTo+" '. \n You can find it here : ' "+url+"."
 
-        if( message.recipient.length > 0){
-          message.date = new Date(Date.now())
-          message.id = message.date.getTime()
-          message.sender = this.webId
-          message.url = message.recipient+message.id+".ttl"
-          await this.buildMessage(message)
-          this.replyTo = ""
-        }else{
-          alert("Recipient  empty")
-        }
-
-
-
-      }catch(e){
-        alert(e)
-      }
 
 
     }catch(e){

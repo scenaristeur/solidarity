@@ -31,7 +31,7 @@ class LoginElement extends LitElement {
       : html`
       <!-- else logout button is displayed -->
       <button type="button" class="btn btn-primary" @click=${this.logout}>Logout</button>
-      ${this.fullname}
+      <span class="text-light bg-dark">${this.fullname}</span>
       `
     }
     `;

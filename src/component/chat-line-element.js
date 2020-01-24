@@ -331,6 +331,9 @@ class ChatLineElement extends LitElement {
         <i class="fas fa-reply " ></i></button>
         <a class="btn btn-primary btn-sm" href="${this.url}" target="_blank">
         <i class="fas fa-link" ></i></a>
+        <a class="btn btn-primary btn-sm" href="https://scenaristeur.github.io/spoggy-simple/?source=${this.url}" target="_blank">
+        <i class="fas fa-project-diagram"></i>
+        </a>
         </div>
 
 

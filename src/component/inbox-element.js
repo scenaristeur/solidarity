@@ -118,7 +118,7 @@ class InboxElement extends LitElement {
 
     <!------------------->
 
-    ${friendList(this.friends)}
+  <!--  ${friendList(this.friends)}
 
     <div id="writePan">
 
@@ -126,7 +126,7 @@ class InboxElement extends LitElement {
     <input id="title" placeholder="Title" size="51"></input><br>
     <textarea id="messageContent" rows="4" cols="50" placeholder="Content"></textarea><br>
     <button @click=${this.send}>Send</send>
-    </div>
+    </div>-->
 
     `
   }

@@ -55,12 +55,12 @@ class NavbarElement extends LitElement {
     <li class="nav-item  d-lg-none">
     <a class="nav-link" href="#" @click="${this.clickmenu.bind(this)}">Friends</a>
     </li>
-    <li class="nav-item">
+  <!--  <li class="nav-item">
     <a class="nav-link" href="#" @click="${this.clickmenu.bind(this)}">Link</a>
     </li>
     <li class="nav-item">
     <a class="nav-link" href="#" @click="${this.clickmenu.bind(this)}">Link</a>
-    </li>
+    </li>-->
     </ul>
     </div>
     </nav>

@@ -16,23 +16,25 @@ class ChatsElement extends LitElement {
 
   constructor() {
     super();
-    this.something = "ChatsElement"
+    this.something = "Channels"
     this.webId = "https://solidarity.inrupt.net/profile/card#me"
     this.pod = {instances: []}
     this.discover = {years:[], months:[], days: []}
-
   }
 
   render(){
     return html`
     <link href="css/bootstrap/bootstrap.min.css" rel="stylesheet">
 
-    <b>${this.something}</b>
+    <h4>${this.something}</h4>
     ${this.webId != "https://solidarity.inrupt.net/profile/card#me" ?
-    html`  <button class="btn btn-primary btn-sm" @click="${this.restore}">
-    Restore Solidarity to default</button>`
+    html`<button class="btn btn-primary btn-sm" @click="${this.restore}">
+    Back to default Channels</button>`
     :html``}
 
+
+${this.pod.instances.length>0 ?
+  html `
     <ul>
     ${this.pod.instances.map((i) => html`
       <li><div class = "row">
@@ -40,11 +42,16 @@ class ChatsElement extends LitElement {
       class="btn btn-primary btn-lg instance"
       url="${i.object}"
       classe = "${i.classe}"
-      @click="${this.open}">${this.cutStorage(i.object)}</button>(${this.localName(i.classe)})
+      @click="${this.open}">${this.cutStorage(i.object)}</button>(${i.shortClasse})
       </div>
       </li>
       ` )}
       </ul>
+      `
+      :html`
+      <i class="fas fa-hourglass-half"></i> Loading instances... Please wait & if it's too long refresh...
+      `
+    }
 
       `;
     }
@@ -146,6 +153,7 @@ class ChatsElement extends LitElement {
                     s.predicate = `${property}`
                     s.object = `${instance}`
                     s.classe = `${classe}`
+                    s.shortClasse = this.localName(s.classe)
                   }
                 }
                 instances.push(s)
@@ -155,6 +163,11 @@ class ChatsElement extends LitElement {
         }catch(e){
           console.log(e)
         }
+
+        instances.sort(function(a, b) { //tri par date
+          console.log(a.shortClasse,b.shortClasse)
+            return a.shortClasse - b.shortClasse;
+          });
         p.instances = instances
         this.pod = p
         console.log(this.pod)

@@ -58,7 +58,7 @@ class AppElement extends LitElement {
     </div>
     </div>
 
-    <div id="footer" class="row">
+    <div id="footer" class="row-12">
 
     <footer-element name="Footer"></footer-element>
     </div>

@@ -27,8 +27,8 @@ class ContactsElement extends LitElement {
     <link href="css/fontawesome/css/all.css" rel="stylesheet">
 
     <style>
-    contacts{
-      height: 100%;
+    #contacts{
+      height: 80vh;
       margin: 0;
       background: #7F7FD5;
       background: -webkit-linear-gradient(to right, #91EAE4, #86A8E7, #7F7FD5);
@@ -257,6 +257,7 @@ class ContactsElement extends LitElement {
     <div class="container-fluid h-100">
     <div class="row justify-content-center h-100">-->
     <div id="contacts" class="col-12 chat d-none d-lg-block">
+    <h4>Contacts</h4>
     <div class="card contacts_card">
     <div class="card-header">
     <div class="input-group">

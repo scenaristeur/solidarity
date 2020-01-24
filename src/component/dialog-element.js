@@ -25,33 +25,23 @@ class DialogElement extends LitElement {
 
   render(){
     return html`
-    <h4>${this.something}</h4>
-
-    <!-- Dialog -->
-    ${this.postVisible}
     <post-dialog-element
     name="PostDialog"
     ?opened="${this.postVisible}"
     @dialog.accept="${this.close.bind(this)}"
     @dialog.cancel="${this.close.bind(this)}">
     </post-dialog-element>
-    <!--fin dailog -->
-
-
     `;
   }
 
 
   toggle(params = null) {
-        console.log(params)
+    console.log(params)
     this.postVisible = !this.postVisible
-    //  console.log(this.postVisible)
-  //  var messRep = {action:"setReplyTo" }
- this.agent.send("PostDialog", params)
+    this.agent.send("PostDialog", params)
   }
 
   close () {
-    //  console.log(e)
     this.postVisible = false
   }
 

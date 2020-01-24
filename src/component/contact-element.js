@@ -293,8 +293,15 @@ class ContactElement extends LitElement {
     <div class="user_info">
     <span @click="${this.details.bind(this)}">${this.pod.name}</span>
     <p>online</p>
-    <button @click="${this.details.bind(this)}">  ${this.pod.instances.length} instances </button>
-    <button @click="${this.sendMail}">  <i class="far fa-envelope"></i></button>
+    <button class="btn btn-primary btn-sm" @click="${this.sendMail}"><i class="far fa-envelope"></i></button>
+    <a class="btn btn-primary btn-sm" href="https://scenaristeur.github.io/spoggy-simple/?source=${this.webId}" target="_blank">
+    <i class="fas fa-project-diagram"></i>
+    </a>
+    ${this.pod.instances.length > 0 ?
+      html`<button class="btn btn-primary notActive btn-sm" @click="${this.details.bind(this)}">${this.pod.instances.length} channel(s) </button>
+      `
+      :html``
+    }
     </div>
     <div>
 
@@ -308,8 +315,8 @@ class ContactElement extends LitElement {
 
 
   sendMail(){
-  //  this.agent.send("Inbox", {action:"mailTo", pod: this.pod})
-      this.agent.send("Dialog", {action : "toggle", params: {action:"mailTo", pod: this.pod}})
+    //  this.agent.send("Inbox", {action:"mailTo", pod: this.pod})
+    this.agent.send("Dialog", {action : "toggle", params: {action:"mailTo", pod: this.pod}})
   }
 
   async firstUpdated(){
@@ -368,7 +375,7 @@ class ContactElement extends LitElement {
 
 
     this.agent = new HelloAgent(this.name);
-  //  console.log(this.agent)
+    //  console.log(this.agent)
     this.agent.receive = function(from, message) {
 
       if (message.hasOwnProperty("action")){

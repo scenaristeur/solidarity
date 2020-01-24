@@ -18,7 +18,7 @@ class MessagesElement extends LitElement {
   render(){
     return html`
     <link href="css/bootstrap/bootstrap.min.css" rel="stylesheet">
-    <p>${this.name}</p>
+    <h4>Log</h4>
     <!--  <pre class="pre-scrollable">-->
     <ul id="messageslist" style="height: 30vh; overflow: auto" class="list-group">
     ${this.messages.map((m) => html`
