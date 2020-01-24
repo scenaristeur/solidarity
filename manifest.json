@@ -2,7 +2,7 @@
   "name": "Solidarity",
   "short_name": "Solidarity",
   "start_url": "./",
-  "background_color": "red",
+  "background_color": "aliceblue",
   "theme_color": "aliceblue",
   "description": "Solidarity !",
   "display": "fullscreen",
@@ -11,6 +11,13 @@
     "platform": "web",
     "url": "https://scenaristeur.github.io/solidarity/"
   }],
+  "icons": [
+  {
+    "src": "favicon.png",
+    "sizes": "192x192",
+    "type": "image/png"
+  }
+],
   "permissions": {
     "desktop-notification": {
       "description": "Needed for creating system notifications."
