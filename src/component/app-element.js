@@ -8,7 +8,7 @@ import './main-element.js'
 import './contacts-element.js'
 import './chats-element.js'
 import './dialog-element.js'
-import './fab-element.js'
+
 
 
 class AppElement extends LitElement {
@@ -65,7 +65,7 @@ class AppElement extends LitElement {
 
     </div>
     <dialog-element name="Dialog"></dialog-element>
-    <!--<fab-element name="Fab"></fab-element>-->
+
     `;
   }
 

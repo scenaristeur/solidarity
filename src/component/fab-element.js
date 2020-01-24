@@ -6,13 +6,15 @@ class FabElement extends LitElement {
   static get properties() {
     return {
       name: {type: String},
-      webId: {type: String}
+      webId: {type: String},
+      discover: {type: Object}
     };
   }
 
   constructor() {
     super();
     this.webId = null
+    this.discover = undefined
   }
 
   render(){
@@ -78,15 +80,16 @@ class FabElement extends LitElement {
     </style>
 
 
-    ${this.webId != null ?
+    ${this.webId != null && this.discover != undefined ?
       html`
+
       <button type="button" class="btn btn-write btn-info has-tooltip" data-placement="left" @click="${this.toggleWrite}" title="Write"> <i class="fa fa-pen"></i> </button>
       `
-      :html``
+      :html`You must login using your Solid WebId to be able to post. <br><br> `
 
     }
 
-<!--
+    <!--
     <div class="btn-group-fab" role="group" @click="${this.toggleFab}" aria-label="FAB Menu">
     <div>
 
@@ -109,6 +112,9 @@ class FabElement extends LitElement {
           case "webIdChanged":
           app.webIdChanged(message.webId);
           break;
+          case "discoverChanged":
+          app.discoverChanged(message.discover);
+          break;
           default:
           console.log("Unknown action ",message)
         }
@@ -120,13 +126,19 @@ class FabElement extends LitElement {
     this.webId = webId
   }
 
+  discoverChanged(discover){
+    this.discover = discover
+    console.log(this.discover)
+  }
+
   toggleFab(){
     this.shadowRoot.querySelector(".btn-group-fab").classList.toggle('active')
   }
 
   toggleWrite(){
-    console.log("toggleWrite")
-    this.agent.send("Dialog", {action : "toggle", params: "toggleWrite"})
+    console.log("toggleWrite", this.discover)
+    this.agent.send("Dialog", {action : "toggleWrite", discover: this.discover})
+
   }
 
 }

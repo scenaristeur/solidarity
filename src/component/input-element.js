@@ -114,6 +114,11 @@ class InputElement extends LitElement {
           case "reply":
           app.reply(message.replyTo)
           break;
+          case "discoverChanged":
+          app.discover= this.discover
+          console.log(this.discover)
+          break;
+
           default:
           console.log("Unknown action ",message)
         }
@@ -210,7 +215,7 @@ class InputElement extends LitElement {
           }
 
         }
-
+        this.agent.send("Dialog", {action:"close"})
         this.shadowRoot.getElementById("textarea").value = ""
         //  this.shadowRoot.getElementById("inlineRadio1").checked = true
 

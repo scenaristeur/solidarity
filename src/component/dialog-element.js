@@ -3,6 +3,7 @@ import { LitElement, html } from 'lit-element';
 import { HelloAgent } from '../agents/hello-agent.js';
 
 import './post-dialog-element.js'
+import './input-dialog-element.js'
 
 class DialogElement extends LitElement {
 
@@ -11,7 +12,9 @@ class DialogElement extends LitElement {
       name: {type: String},
       something: {type: String},
       lang: {type: String},
-      postVisible: {type: Boolean}
+      postVisible: {type: Boolean},
+      inputVisible : {type: Boolean},
+      discover: {type: Object}
     };
   }
 
@@ -20,6 +23,8 @@ class DialogElement extends LitElement {
     this.something = "Dialog"
     this.lang=navigator.language
     this.postVisible = false
+    this.inputVisible = false
+    this.discover = {}
 
   }
 
@@ -31,18 +36,43 @@ class DialogElement extends LitElement {
     @dialog.accept="${this.close.bind(this)}"
     @dialog.cancel="${this.close.bind(this)}">
     </post-dialog-element>
+
+    <input-dialog-element
+    name="InputDialog"
+    ?opened="${this.inputVisible}"
+    .discover= "${this.discover}"
+    @dialog.accept="${this.close.bind(this)}"
+    @dialog.cancel="${this.close.bind(this)}">
+    </input-dialog-element>
+
+
+
     `;
   }
 
 
   toggle(params = null) {
     console.log(params)
-    this.postVisible = !this.postVisible
-    this.agent.send("PostDialog", params)
+    switch(params.action) {
+      case "mailTo":
+      this.postVisible = !this.postVisible
+      this.agent.send("PostDialog", params)
+      break;
+      default:
+      console.log(params, "non pris en compte")
+    }
+
+  }
+
+  toggleWrite(discover){
+    this.inputVisible = !this.inputVisible
+    console.log("DISCOVER", discover)
+  this.discover = discover
   }
 
   close () {
     this.postVisible = false
+    this.inputVisible = false
   }
 
 
@@ -57,6 +87,9 @@ class DialogElement extends LitElement {
         switch(message.action) {
           case "toggle":
           app.toggle(message.params)
+          break;
+          case "toggleWrite":
+          app.toggleWrite(message.discover)
           break;
           case "close":
           app.close()
