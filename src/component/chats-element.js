@@ -2,6 +2,8 @@ import { LitElement, html } from 'lit-element';
 import { HelloAgent } from '../agents/hello-agent.js';
 import data from "@solid/query-ldflex";
 
+import './new-channel-element.js'
+
 class ChatsElement extends LitElement {
 
   static get properties() {
@@ -35,6 +37,9 @@ class ChatsElement extends LitElement {
     ${this.pod.instances.length>0 ?
       html `
       <h3>${this.something}</h3>
+<!--
+<new-channel-element name="NewChannel"></new-channel-element>-->
+
       <ul class="nav nav-pills">
       ${this.pod.instances.map((i) => html`
         <li class="active">

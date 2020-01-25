@@ -33,8 +33,6 @@ class PostDialogElement extends LitElement {
     <link href="css/fontawesome/css/all.css" rel="stylesheet">
     <link href="css/bootstrap/bootstrap.min.css" rel="stylesheet">
     <style>
-
-
     /* The Modal (background) */
     .modal {
       display: none; /* Hidden by default */

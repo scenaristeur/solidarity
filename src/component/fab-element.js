@@ -83,7 +83,7 @@ class FabElement extends LitElement {
     ${this.webId != null && this.discover != undefined ?
       html`
 
-      <button type="button" class="btn btn-write btn-info has-tooltip" data-placement="left" @click="${this.toggleWrite}" title="Write"> <i class="fa fa-pen"></i> </button>
+      <button type="button" class="btn btn-write btn-danger has-tooltip" data-placement="left" @click="${this.toggleWrite}" title="Write"> <i class="fa fa-pen"></i> </button>
       `
       :html`You must login using your Solid WebId to be able to post. <br><br> `
 

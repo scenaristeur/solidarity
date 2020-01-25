@@ -42,6 +42,8 @@ class InboxElement extends LitElement {
 
     const messageList = (messages) => html`
     <h5>Messages (${messages.length})</h5>
+
+
     <table id="messages"  style="height: 250px">
     <tr>
     <th><div>Sender</div></th>
@@ -108,6 +110,9 @@ class InboxElement extends LitElement {
 
     <div class="col alert alert-primary" role="alert">
     <small>${this.webId}</small>
+    <br>
+    <a href="https://forum.solidproject.org/t/solidarity-first-shot-for-a/2581/5?u=smag0"
+    target="_blank">How to get Inbox notification</a>
     </div>
     <!--
     <button type="button" class="btn btn-primary btn-sm" @click="${this.toggleWrite}"><i class="fa fa-pen"></i></button>

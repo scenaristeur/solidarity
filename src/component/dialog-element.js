@@ -4,6 +4,7 @@ import { HelloAgent } from '../agents/hello-agent.js';
 
 import './post-dialog-element.js'
 import './input-dialog-element.js'
+import './channel-create-element.js'
 
 class DialogElement extends LitElement {
 
@@ -14,6 +15,7 @@ class DialogElement extends LitElement {
       lang: {type: String},
       postVisible: {type: Boolean},
       inputVisible : {type: Boolean},
+      channelVisible : {type: Boolean},
       discover: {type: Object}
     };
   }
@@ -24,6 +26,7 @@ class DialogElement extends LitElement {
     this.lang=navigator.language
     this.postVisible = false
     this.inputVisible = false
+    this.channelVisible = false
     this.discover = {}
 
   }
@@ -45,7 +48,13 @@ class DialogElement extends LitElement {
     @dialog.cancel="${this.close.bind(this)}">
     </input-dialog-element>
 
-
+    <channel-create-element
+    name="ChannelDialog"
+    ?opened="${this.channelVisible}"
+    .discover= "${this.discover}"
+    @dialog.accept="${this.close.bind(this)}"
+    @dialog.cancel="${this.close.bind(this)}">
+    </channel-create-element>
 
     `;
   }
@@ -62,6 +71,10 @@ class DialogElement extends LitElement {
       this.inputVisible = !this.inputVisible
       this.agent.send("Input", params)
       break;
+      case "newChannel":
+      this.channelVisible = !this.channelVisible
+      //  this.agent.send("Input", params)
+      break;
       default:
       console.log(params, "non pris en compte")
     }
@@ -71,12 +84,13 @@ class DialogElement extends LitElement {
   toggleWrite(discover){
     this.inputVisible = !this.inputVisible
     console.log("DISCOVER", discover)
-  this.discover = discover
+    this.discover = discover
   }
 
   close () {
     this.postVisible = false
     this.inputVisible = false
+    this.channelVisible = false
   }
 
 
