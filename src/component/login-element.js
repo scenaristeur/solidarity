@@ -45,16 +45,15 @@ class LoginElement extends LitElement {
         app.webId=null
         app.agent.send('Messages',  {action:"info", info:"Not logged"});
 
-        app.agent.sendMulti(['Friends', 'Contacts', 'Inbox', 'Fab', 'PostDialog'],  {action:"webIdChanged", webId: app.webId});
+        app.agent.sendMulti(['App', /*'Friends',*/ 'Contacts', 'Inbox', 'Fab', 'PostDialog', 'Right', 'Chat'],  {action:"webIdChanged", webId: app.webId});
         app.fullname = ""
         //  this.agent.send('Chat',  {action:"webIdChanged", webId: this.webId});
-
         //  this.agent.send('Profile',  {action:"webIdChanged", webId: this.webId});
       }
       else{
         app.webId = session.webId
         app.agent.send('Messages',  {action:"info", info:"Login "+app.webId});
-        app.agent.sendMulti(['Friends', 'Contacts', 'Inbox', 'Fab', 'PostDialog'], {action:"webIdChanged", webId: app.webId});
+        app.agent.sendMulti(['App', /*'Friends',*/ 'Contacts', 'Inbox', 'Fab', 'PostDialog', 'Right', 'Chat'], {action:"webIdChanged", webId: app.webId});
         app.fullname = await data[app.webId].vcard$fn || app.webId.split("/")[2].split('.')[0];
         //  this.agent.send('Chat',  {action:"webIdChanged", webId: this.webId});
         //this.agent.send('Profile',  {action:"webIdChanged", webId: this.webId});

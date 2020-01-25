@@ -275,7 +275,6 @@ class ContactsElement extends LitElement {
     </div>
     <div class="card-body contacts_body">
 
-
     ${this.friendsWebIds.length > 0 ?
       html `
       <ul class="contacts">
@@ -333,7 +332,7 @@ class ContactsElement extends LitElement {
         this.agent.receive = function(from, message) {
           //  console.log("messah",message)
           if (message.hasOwnProperty("action")){
-            //  console.log(message)
+            console.log(message)
             switch(message.action) {
               case "webIdChanged":
               app.webIdChanged(message.webId)
@@ -347,22 +346,27 @@ class ContactsElement extends LitElement {
             }
           }
         };
+        if (this.webId != null){
+          this.webIdChanged(this.webId)
+        }
       }
 
       close(){
         this.shadowRoot.getElementById("contacts").classList.add("d-none")
       }
+
       async webIdChanged(webId){
         this.webId = webId
-        console.log(this.webId)
+      //  console.log(this.webId)
         if (webId != null){
           this.friendsWebIds = []
           this.friendsWebIds.push(await data.user)
           for await (const friend of data.user.friends){
+          //  console.log(friend)
             this.friendsWebIds = [... this.friendsWebIds, friend]
           }
         }else{
-          this.friendsWebIds = []
+          //  this.friendsWebIds = []
         }
       }
 

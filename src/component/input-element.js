@@ -109,14 +109,14 @@ class InputElement extends LitElement {
     this.agent = new HelloAgent(this.name);
     this.agent.receive = function(from, message) {
       if (message.hasOwnProperty("action")){
-        console.log(message)
+      //  console.log(message)
         switch(message.action) {
           case "reply":
           app.reply(message.replyTo)
           break;
           case "discoverChanged":
           app.discover= this.discover
-          console.log(this.discover)
+        //  console.log(this.discover)
           break;
 
           default:
@@ -129,11 +129,11 @@ class InputElement extends LitElement {
 
 
   async reply(replyTo){
-    console.log(replyTo)
+  //  console.log(replyTo)
     this.replyTo = replyTo.url
     var notifDestInbox = await data[replyTo.maker].inbox
     this.notifDestInbox = `${notifDestInbox}`
-    console.log(this.notifDestInbox)
+  //  console.log(this.notifDestInbox)
     this.discover = replyTo.discover
   }
 
@@ -225,7 +225,7 @@ class InputElement extends LitElement {
       this.postType = "InstantMessage"
       var buttons = this.shadowRoot.querySelectorAll("#radioBtn a")
       buttons.forEach(function(b){
-        console.log(b)
+      //  console.log(b)
         b.classList.remove("active")
         b.classList.add("notActive")
       })

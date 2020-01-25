@@ -25,33 +25,35 @@ class ChatsElement extends LitElement {
   render(){
     return html`
     <link href="css/bootstrap/bootstrap.min.css" rel="stylesheet">
+    <link href="css/fontawesome/css/all.css" rel="stylesheet">
 
-    <h4>${this.something}</h4>
     ${this.webId != "https://solidarity.inrupt.net/profile/card#me" ?
     html`<button class="btn btn-primary btn-sm" @click="${this.restore}">
     Back to default Channels</button>`
     :html``}
 
-
-${this.pod.instances.length>0 ?
-  html `
-    <ul>
-    ${this.pod.instances.map((i) => html`
-      <li><div class = "row">
-      <button type="button"
-      class="btn btn-primary btn-lg instance"
-      url="${i.object}"
-      classe = "${i.classe}"
-      @click="${this.open}">${this.cutStorage(i.object)}</button>(${i.shortClasse})
-      </div>
-      </li>
-      ` )}
-      </ul>
-      `
-      :html`
-      <i class="fas fa-hourglass-half"></i> Loading instances... Please wait & if it's too long refresh...
-      `
-    }
+    ${this.pod.instances.length>0 ?
+      html `
+      <h3>${this.something}</h3>
+      <ul class="nav nav-pills">
+      ${this.pod.instances.map((i) => html`
+        <li class="active">
+        <button type="button"
+        class="btn btn-info btn-sm instance"
+        url="${i.object}"
+        classe = "${i.classe}"
+        @click="${this.open}">
+        ${this.cutStorage(i.object)}<br>
+        ${i.shortClasse.toLowerCase()}
+        </button>
+        </li>
+        ` )}
+        </ul>
+        `
+        :html`
+        <i class="fas fa-hourglass-half"></i> Loading instances... Please wait & if it's too long refresh...
+        `
+      }
 
       `;
     }
@@ -166,8 +168,8 @@ ${this.pod.instances.length>0 ?
 
         instances.sort(function(a, b) { //tri par date
           console.log(a.shortClasse,b.shortClasse)
-            return a.shortClasse - b.shortClasse;
-          });
+          return a.shortClasse - b.shortClasse;
+        });
         p.instances = instances
         this.pod = p
         console.log(this.pod)

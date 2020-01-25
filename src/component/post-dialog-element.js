@@ -127,10 +127,35 @@ class PostDialogElement extends LitElement {
     <!--  <post-tabs-element name="PostTabs"></post-tabs-element>-->
 
     <div id="writePan">
-    <input id="to" placeholder="Recipient" size="51"></input><br>
+
+    <div class="input-group mb-3">
+  <div class="input-group-prepend">
+    <span class="input-group-text" id="basic-addon1">Recipient</span>
+  </div>
+  <input type="text" id="to" placeholder="Recipient" class="form-control"  aria-label="Recipient" aria-describedby="basic-addon1">
+</div>
+
+<div class="input-group mb-3">
+<div class="input-group-prepend">
+<span class="input-group-text" id="basic-addon1">Title</span>
+</div>
+<input type="text" id="title" placeholder="Title" class="form-control" aria-label="Title" aria-describedby="basic-addon1">
+</div>
+<!--
+<div class="input-group">
+  <div class="input-group-prepend">
+    <span class="input-group-text">With textarea</span>
+  </div>-->
+  <textarea id="messageContent" class="form-control" aria-label="With textarea" placeholder="Say something..."></textarea>
+<!--</div>-->
+
+
+
+  <!--  <input id="to" placeholder="Recipient" size="51"></input><br>
     <input id="title" placeholder="Title" size="51"></input><br>
-    <textarea id="messageContent" rows="4" cols="50" placeholder="Content"></textarea><br>
-    <button @click=${this.send}>Send</send>
+    <textarea  rows="4" cols="50" placeholder="Content"></textarea><br>-->
+    <button class="btn btn-primary" @click=${this.send}>Send</send>
+
     </div>
 
 

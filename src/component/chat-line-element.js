@@ -329,11 +329,13 @@ class ChatLineElement extends LitElement {
         </div>
         <!--  ${this.other.map((d) => html`Other : ${d.property} ${d.values}<br>`)}-->
         <div>
+
         <button class="btn btn-primary btn-sm" @click="${this.reply}">
-        <i class="fas fa-reply " ></i></button>
+        <i class="fas fa-reply " ></i></button>    
         <a class="btn btn-primary btn-sm" href="${this.url}" target="_blank">
         <i class="fas fa-link" ></i></a>
-        <a class="btn btn-primary btn-sm" href="https://scenaristeur.github.io/spoggy-simple/?source=${this.url}" target="_blank">
+        <a class="btn btn-primary btn-sm"
+        href="https://scenaristeur.github.io/spoggy-simple/?source=${this.url}" target="_blank">
         <i class="fas fa-project-diagram"></i>
         </a>
         </div>
@@ -397,8 +399,14 @@ class ChatLineElement extends LitElement {
           </div>
           <!--  ${this.other.map((d) => html`Other : ${d.property} ${d.values}<br>`)}-->
           <div>
-          <button class="btn btn-primary btn-sm" @click="${this.reply}">
-          <i class="fas fa-reply" ></i></button>
+
+
+          ${this.webId != null ?
+            html`  <button class="btn btn-primary btn-sm" @click="${this.reply}">
+            <i class="fas fa-reply" ></i></button>`
+            :html``
+          }
+
           <a class="btn btn-primary btn-sm" href="${this.url}" target="_blank">
           <i class="fas fa-link" ></i></a>
           </div>
@@ -458,7 +466,7 @@ class ChatLineElement extends LitElement {
           if (this.url.split('#')[1].startsWith('Msg')){
             for await (const property of data[this.url].properties)
             {
-            //  console.log("Prop",`${property}`)
+              //  console.log("Prop",`${property}`)
               switch(`${property}`) {
                 case "http://xmlns.com/foaf/0.1/maker":
                 var maker = await data[this.url][`${property}`]
@@ -479,7 +487,7 @@ class ChatLineElement extends LitElement {
                 case "http://www.w3.org/2000/01/rdf-schema#type":
                 for await (const type of data[this.url][`${property}`])
                 {
-                //  console.log("Type",`${type}`)
+                  //  console.log("Type",`${type}`)
                   app.types = [... app.types, `${type}`]
                 }
                 break;
@@ -491,7 +499,7 @@ class ChatLineElement extends LitElement {
                 case "http://schema.org/comment":
                 for await (const comment of data[this.url][`${property}`])
                 {
-                //  console.log("Comment",`${comment}`)
+                  //  console.log("Comment",`${comment}`)
                   app.comments = [... app.comments, `${comment}`]
                 }
                 break;

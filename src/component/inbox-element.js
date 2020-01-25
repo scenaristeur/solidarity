@@ -100,19 +100,19 @@ class InboxElement extends LitElement {
   table { border-collapse: collapse; }
   </style>
 
-
-
   <h4>${this.something}</h4>
+
   ${this.webId == null ?
     html`You must login to acces your inbox`
     :html`
-    <h6>${this.webId}</h6>
 
+    <div class="col alert alert-primary" role="alert">
+    <small>${this.webId}</small>
+    </div>
     <!--
     <button type="button" class="btn btn-primary btn-sm" @click="${this.toggleWrite}"><i class="fa fa-pen"></i></button>
     -->
-
-    <button @click="${this.notifyMe}">Notify me!</button>
+    <button  type="button" class="btn btn-primary btn-sm" @click="${this.notifyMe}">Notify me!</button>
 
     ${messageList(this.messages)}
 
@@ -160,6 +160,7 @@ firstUpdated(){
       }
     }
   };
+    this.webIdChanged(this.webId)
 }
 
 webIdChanged(webId){
