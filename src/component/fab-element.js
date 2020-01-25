@@ -85,7 +85,7 @@ class FabElement extends LitElement {
 
       <button type="button" class="btn btn-write btn-danger has-tooltip" data-placement="left" @click="${this.toggleWrite}" title="Write"> <i class="fa fa-pen"></i> </button>
       `
-      :html`You must login using your Solid WebId to be able to post. <br><br> `
+      :html`You must login using your Solid WebId and select a Channel to be able to post. <br><br> `
 
     }
 

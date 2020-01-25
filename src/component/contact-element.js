@@ -335,13 +335,17 @@ class ContactElement extends LitElement {
       p.img = `${img}`
       p.inbox = `${inbox}`
       p.storage = `${storage}`
-      //  p.publicIndex = `${publicTypeIndex}`
+      p.instances = []
 
-      const publicTypeIndex = await data[this.webId].publicTypeIndex || "undefined"
-      //  console.log(`${publicTypeIndex}`);
+      app.pod = p
 
+      console.log("POD",p)
       let instances = []
       try{
+        //  p.publicIndex = `${publicTypeIndex}`
+
+        const publicTypeIndex = await data[this.webId].publicTypeIndex || "undefined"
+        //  console.log(`${publicTypeIndex}`);
         if (`${publicTypeIndex}` != "undefined"){
 
           for await (const subject of data[publicTypeIndex].subjects){
@@ -367,8 +371,7 @@ class ContactElement extends LitElement {
       }catch(e){
         console.log(e)
       }
-      p.instances = instances
-      this.pod = p
+      app.pod.instances = instances
       //  console.log(this.pod)
     }
 
