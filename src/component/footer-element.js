@@ -32,11 +32,11 @@ class FooterElement extends LitElement {
     <a href="index-mini.html" target="_blank">Solidarity-mini</a><br>
     </div>
     <div class="col">
-    Solid<br>
+    <a href="https://solidproject.org/" target="_blank">Solid</a><br>
     Inrupt<br>
     </div>
     <div class="col">
-    Forum Solid<br>
+    <a href="https://forum.solidproject.org/t/solidarity-first-shot-for-a/" target="_blank">Forum Solid</a><br>
     Talks<br>
     </div>
     </div>
