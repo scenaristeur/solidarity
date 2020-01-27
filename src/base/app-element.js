@@ -4,6 +4,7 @@ import { HelloAgent } from '../agents/hello-agent.js';
 
 import './main-element.js'
 import './inbox-element.js'
+import './login-element.js'
 
 class AppElement extends LitElement {
 
@@ -11,7 +12,8 @@ class AppElement extends LitElement {
     return {
       name: {type: String},
       something: {type: String},
-      tab: {type: String}
+      tab: {type: String},
+      messagesLength: {type: Number}
     };
   }
 
@@ -19,6 +21,7 @@ class AppElement extends LitElement {
     super();
     this.something = "Flow Element"
     this.tab = "main"
+    this.messagesLength = 0
   }
 
   render(){
@@ -40,27 +43,32 @@ class AppElement extends LitElement {
     </div>
     <div class="row p-3">
 
-    <div class="col-1 shadow-sm btn-group-vertical d-none d-sm-block"  style="height:30vh">
+    <div class="col-1 shadow-sm btn-group-vertical d-none d-sm-block"  style="height:30vh;text-align:left">
     <button type="button"
     class="btn mt-1 border-10 border-right-0 border-top-0 border-bottom-0"
-    style="color:purple;border-color:purple"
+    style="color:purple;border-color:purple;text-align:left"
     tab="main" @click=${this.changeTab}>
     <i class="fas fa-users" tab="main"></i>
-    Chatter</button>
+    <span style="vertical-align:1px" tab="main">Chatter</span></button>
     <button type="button"
     class="btn mt-1 border-10 border-danger border-right-0 border-top-0 border-bottom-0 text-danger"
-    tab="main" @click=${this.changeTab}>
-    <i class="fas fa-comment-alt" tab="main"></i>Chat</button>
+    tab="main" @click=${this.changeTab}
+    style="text-align:left">
+    <i class="fas fa-comment-alt" tab="main"></i>
+    <span style="vertical-align:1px" tab="main">Chat</span></button>
     <button type="button"
     class="btn mt-1 border-10 border-success border-right-0 border-top-0 border-bottom-0 text-success"
-    tab="inbox" @click=${this.changeTab}>
-    <i class="fas fa-envelope" tab="inbox"></i>Inbox
+    tab="inbox" @click=${this.changeTab}
+    style="text-align:left">
+    <i class="fas fa-envelope" tab="inbox"></i> <span style="vertical-align:1px" tab="inbox">Inbox</span>
+    <span class="badge badge-light" ?hidden="${this.messagesLength == 0}" tab="inbox">${this.messagesLength}</span>
+    </button>
+    <login-element name="Login"></login-element>
     </div>
 
     <div class="col shadow-sm p-3 m-1" style="height:80vh">
-    <main-element ?hidden="${this.tab != "main"}" name="Main"></main-element>
-    <inbox-element ?hidden="${this.tab != "inbox"}" name="Inbox"></inbox-element>
-
+    <main-element ?hidden="${this.tab != 'main'}" name="Main"></main-element>
+    <inbox-element ?hidden="${this.tab != 'inbox'}" name="Inbox"></inbox-element>
     </div>
 
     <div class="col-4 shadow-sm p-3  m-1  d-none d-sm-block">
@@ -116,7 +124,7 @@ class AppElement extends LitElement {
 
   changeTab(e){
     this.tab = e.target.getAttribute("tab")
-    console.log(this.tab)
+    //  console.log(this.tab)
   }
 
 
@@ -132,11 +140,18 @@ class AppElement extends LitElement {
           case "webIdChanged":
           app.webIdChanged(message.webId)
           break;
+          case "updateInboxBtn":
+          app.updateInboxBtn(message.messagesLength)
+          break;
           default:
           console.log("Unknown action ",message)
         }
       }
     };
+  }
+
+  updateInboxBtn(ml){
+    this.messagesLength = ml
   }
 
   webIdChanged(webId){
