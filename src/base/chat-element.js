@@ -325,7 +325,7 @@ ${this.discover.folder != undefined ?
 
 ${this.documents.map((d, index) =>
   html`${d.split('#').length > 1 && d.split('#')[1].startsWith('Msg')? html `
-  <li class="list-group-item">
+  <li class="list-group-item border-bottom-0 p-0">
   <chat-line-element url="${d}"
   chatOwner="${this.chatOwner}"
   .discover="${this.discover}"

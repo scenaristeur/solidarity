@@ -48,8 +48,8 @@ class ChatsElement extends LitElement {
         url="${i.object}"
         classe = "${i.classe}"
         @click="${this.open}">
-        ${this.cutStorage(i.object)}<br>
-        ${i.shortClasse.toLowerCase()}
+        ${this.cutStorage(i.object)}<!--<br>
+        ${i.shortClasse.toLowerCase()}-->
         </button>
         </li>
         ` )}
