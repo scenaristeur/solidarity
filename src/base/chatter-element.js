@@ -3,6 +3,8 @@ import { LitElement, html } from 'lit-element';
 import { HelloAgent } from '../agents/hello-agent.js';
 
 import './chat-line-element.js'
+import './chats-element.js'
+import './chat-element.js'
 
 class ChatterElement extends LitElement {
 
@@ -15,15 +17,19 @@ class ChatterElement extends LitElement {
 
   constructor() {
     super();
-    this.something = "Chatter Element"
+    this.something = "Chatter"
   }
 
   render(){
     return html`
     <link href="css/fontawesome/css/all.css" rel="stylesheet">
     <link href="css/bootstrap/bootstrap.min.css" rel="stylesheet">
-    <h4>${this.something}</h4>
-    <ul class="list-group  list-group-flush">
+
+
+    <chats-element name="Chats"></chats-element>
+    <chat-element name="Chat"></chat-element>
+
+  <!--  <ul class="list-group  list-group-flush">
     <li class="list-group-item">
     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua
     </li>
@@ -42,25 +48,8 @@ class ChatterElement extends LitElement {
     <li class="list-group-item">
     Praesent tristique magna sit amet purus gravida. Quis hendrerit dolor magna eget.
     </li>
-    <li class="list-group-item">
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Egestas egestas fringilla phasellus faucibus scelerisque eleifend
-    </li>
-    <li class="list-group-item">
-    Praesent tristique magna sit amet purus gravida.
-    </li>
-    <li class="list-group-item">
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua
-    </li>
-    <li class="list-group-item">
-    Praesent tristique magna sit amet purus gravida. Quis hendrerit dolor magna eget.
-    </li>
-    <li class="list-group-item">
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Egestas egestas fringilla phasellus faucibus scelerisque eleifend
-    </li>
-    <li class="list-group-item">
-    Praesent tristique magna sit amet purus gravida.
-    </li>
-    </ul>
+
+    </ul>-->
     `;
   }
 

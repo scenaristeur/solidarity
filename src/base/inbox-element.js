@@ -47,7 +47,7 @@ class InboxElement extends LitElement {
     th, td { padding: 8px 16px; }
     th     { background:#eee; }
     </style>
-    <h3>${this.name} (${this.messages.length})</h3>
+    <h5>${this.name} (${this.messages.length})</h5>
 
     ${this.webId == null ?
       html`You must login to acces your inbox`

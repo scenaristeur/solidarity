@@ -27,7 +27,7 @@ class AppElement extends LitElement {
     this.messagesLength = 0
     this.webId = null
     this.fullname = ""
-    this.img = ""
+    this.img = null
   }
 
   render(){
@@ -72,22 +72,20 @@ class AppElement extends LitElement {
 
 
     <div class="col text-right">
-    <!-- Collapse button -->
 
+    <!-- Collapse button -->
     <span style="padding:5px">
     ${this.fullname}
     <login-element ?hidden="${this.webId != null}" name="Login"></login-element>
     </span>
 
-    ${this.img.length > 0 ?
+    ${this.img != null ?
       html`
       <!-- REduce the profile image https://images.weserv.nl/docs/-->
       <img class="rounded-circle user_img" src="//images.weserv.nl/?url=${this.img}&w=32&h=32" title="${this.webId}" alt="Can not access image profile">
       `
       :html`<i class="fas fa-user-circle fa-1x" title="${this.webId}"></i>`
     }
-
-
 
     <button class="navbar-toggler toggler-example"
     type="button"
