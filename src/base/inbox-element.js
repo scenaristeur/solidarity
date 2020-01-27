@@ -10,7 +10,6 @@ class InboxElement extends LitElement {
   static get properties() {
     return {
       name: {type: String},
-      something: {type: String},
       messages: {type: Array},
       lang: {type: String},
     };
@@ -18,31 +17,20 @@ class InboxElement extends LitElement {
 
   constructor() {
     super();
-    this.something = "Inbox Element"
     this.webId = null
     this.messages = []
     this.lang=navigator.language
   }
 
   render(){
-
-
     const messageList = (messages) => html`
-    <h5>Messages (${messages.length})</h5>
-
-<div class="table-responsive">
-    <table class="table-striped table-hover table-sm" id="messages"  style="height: 250px">
-    <thead class="thead-light">
-    <th scope="col"Sender</th>
-    <th scope="col">Title</th>
-    <th scope="col">Content</th>
-    <th scope="col">Date</th>
-    <th scope="col">Action</th>
+    <div class="tableFixHead table-striped table-hover table-sm">
+    <table>
+    <thead>
+    <tr><th>Sender</th><th>Title</th><th>Content</th><th>Date</th><th>Action</th></tr>
     </thead>
     <tbody>
-    <div class="col overflow-auto" style="height: 70vh;">
     ${messages.reverse().map((m) => html`${this.templateMessage(m)}`)}
-    </div>
     </tbody>
     </table>
     </div>
@@ -50,7 +38,16 @@ class InboxElement extends LitElement {
     return html`
     <link href="css/fontawesome/css/all.css" rel="stylesheet">
     <link href="css/bootstrap/bootstrap.min.css" rel="stylesheet">
-    <h4>${this.something}</h4>
+    <style>
+    .tableFixHead          { overflow-y: auto; height: 400px; }
+    .tableFixHead thead th { position: sticky; top: 0; }
+
+    /* Just common table stuff. Really. */
+    table  { border-collapse: collapse; width: 100%; }
+    th, td { padding: 8px 16px; }
+    th     { background:#eee; }
+    </style>
+    <h3>${this.name} (${this.messages.length})</h3>
 
     ${this.webId == null ?
       html`You must login to acces your inbox`
@@ -58,13 +55,14 @@ class InboxElement extends LitElement {
       <div class="col alert alert-primary" role="alert">
       <small>${this.webId}</small>
       <br>
+      <button  type="button" class="btn btn-primary btn-sm" @click="${this.notifyMe}">Notify me!</button>
+
       <a href="https://forum.solidproject.org/t/solidarity-first-shot-for-a/2581/5?u=smag0"
       target="_blank">How to get Inbox notification</a>
       </div>
       <!--
       <button type="button" class="btn btn-primary btn-sm" @click="${this.toggleWrite}"><i class="fa fa-pen"></i></button>
       -->
-      <button  type="button" class="btn btn-primary btn-sm" @click="${this.notifyMe}">Notify me!</button>
 
       ${messageList(this.messages)}
       `
@@ -105,7 +103,7 @@ class InboxElement extends LitElement {
       this.updateInbox();
     }else{
       this.inbox = ""
-    //  this.friends = []
+      //  this.friends = []
       this.messages = []
       this.socket = null
       this.agent.send('Base', {action:"updateInboxBtn", messagesLength: 0})

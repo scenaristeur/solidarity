@@ -29,6 +29,7 @@ class FooterElement extends LitElement {
     <div class="col">
 
     <a href="https://github.com/scenaristeur/solidarity" target="_blank">Source</a><br>
+    <a href="index1.html" target="_blank">NEW DESIGN</a><br>
     <a href="index-mini.html" target="_blank">Solidarity-mini</a><br>
     </div>
     <div class="col">

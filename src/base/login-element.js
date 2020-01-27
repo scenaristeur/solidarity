@@ -31,7 +31,7 @@ class LoginElement extends LitElement {
       : html`
       <!-- else logout button is displayed -->
       <button type="button" class="btn btn-primary" @click=${this.logout}>Logout</button>
-      <span class="text-light bg-dark">${this.fullname}</span>
+      <!--<span class="text-light bg-dark">${this.fullname}</span>-->
       `
     }
     `;
@@ -44,21 +44,39 @@ class LoginElement extends LitElement {
       if (!session){
         app.webId=null
         app.agent.send('Messages',  {action:"info", info:"Not logged"});
-
-        app.agent.sendMulti(['App', /*'Friends',*/ 'Contacts', 'Inbox', 'Fab', 'PostDialog', 'Right', 'Chat'],  {action:"webIdChanged", webId: app.webId});
         app.fullname = ""
+        app.agent.sendMulti(['Base', 'Inbox'],  {action:"webIdChanged", webId: app.webId, fullname: app.fullname, img:""});
+
         //  this.agent.send('Chat',  {action:"webIdChanged", webId: this.webId});
         //  this.agent.send('Profile',  {action:"webIdChanged", webId: this.webId});
       }
       else{
         app.webId = session.webId
         app.agent.send('Messages',  {action:"info", info:"Login "+app.webId});
-        app.agent.sendMulti(['App', /*'Friends',*/ 'Contacts', 'Inbox', 'Fab', 'PostDialog', 'Right', 'Chat'], {action:"webIdChanged", webId: app.webId});
         app.fullname = await data[app.webId].vcard$fn || app.webId.split("/")[2].split('.')[0];
+        app.img = await data[app.webId].vcard$hasPhoto || "";
+        app.agent.sendMulti(['Base', 'Inbox'], {action:"webIdChanged", webId: app.webId, fullname: app.fullname, img: app.img});
+
         //  this.agent.send('Chat',  {action:"webIdChanged", webId: this.webId});
         //this.agent.send('Profile',  {action:"webIdChanged", webId: this.webId});
       }
     })
+
+
+    this.agent.receive = function(from, message) {
+      //  console.log("messah",message)
+      if (message.hasOwnProperty("action")){
+        //  console.log(message)
+        switch(message.action) {
+          case "logout":
+          app.logout(null)
+          break;
+          default:
+          console.log("Unknown action ",message)
+        }
+      }
+    };
+
   }
 
   login(event) {

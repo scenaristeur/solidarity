@@ -13,7 +13,10 @@ class AppElement extends LitElement {
       name: {type: String},
       something: {type: String},
       tab: {type: String},
-      messagesLength: {type: Number}
+      messagesLength: {type: Number},
+      webId: {type: String},
+      fullname: {type: String},
+      img: {type: String}
     };
   }
 
@@ -22,13 +25,32 @@ class AppElement extends LitElement {
     this.something = "Flow Element"
     this.tab = "main"
     this.messagesLength = 0
+    this.webId = null
+    this.fullname = ""
+    this.img = ""
   }
 
   render(){
     return html`
     <link href="css/fontawesome/css/all.css" rel="stylesheet">
     <link href="css/bootstrap/bootstrap.min.css" rel="stylesheet">
+
     <style>
+    #collapsibleNavbar{
+      background-color:  #CCCCCC;
+      z-index:2
+    }
+    .fa-1x {
+      font-size: 1.5rem;
+    }
+    .navbar-toggler.toggler-example {
+      cursor: pointer;
+    }
+    .user_img{
+      height: 32px;
+      width: 32px;
+      border:1.5px solid #f5f6fa;
+    }
     .border-10 {
       border-width:10px !important;
     }
@@ -38,7 +60,64 @@ class AppElement extends LitElement {
     <div class="row shadow-lg p-3 mt-n3 bg-white"
     style="box-shadow: inset 0px 5px 45px -35px #000000;height:64px;border-radius: 25px 25px 0px 0px;">
     <!--https://developer.mozilla.org/fr/docs/Web/CSS/Mod%C3%A8le_de_bo%C3%AEte_CSS/G%C3%A9n%C3%A9rateur_box-shadow-->
+
+    <!-- Navbar brand -->
+    <div class="col">
     <a class="navbar-brand" href="#">Solidarity / Chat</a>
+    </div>
+
+    <!--Navbar-->
+    <nav class="navbar navbar-light light-blue lighten-4">
+
+
+
+    <div class="col text-right">
+    <!-- Collapse button -->
+
+    <span style="padding:5px">
+    ${this.fullname}
+    <login-element ?hidden="${this.webId != null}" name="Login"></login-element>
+    </span>
+
+    ${this.img.length > 0 ?
+      html`
+      <!-- REduce the profile image https://images.weserv.nl/docs/-->
+      <img class="rounded-circle user_img" src="//images.weserv.nl/?url=${this.img}&w=32&h=32" title="${this.webId}" alt="Can not access image profile">
+      `
+      :html`<i class="fas fa-user-circle fa-1x" title="${this.webId}"></i>`
+    }
+
+
+
+    <button class="navbar-toggler toggler-example"
+    type="button"
+    @click="${this.toggleOffCanvas.bind(this)}">
+    <i class="fas fa-bars fa-1x"></i></button>
+    </div>
+
+
+    <!-- Navbar links -->
+    <div class="collapse navbar-collapse offcanvas-collapse" id="collapsibleNavbar">
+    <ul class="navbar-nav">
+    <li class="nav-item">
+    <a class="nav-link" href="#" @click="${this.clickmenu.bind(this)}">Friends</a>
+    </li>
+    <li class="nav-item">
+    <a class="nav-link" href="#" @click="${this.clickmenu.bind(this)}">Link</a>
+    </li>
+    <li class="nav-item">
+    <a class="nav-link" href="#" @click="${this.clickmenu.bind(this)}">Link</a>
+    </li>
+    <li class="nav-item" ?hidden="${this.webId == null}">
+    <a class="nav-link" action="logout" href="#" @click="${this.clickmenu.bind(this)}">Logout</a>
+    </li>
+    </ul>
+    </div>
+    <!-- Collapsible content -->
+
+    </nav>
+    <!--/.Navbar-->
+
 
     </div>
     <div class="row p-3">
@@ -63,7 +142,6 @@ class AppElement extends LitElement {
     <i class="fas fa-envelope" tab="inbox"></i> <span style="vertical-align:1px" tab="inbox">Inbox</span>
     <span class="badge badge-light" ?hidden="${this.messagesLength == 0}" tab="inbox">${this.messagesLength}</span>
     </button>
-    <login-element name="Login"></login-element>
     </div>
 
     <div class="col shadow-sm p-3 m-1" style="height:80vh">
@@ -138,7 +216,7 @@ class AppElement extends LitElement {
         //  console.log(message)
         switch(message.action) {
           case "webIdChanged":
-          app.webIdChanged(message.webId)
+          app.webIdChanged(message)
           break;
           case "updateInboxBtn":
           app.updateInboxBtn(message.messagesLength)
@@ -154,15 +232,30 @@ class AppElement extends LitElement {
     this.messagesLength = ml
   }
 
-  webIdChanged(webId){
-    this.webId = webId
-    if (webId != null){
-      this.updateProfile();
-    }else{
-
-    }
+  webIdChanged(mess){
+    this.webId = mess.webId
+    this.fullname = mess.fullname
+    this.img = mess.img
+    console.log(mess)
   }
 
+  clickmenu(e){
+    console.log(e)
+    this.toggleOffCanvas(e)
+    var action = e.target.getAttribute("action")
+    console.log(action)
+    switch(action) {
+      case "logout":
+      this.agent.send("Login", {action: "logout"})
+      break;
+      default:
+      console.log("action inconnue", action)
+    }
+  }
+  toggleOffCanvas(e){
+    //  console.log(e) //
+    this.shadowRoot.getElementById("collapsibleNavbar").classList.toggle("collapse");
+  }
 }
 
 customElements.define('app-element', AppElement);
