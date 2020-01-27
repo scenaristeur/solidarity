@@ -6,7 +6,7 @@ import "./chatter-element.js"
 import "./questions-element.js"
 import "./topics-element.js"
 import "./polls-element.js"
-import "./input-element.js"
+import "./input-simple-element.js"
 
 class MainElement extends LitElement {
 
@@ -53,7 +53,7 @@ class MainElement extends LitElement {
     </div>
 
     <div class="col overflow-auto" style="height: 15vh;">
-    <input-element name="Input" type="${this.tab}"></input-element>
+    <input-simple-element name="InputSimple" type="${this.tab}"></input-simple-element>
     </div>
 
     `;

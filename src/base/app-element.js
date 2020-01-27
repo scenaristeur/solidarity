@@ -5,6 +5,7 @@ import { HelloAgent } from '../agents/hello-agent.js';
 import './main-element.js'
 import './inbox-element.js'
 import './login-element.js'
+import './dialog-element.js'
 
 class AppElement extends LitElement {
 
@@ -187,6 +188,8 @@ class AppElement extends LitElement {
     </li>
     </ul>
     </div>
+
+    <dialog-element name="Dialog"></dialog-element>
     </div>
 
 
@@ -194,6 +197,7 @@ class AppElement extends LitElement {
     </div>
 
     </div>
+
     `;
   }
 

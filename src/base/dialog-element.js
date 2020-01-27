@@ -101,7 +101,7 @@ class DialogElement extends LitElement {
     this.agent.receive = function(from, message) {
       //  console.log("messah",message)
       if (message.hasOwnProperty("action")){
-        //  console.log(message)
+          console.log(message)
         switch(message.action) {
           case "toggle":
           app.toggle(message.params)
