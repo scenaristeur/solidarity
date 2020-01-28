@@ -37,8 +37,8 @@ class ChatsElement extends LitElement {
     ${this.pod.instances.length>0 ?
       html `
       <h5>${this.something}</h5>
-<!--
-<new-channel-element name="NewChannel"></new-channel-element>-->
+      <!--
+      <new-channel-element name="NewChannel"></new-channel-element>-->
 
       <ul class="nav nav-pills">
       ${this.pod.instances.map((i) => html`
@@ -71,6 +71,7 @@ class ChatsElement extends LitElement {
       this.discover.folder = this.discover.url.substring(0,this.discover.url.lastIndexOf('/')+1)
       this.agent.send("Flow", {action: "discoverChanged", discover: this.discover})
       this.agent.send("Chat", {action: "discoverChanged", discover: this.discover})
+      this.agent.send("InputSimple", {action: "discoverChanged", discover: this.discover})
 
     }
 
@@ -164,7 +165,7 @@ class ChatsElement extends LitElement {
                   }
                 }
                 if(s.shortClasse == "LongChat"){
-                    instances.push(s)
+                  instances.push(s)
                 }
 
               }

@@ -32,12 +32,10 @@ class InputElement extends LitElement {
     <!--<script src="vendor/jquery/jquery.slim.min.js"></script>
     <script src="js/bootstrap.bundle.min.js"></script>-->
     <style>
-
     #radioBtn .notActive{
       color: #3276b1;
       background-color: #fff;
     }
-
     </style>
 
     <div class="form-group">
