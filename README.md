@@ -1,7 +1,10 @@
 # install locally
+prerequisites : nodejs >= 10
+
 ```
 git clone https://github.com/scenaristeur/solidarity
 cd solidarity
+npm install -g browserify
 npm install
 npm run start
 ```

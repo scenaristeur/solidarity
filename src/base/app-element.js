@@ -37,6 +37,49 @@ class AppElement extends LitElement {
     <link href="css/bootstrap/bootstrap.min.css" rel="stylesheet">
 
     <style>
+
+
+    /* Extra small devices (portrait phones, less than 576px)*/
+    @media (max-width: 575.98px) {
+      .fullname{
+        display:none
+      }
+    }
+
+    /*Small devices (landscape phones, 576px and up)*/
+    @media (min-width: 576px) {
+      .fullname{
+        display:block
+      }
+    }
+
+    /*Medium devices (tablets, 768px and up)*/
+    @media (min-width: 768px) {
+      /*div{
+      border: 10px solid #ccc;
+      height: 200px;
+      }*/
+    }
+
+
+    /*Large devices (desktops, 992px and up)*/
+    @media (min-width: 992px) {
+      /*div{
+      border: 10px solid #ccc;
+      height: 200px;
+      }*/
+    }
+
+
+    /* Extra large devices (large desktops, 1200px and up)*/
+    @media (min-width: 1200px) {
+      /*div{
+      border: 10px solid #ccc;
+      height: 200px;
+      }*/
+    }
+
+
     #collapsibleNavbar{
       background-color:  #CCCCCC;
       z-index:2

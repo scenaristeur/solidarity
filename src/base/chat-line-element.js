@@ -47,8 +47,6 @@ class ChatLineElement extends LitElement {
     <link href="css/fontawesome/css/all.css" rel="stylesheet">
     <link href="css/bootstrap/bootstrap.min.css" rel="stylesheet">
 
-
-
     <div class="row">
     <div class="col-1">
     <a href="${this.maker}" target="_blank">
