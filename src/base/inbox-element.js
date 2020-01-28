@@ -12,6 +12,7 @@ class InboxElement extends LitElement {
       name: {type: String},
       messages: {type: Array},
       lang: {type: String},
+      log: {type: String}
     };
   }
 
@@ -20,6 +21,7 @@ class InboxElement extends LitElement {
     this.webId = null
     this.messages = []
     this.lang=navigator.language
+    this.log="oups"
   }
 
   render(){
@@ -246,10 +248,10 @@ class InboxElement extends LitElement {
   }
 
   async readInbox(){
-
+  //  console.log("inbox",this.inbox);
     var messages = []
     for await (const url of data[this.inbox]['ldp$contains']){
-      //  console.log("YEAR",`${year}`);
+    //  console.log("url",`${url}`)
       if ( `${url}`.endsWith('/log.ttl') == false){
         var m = {}
         m.url = `${url}`
@@ -261,7 +263,7 @@ class InboxElement extends LitElement {
         m.text = await data[url].schema$text
         m.senderName = await data[m.sender].vcard$fn;
         //  m.filename = m.url.split("/").pop().split('.')[0]
-        //  console.log(m)
+      //  console.log(m)
 
         //messages.push(message)
         messages = [... messages, m]
@@ -269,6 +271,7 @@ class InboxElement extends LitElement {
         this.requestUpdate()
       }else{
         this.log = `${url}`
+        //console.log("LOOOOOG",this.log)
       }
     }
     this.agent.send('Base', {action:"updateInboxBtn", messagesLength: this.messages.length})

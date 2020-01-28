@@ -47,7 +47,7 @@ class LoginElement extends LitElement {
         app.webId=null
         app.agent.send('Messages',  {action:"info", info:"Not logged"});
         app.fullname = ""
-        app.agent.sendMulti(['Base', 'Inbox', 'Fab'],  {action:"webIdChanged", webId: app.webId, fullname: app.fullname, img:null});
+        app.agent.sendMulti(['Base', 'Inbox', 'Fab', 'Contacts', 'PostDialog'],  {action:"webIdChanged", webId: app.webId, fullname: app.fullname, img:null});
 
         //  this.agent.send('Chat',  {action:"webIdChanged", webId: this.webId});
         //  this.agent.send('Profile',  {action:"webIdChanged", webId: this.webId});
@@ -58,7 +58,7 @@ class LoginElement extends LitElement {
         app.fullname = await data[app.webId].vcard$fn || app.webId.split("/")[2].split('.')[0];
         app.img = await data[app.webId].vcard$hasPhoto || "";
         console.log(app.img)
-        app.agent.sendMulti(['Base', 'Inbox', 'Fab'], {action:"webIdChanged", webId: app.webId, fullname: app.fullname, img: app.img});
+        app.agent.sendMulti(['Base', 'Inbox', 'Fab', 'Contacts', 'PostDialog'], {action:"webIdChanged", webId: app.webId, fullname: app.fullname, img: app.img});
 //        app.agent.sendMulti(['App', /*'Friends',*/ 'Contacts', 'Inbox', 'Fab', 'PostDialog', 'Right', 'Chat'], {action:"webIdChanged", webId: app.webId});
 
         //  this.agent.send('Chat',  {action:"webIdChanged", webId: this.webId});

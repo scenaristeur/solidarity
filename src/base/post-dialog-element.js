@@ -197,7 +197,7 @@ class PostDialogElement extends LitElement {
   async send(){
     console.log("send")
     var message = {}
-
+    this.agent.send("Dialog", {action: "close"})
     message.recipient = this.shadowRoot.getElementById("to").value.trim()
     message.content = this.shadowRoot.getElementById("messageContent").value.trim()
     message.title = this.shadowRoot.getElementById("title").value.trim()
@@ -224,7 +224,7 @@ class PostDialogElement extends LitElement {
       await data[mess].schema$sender.add(namedNode(this.webId))
       var notif = message.recipient+"log.ttl#"+message.id
       await data[notif].schema$message.add(namedNode(mess))
-      this.agent.send("Dialog", {action: "close"})
+
       this.shadowRoot.getElementById("to").value = ""
       this.shadowRoot.getElementById("title").value = ""
       this.shadowRoot.getElementById("messageContent").value = ""

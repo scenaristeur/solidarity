@@ -104,13 +104,14 @@ https://getbootstrap.com/docs/4.0/layout/media-object/#alignment
     </font> </div>
     </div>
 
-    <div class="col-2">
-    <div class="row">
+    <div class="col-3">
+
     <font face="Arial, Helvetica, sans-serif" style="color:#A5A5A5; font-size:13px;font-weight:bold;">
-    <div class="col text-left"  style="top:20px">${new Date(this.date).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</div> </font>
-    <div class="col text-right" style="top:20px">
+    <span class="span text-left"  style="top:20px;width:50px">
+    ${new Date(this.date).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span> </font>
+    <span class="col text-right" style="top:20px;width:100px"">
     <i class="fas fa-reply" @click="${this.reply}"></i>
-    <i class="fas fa-ellipsis-v"></i></div>
+    <i class="fas fa-ellipsis-v"></i></span>
     </div>
     </div>
 
