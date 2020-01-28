@@ -41,15 +41,15 @@ class AppElement extends LitElement {
 
     /* Extra small devices (portrait phones, less than 576px)*/
     @media (max-width: 575.98px) {
-      .fullname{
-        display:none
+      .nav-brand{
+        /*font-size: 80px;*/
       }
     }
 
     /*Small devices (landscape phones, 576px and up)*/
     @media (min-width: 576px) {
-      .fullname{
-        display:block
+      .nav-brand{
+        /*  font-size: 80px;*/
       }
     }
 
@@ -81,8 +81,17 @@ class AppElement extends LitElement {
 
 
     #collapsibleNavbar{
-      background-color:  #CCCCCC;
-      z-index:2
+      background-color: #17a2b8;
+      z-index:5;
+      max-width: 300px;
+      width:100%;
+      position: fixed;
+      top: 80px;
+      right:30px;
+      overflow-y: auto;
+      transition: visibility .3s ease-in-out, -webkit-transform .3s ease-in-out;
+      transition: transform .3s ease-in-out, visibility .3s ease-in-out;
+      transition: transform .3s ease-in-out, visibility .3s ease-in-out, -webkit-transform .3s ease-in-out;
     }
     .fa-1x {
       font-size: 1.5rem;
@@ -98,6 +107,10 @@ class AppElement extends LitElement {
     .border-10 {
       border-width:10px !important;
     }
+    nav {
+      width: 100%
+
+    }
     </style>
     <div class="container-fluid" >
     <div class="col shadow-lg p-3 mt-3 ml-n1 mr-n1 bg-white" style="height:96vh;width:100vw;border-radius: 25px;">
@@ -105,24 +118,14 @@ class AppElement extends LitElement {
     style="box-shadow: inset 0px 5px 45px -35px #000000;height:64px;border-radius: 25px 25px 0px 0px;">
     <!--https://developer.mozilla.org/fr/docs/Web/CSS/Mod%C3%A8le_de_bo%C3%AEte_CSS/G%C3%A9n%C3%A9rateur_box-shadow-->
 
-    <!-- Navbar brand -->
-    <div class="col">
-    <a class="navbar-brand" href="#">Solidarity / Chat</a>
-    </div>
 
-    <!--Navbar-->
-    <nav class="navbar navbar-light light-blue lighten-4">
-
-
-
-    <div class="col text-right">
-
-    <!-- Collapse button -->
-    <span style="padding:5px">
+    <nav class="navbar navbar-light bg-white height:50px  p-0 mt-n3">
+    <a class="navbar-brand" href="#">Solidarity</a>
+    <!--<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+    </button>-->
+    <div class="navbar-text">
     ${this.fullname}
-    <login-element ?hidden="${this.webId != null}" name="Login"></login-element>
-    </span>
-
     ${this.img != null ?
       html`
       <!-- REduce the profile image https://images.weserv.nl/docs/-->
@@ -130,13 +133,14 @@ class AppElement extends LitElement {
       `
       :html`<i class="fas fa-user-circle fa-1x" title="${this.webId}"></i>`
     }
+    <login-element ?hidden="${this.webId != null}" name="Login"></login-element>
+    </div>
 
-    <button class="navbar-toggler toggler-example"
+
+    <button class="navbar-toggler"
     type="button"
     @click="${this.toggleOffCanvas.bind(this)}">
     <i class="fas fa-bars fa-1x"></i></button>
-    </div>
-
 
     <!-- Navbar links -->
     <div class="collapse navbar-collapse offcanvas-collapse" id="collapsibleNavbar">
@@ -154,11 +158,13 @@ class AppElement extends LitElement {
     <a class="nav-link" action="logout" href="#" @click="${this.clickmenu.bind(this)}">Logout</a>
     </li>
     </ul>
-    </div>
-    <!-- Collapsible content -->
 
+    </div>
+    <!--<span class="navbar-text">
+    Navbar text with an inline element 2
+    </span>-->
     </nav>
-    <!--/.Navbar-->
+
 
 
     </div>
