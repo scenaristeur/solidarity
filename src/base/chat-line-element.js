@@ -47,35 +47,6 @@ class ChatLineElement extends LitElement {
     <link href="css/fontawesome/css/all.css" rel="stylesheet">
     <link href="css/bootstrap/bootstrap.min.css" rel="stylesheet">
 
-<!-- see
-https://getbootstrap.com/docs/4.0/layout/media-object/#alignment
-<ul class="list-unstyled">
-  <li class="media">
-    <img class="mr-3" src="..." alt="Generic placeholder image">
-    <div class="media-body">
-      <h5 class="mt-0 mb-1">List-based media object</h5>
-      Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-    </div>
-  </li>
-  <li class="media my-4">
-    <img class="mr-3" src="..." alt="Generic placeholder image">
-    <div class="media-body">
-      <h5 class="mt-0 mb-1">List-based media object</h5>
-      Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-    </div>
-  </li>
-  <li class="media">
-    <img class="mr-3" src="..." alt="Generic placeholder image">
-    <div class="media-body">
-      <h5 class="mt-0 mb-1">List-based media object</h5>
-      Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-    </div>
-  </li>
-</ul>
--->
-
-
-
     <div class="row">
     <div class="col-1">
     <a href="${this.maker}" target="_blank">
@@ -104,14 +75,13 @@ https://getbootstrap.com/docs/4.0/layout/media-object/#alignment
     </font> </div>
     </div>
 
-    <div class="col-3">
-
+    <div class="col-2">
+    <div class="row">
     <font face="Arial, Helvetica, sans-serif" style="color:#A5A5A5; font-size:13px;font-weight:bold;">
-    <span class="span text-left"  style="top:20px;width:50px">
-    ${new Date(this.date).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span> </font>
-    <span class="col text-right" style="top:20px;width:100px">
+    <div class="col text-left"  style="top:20px">${new Date(this.date).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</div> </font>
+    <div class="col text-right" style="top:20px">
     <i class="fas fa-reply" @click="${this.reply}"></i>
-    <i class="fas fa-ellipsis-v"></i></span>
+    <i class="fas fa-ellipsis-v"></i></div>
     </div>
     </div>
 
