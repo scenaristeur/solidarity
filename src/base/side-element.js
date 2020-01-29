@@ -1,6 +1,12 @@
 import { LitElement, html } from 'lit-element';
-
 import { HelloAgent } from '../agents/hello-agent.js';
+
+import './news-element.js'
+import './events-element.js'
+import './people-element.js'
+import './activity-element.js'
+import "./input-side-element.js"
+
 
 class SideElement extends LitElement {
 
@@ -8,12 +14,15 @@ class SideElement extends LitElement {
     return {
       name: {type: String},
       something: {type: String},
+      tab: {type: String}
     };
   }
 
   constructor() {
     super();
-    this.something = "Flow Element"
+    this.something = "Side Element"
+    this.tab = "events"
+    this.name = ""
   }
 
   render(){
@@ -23,43 +32,40 @@ class SideElement extends LitElement {
     <div class="row">
     <ul class="nav nav-tabs">
     <li class="nav-item">
-    <a class="nav-link" href="#">NEWS</a>
+    <a class="nav-link" href="#" tab="news" @click=${this.changeTab}>NEWS</a>
     </li>
     <li class="nav-item">
-    <a class="nav-link active" href="#">EVENTS</a>
+    <a class="nav-link active" href="#" tab="events" @click=${this.changeTab}>EVENTS</a>
     </li>
     <li class="nav-item">
-    <a class="nav-link" href="#">PEOPLE</a>
+    <a class="nav-link" href="#" tab="people" @click=${this.changeTab}>PEOPLE</a>
     </li>
     <li class="nav-item">
-    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">ACTIVITY</a>
+    <a class="nav-link" href="#" tab="activity" @click=${this.changeTab}>ACTIVITY</a>
     </li>
     </ul>
     </div>
 
-    <div class="col overflow-auto" style="height: 70vh;">
-    <ul class="list-group  list-group-flush">
-    <li class="list-group-item">
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Egestas egestas fringilla phasellus faucibus scelerisque eleifend. Amet tellus cras adipiscing enim eu turpis. Sem integer vitae justo eget. Blandit volutpat maecenas volutpat blandit aliquam etiam erat velit. Vel eros donec ac odio tempor orci dapibus. Viverra justo nec ultrices dui sapien eget mi proin sed. Augue neque gravida in fermentum et. Ac tortor vitae purus
-    </li>
-    <li class="list-group-item">
-    Praesent tristique magna sit amet purus gravida. Quis hendrerit dolor magna eget. Eleifend quam adipiscing vitae proin sagittis nisl rhoncus mattis. Imperdiet dui accumsan sit amet. Mauris commodo quis imperdiet massa tincidunt nunc. Nunc id cursus metus aliquam eleifend mi in. Ultricies lacus sed turpis tincidunt id. Sagittis vitae et leo duis ut diam quam. Leo vel fringilla est ullamcorper eget nulla. Pellentesque nec nam aliquam sem et tortor consequat id porta. Proin sed libero enim sed
-    </li>
-    <li class="list-group-item">
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Egestas egestas fringilla phasellus faucibus scelerisque eleifend. Amet tellus cras adipiscing enim eu turpis. Sem integer vitae justo eget. Blandit volutpat maecenas volutpat blandit aliquam etiam erat velit. Vel eros donec ac odio tempor orci dapibus. Viverra justo nec ultrices dui sapien eget mi proin sed. Augue neque gravida in fermentum et. Ac tortor vitae purus
-    </li>
-    <li class="list-group-item">
-    Praesent tristique magna sit amet purus gravida. Quis hendrerit dolor magna eget. Eleifend quam adipiscing vitae proin sagittis nisl rhoncus mattis. Imperdiet dui accumsan sit amet. Mauris commodo quis imperdiet massa tincidunt nunc. Nunc id cursus metus aliquam eleifend mi in. Ultricies lacus sed turpis tincidunt id. Sagittis vitae et leo duis ut diam quam. Leo vel fringilla est ullamcorper eget nulla. Pellentesque nec nam aliquam sem et tortor consequat id porta. Proin sed libero enim sed
-    </li>
-    <li class="list-group-item">
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Egestas egestas fringilla phasellus faucibus scelerisque eleifend. Amet tellus cras adipiscing enim eu turpis. Sem integer vitae justo eget. Blandit volutpat maecenas volutpat blandit aliquam etiam erat velit. Vel eros donec ac odio tempor orci dapibus. Viverra justo nec ultrices dui sapien eget mi proin sed. Augue neque gravida in fermentum et. Ac tortor vitae purus
-    </li>
-    <li class="list-group-item">
-    Praesent tristique magna sit amet purus gravida. Quis hendrerit dolor magna eget. Eleifend quam adipiscing vitae proin sagittis nisl rhoncus mattis. Imperdiet dui accumsan sit amet. Mauris commodo quis imperdiet massa tincidunt nunc. Nunc id cursus metus aliquam eleifend mi in. Ultricies lacus sed turpis tincidunt id. Sagittis vitae et leo duis ut diam quam. Leo vel fringilla est ullamcorper eget nulla. Pellentesque nec nam aliquam sem et tortor consequat id porta. Proin sed libero enim sed
-    </li>
-    </ul>
+    <div id="scroller" class="col overflow-auto" style="height: 60vh;">
+    <news-element ?hidden=${this.tab != 'news'} name="News"></news-element>
+    <events-element ?hidden=${this.tab != 'events'} name="Events"></events-element>
+    <people-element ?hidden=${this.tab != 'people'} name="People"></people-element>
+    <activity-element ?hidden=${this.tab != 'activity'} name="Activity"></activity-element>
+    </div>
+
+    <div class="col overflow-auto" style="height: 15vh;">
+    <input-side-element name="InputSide" type="${this.tab}"></input-side-element>
     </div>
     `;
+  }
+
+  changeTab(e){
+    this.shadowRoot.querySelectorAll(".nav-link").forEach((l, i) => {
+      l.classList.remove("active")
+    });
+    this.tab = e.target.getAttribute("tab")
+    e.target.classList.add("active")
+    console.log(this.tab)
   }
 
   firstUpdated(){

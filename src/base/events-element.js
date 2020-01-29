@@ -2,7 +2,7 @@ import { LitElement, html } from 'lit-element';
 
 import { HelloAgent } from '../agents/hello-agent.js';
 
-class ModeleAgentElement extends LitElement {
+class EventsElement extends LitElement {
 
   static get properties() {
     return {
@@ -13,7 +13,7 @@ class ModeleAgentElement extends LitElement {
 
   constructor() {
     super();
-    this.something = "Flow Element"
+    this.something = "Events Element"
   }
 
   render(){
@@ -52,4 +52,4 @@ class ModeleAgentElement extends LitElement {
 
 }
 
-customElements.define('modele-agent-element', ModeleAgentElement);
+customElements.define('events-element', EventsElement);

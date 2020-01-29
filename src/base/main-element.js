@@ -46,10 +46,10 @@ class MainElement extends LitElement {
     </div>
 
     <div id="scroller" class="col overflow-auto" style="height: 60vh;">
-    <chatter-element ?hidden="${this.tab != "chatter"}" name="Chatter"></chatter-element>
-    <questions-element ?hidden="${this.tab != "questions"}" name="Questions"></questions-element>
-    <topics-element ?hidden="${this.tab != "topics"}" name="Topics"></topics-element>
-    <polls-element ?hidden="${this.tab != "polls"}" name="Polls"></polls-element>
+    <chatter-element ?hidden=${this.tab != 'chatter'} name="Chatter"></chatter-element>
+    <questions-element ?hidden=${this.tab != 'questions'} name="Questions"></questions-element>
+    <topics-element ?hidden=${this.tab != 'topics'} name="Topics"></topics-element>
+    <polls-element ?hidden=${this.tab != 'polls'} name="Polls"></polls-element>
     </div>
 
     <div class="col overflow-auto" style="height: 15vh;">
