@@ -3,7 +3,6 @@ import { LitElement, html } from 'lit-element';
 import { HelloAgent } from '../agents/hello-agent.js';
 
 import './chat-line-element.js'
-import './chats-element.js'
 import './chat-element.js'
 
 class ChatterElement extends LitElement {
@@ -25,8 +24,6 @@ class ChatterElement extends LitElement {
     <link href="css/fontawesome/css/all.css" rel="stylesheet">
     <link href="css/bootstrap/bootstrap.min.css" rel="stylesheet">
 
-
-    <chats-element name="Chats"></chats-element>
     <chat-element name="Chat"></chat-element>
 
   <!--  <ul class="list-group  list-group-flush">

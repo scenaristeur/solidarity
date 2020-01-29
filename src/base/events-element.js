@@ -2,7 +2,6 @@ import { LitElement, html } from 'lit-element';
 
 import { HelloAgent } from '../agents/hello-agent.js';
 
-import '@material/mwc-button';
 
 class EventsElement extends LitElement {
 
@@ -22,17 +21,8 @@ class EventsElement extends LitElement {
     return html`
     <h4>${this.something}</h4>
 
-    <mwc-button id="myButton" label="Material test!" @click='${this.clicked}'raised></mwc-button>
-    <mwc-button id="mySecondButton" label="Another!" @click='${this.clicked}'raised></mwc-button>
-
 
     `;
-  }
-
-  clicked(e){
-    var lab = e.target.getAttribute("label")
-    console.log(lab)
-    alert('You clicked '+lab)
   }
 
   firstUpdated(){
