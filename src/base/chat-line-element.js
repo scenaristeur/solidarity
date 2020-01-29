@@ -47,7 +47,7 @@ class ChatLineElement extends LitElement {
     <link href="css/fontawesome/css/all.css" rel="stylesheet">
     <link href="css/bootstrap/bootstrap.min.css" rel="stylesheet">
 
-    <div class="row">
+    <div class="row" style="margin-top:6px ">
     <div class="col-1">
     <a href="${this.maker}" target="_blank">
     ${this.makerimg.length > 0 ?
@@ -58,17 +58,17 @@ class ChatLineElement extends LitElement {
     </a>
     </div>
 
-    <div class="col">
+    <div class="col" style="margin-left: -37px;margin-top: -3px;">
     <div style="position:absolute; width:auto; height:auto;  text-align:left;">
-    <font face="Arial, Helvetica, sans-serif" style="color:#855FFA;
+    <font face="" style="color:#855FFA;
     font-size:13px;font-weight:bold;">
     <span>${this.makername}
     </span> </font> </div>
 
     <div style="position:relative;
-    padding-top:15px; padding-bottom: 5px; width:auto; height:auto;
+    padding-top:18px; padding-bottom: 5px; width:auto; height:auto;
     text-align:left;">
-    <font face="Arial, Helvetica, sans-serif" style="color:#303030; font-size:13px;font-weight:bold;line-height:.5px">
+    <font face="Roboto" style="color:#303030; font-size:13px; font-weight:normal; line-height:18px">
     <span>
     ${this.content}
     </span>
@@ -77,7 +77,7 @@ class ChatLineElement extends LitElement {
 
     <div class="col-2">
     <div class="row">
-    <font face="Arial, Helvetica, sans-serif" style="color:#A5A5A5; font-size:13px;font-weight:bold;">
+    <font face="" style="color:#A5A5A5; font-size:13px;font-weight:bold;">
     <div class="col text-left"  style="top:20px">${new Date(this.date).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</div> </font>
     <div class="col text-right" style="top:20px">
     <i class="fas fa-reply" @click="${this.reply}"></i>
