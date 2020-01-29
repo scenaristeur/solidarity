@@ -109,7 +109,7 @@ https://getbootstrap.com/docs/4.0/layout/media-object/#alignment
     <font face="Arial, Helvetica, sans-serif" style="color:#A5A5A5; font-size:13px;font-weight:bold;">
     <span class="span text-left"  style="top:20px;width:50px">
     ${new Date(this.date).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span> </font>
-    <span class="col text-right" style="top:20px;width:100px"">
+    <span class="col text-right" style="top:20px;width:100px">
     <i class="fas fa-reply" @click="${this.reply}"></i>
     <i class="fas fa-ellipsis-v"></i></span>
     </div>
