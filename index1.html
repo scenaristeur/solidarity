@@ -13,10 +13,15 @@
   <!--   <script src="vendor/jquery/jquery.slim.min.js"></script>-->
 </head>
 <body>
-  <app-element name="Base"><br><br>Solidarity is uploading its 2.4M app-element. <br> Please wait a moment...</app-element>
+  <app-element name="Base">
+		<div style="position:absolute; top:50%; left:50%; margin-top:-100px; margin-left: -64px; width:140px; height:128px; text-align:center">
+			<img src="images/pc/preloader/Preloader_4.gif"/>
+			<br> <span style="font-size:9px">L O A D I N G &nbsp;&nbsp;&nbsp; S O L I D A R I T Y</span>
+		</div>
+  </app-element>
   <script src="app-base.js"></script>
 </body>
-<!-- <script src="js/bootstrap.bundle.min.js"></script>-->
+<script src="js/bootstrap.bundle.min.js"></script>
 <script>
 //https://stackoverflow.com/questions/31512504/html5-notification-not-working-in-mobile-chrome
 navigator.serviceWorker.register('sw.js');
