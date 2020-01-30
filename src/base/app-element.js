@@ -8,6 +8,7 @@ import './inbox-element.js'
 import './contacts-element.js'
 import './login-element.js'
 import './dialog-element.js'
+import './chats-element.js'
 
 class AppElement extends LitElement {
 
@@ -192,8 +193,10 @@ style="text-align:left">
 <i class="fas fa-envelope" tab="inbox"></i> <span style="vertical-align:1px" tab="inbox">Inbox</span>
 <span class="badge badge-light" ?hidden="${this.messagesLength == 0}" tab="inbox">${this.messagesLength}</span>
 </button>
-<a href="https://github.com/scenaristeur/solidarity/wiki/How-does-LongChat-work-on-Solidarity-%3F" target="_blank">How does it work ?</a>
+  <chats-element name="Chats"></chats-element>
 </div>
+
+
 
 <div class="col shadow-sm p-3 m-1" style="height:80vh">
 <main-element ?hidden="${this.tab != 'main'}" name="Main"></main-element>
