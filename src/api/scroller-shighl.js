@@ -49,7 +49,6 @@ class ScrollerShighl extends LitElement {
     ${this.instance}
     <div id="scroller">
     <div id="sentinel">Loading more</div>
-
     <br>
     <br>
     `;
@@ -88,71 +87,102 @@ class ScrollerShighl extends LitElement {
 
   async instanceChanged(instance){
     var app = this
-    console.log(instance)
-    this.instance = instance
-    var folder = instance.substring(0,instance.lastIndexOf('/')+1)
-    this.pages = await this.sh.getPages(folder)
+    /*  app.scroller.innerHTML = ""
+    var sentineldiv = document.createElement('div');
+    //  newItem.classList.add('item');
+    //  newItem.textContent = 'Item ' + this.counter++;
+    sentineldiv.textContent = "loading 2222" //toLocaleTimeString
+    sentineldiv.id="sentinel"
+    app.scroller.insertBefore(sentineldiv, app.scroller.firstChild)*/
+    /*  [].forEach.call(this.shadowRoot.querySelectorAll('.daydiv'),function(e){
+    e.parentNode.removeChild(e);
+  });*/
+  //app.scroller.scrollTop = app.scroller.scrollHeight;
+  var daydivs = this.shadowRoot.querySelectorAll('.day')
+  console.log(daydivs)
+  daydivs.forEach((e, i) => {
+    e.parentNode.removeChild(e);
+  });
+
+
+  console.log(instance)
+  this.instance = instance
+  var folder = instance.substring(0,instance.lastIndexOf('/')+1)
+  this.pages = await this.sh.getPages(folder)
+
+  this.pages.instance = instance
+  this.pages.day =  this.pages.days.pop()
+    this.initial = true
+  app.buildDay()
+
+
+
+  var intersectionObserver = new IntersectionObserver(entries => {
+    // If intersectionRatio is 0, the sentinel is out of view
+    // and we do not need to do anything.
+    if (entries[0].intersectionRatio <= 0) {
+      return;
+    }
+    //  app.loadItems(5);
+    //  app.buildDay()
+    // appendChild will move the existing element, so there is no need to
+    // remove it first.
+    //scroller.appendChild(sentinel);
+    app.scroller.insertBefore(app.sentinel, app.scroller.firstChild);
+    //  app.loadItems(10);
     this.pages.day =  this.pages.days.pop()
-    this.pages.instance = instance
 
-    var initial = true
+    // revoir changement de mois, d'annéee !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    console.log(this.pages)
+    //  app.getMessages()
+    app.buildDay()
 
-    var intersectionObserver = new IntersectionObserver(entries => {
-      // If intersectionRatio is 0, the sentinel is out of view
-      // and we do not need to do anything.
-      if (entries[0].intersectionRatio <= 0) {
-        return;
-      }
-      app.loadItems(5);
-      app.getMessages()
-      // appendChild will move the existing element, so there is no need to
-      // remove it first.
-      //scroller.appendChild(sentinel);
-      app.scroller.insertBefore(app.sentinel, app.scroller.firstChild);
-      app.loadItems(10);
-      this.pages.day =  this.pages.days.pop()
 
-      // revoir changement de mois, d'annéee !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-      console.log(this.pages)
-      app.getMessages()
-      if (initial==true){
-        console.log(initial)
-        app.scroller.scrollTop = app.scroller.scrollHeight;
-        initial = false
-      }
+    //  ChromeSamples.setStatus('Loaded up to item ' + counter);
+  });
+  intersectionObserver.observe(app.sentinel);
+}
 
-      //  ChromeSamples.setStatus('Loaded up to item ' + counter);
-    });
-    intersectionObserver.observe(app.sentinel);
+
+buildDay(){
+  var daydiv = document.createElement('div');
+  daydiv.classList.add('day');
+  //  newItem.textContent = 'Item ' + this.counter++;
+  daydiv.textContent = this.pages.day //toLocaleTimeString
+  //  scroller.appendChild(newItem);
+  this.scroller.insertBefore(daydiv, this.scroller.firstChild);
+  this.getMessages(daydiv)
+}
+
+async getMessages(daydiv){
+  //console.log(this.pages)
+  var messages = await this.sh.getMessages(this.pages)
+  console.log(messages)
+  for (var i = 0; i < messages.length; i++) {
+    var details = await this.sh.messageDetails(messages[i])
+    var newItem = document.createElement('div');
+    newItem.classList.add('item');
+    //  newItem.textContent = 'Item ' + this.counter++;
+    newItem.textContent = new Date(details.date).toLocaleString(this.lang) +' Item ' + messages[i] ; //toLocaleTimeString
+    //  scroller.appendChild(newItem);
+    //  this.scroller.insertBefore(newItem, daydiv);
+    daydiv.prepend(newItem)
   }
-
-
-
-
-  async getMessages(){
-    //console.log(this.pages)
-    var messages = await this.sh.getMessages(this.pages)
-    console.log(messages)
-    for (var i = 0; i < messages.length; i++) {
-      var details = await this.sh.messageDetails(messages[i])
-      var newItem = document.createElement('div');
-      newItem.classList.add('item');
-      //  newItem.textContent = 'Item ' + this.counter++;
-      newItem.textContent = new Date(details.date).toLocaleString(this.lang) +' Item ' + messages[i] ; //toLocaleTimeString
-      //  scroller.appendChild(newItem);
-      this.scroller.insertBefore(newItem, this.scroller.firstChild);
-    }
+  if (this.initial==true){
+    this.scroller.scrollTop = this.scroller.scrollHeight;
+    this.initial = false
   }
+}
 
-  loadItems(n) {
-    for (var i = 0; i < n; i++) {
-      var newItem = document.createElement('div');
-      newItem.classList.add('item');
-      newItem.textContent = 'Item ' + this.counter++;
-      //  scroller.appendChild(newItem);
-      this.scroller.insertBefore(newItem, this.scroller.firstChild);
-    }
+loadItems(n) {
+  for (var i = 0; i < n; i++) {
+    var newItem = document.createElement('div');
+    newItem.classList.add('item');
+    newItem.textContent = 'Item ' + this.counter++;
+    //  scroller.appendChild(newItem);
+    this.scroller.insertBefore(newItem, this.scroller.firstChild);
   }
+}
 
 }
 

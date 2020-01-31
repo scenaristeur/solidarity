@@ -165,13 +165,13 @@ export class Shighl {
 
     for await (const subject of data[chatfile].subjects){
       //  console.log("subject", `${subject}` );
-      if ( `${subject}` != pages.instance){ // ne semble pas fonctionner ??
+      if (( `${subject}` != pages.folder) && ( `${subject}` != chatfile) && ( `${subject}` != pages.instance)){ // ne semble pas fonctionner ??
         messages = [... messages, `${subject}`]
         //console.log(docs)
       }
     }
     //  console.log(docs)
-messages.sort().reverse()
+    messages.sort().reverse()
     console.log(messages)
     return messages
   }
