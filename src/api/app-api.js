@@ -3,6 +3,7 @@ import { LitElement, html } from 'lit-element';
 import './login-shighl.js'
 import './friends-shighl.js'
 import './publictypeindex-shighl.js'
+import './main-shighl.js'
 
 
 class AppApi extends LitElement {
@@ -25,6 +26,8 @@ class AppApi extends LitElement {
     <login-shighl name="Login"></login-shighl>
     <friends-shighl name="Friends"></friends-shighl>
     <publictypeindex-shighl name="PublicTypeIndex"></publictypeindex-shighl>
+    <main-shighl name="Main"></main-shighl>
+    <br><br><br>
     `;
   }
 
