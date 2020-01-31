@@ -1,7 +1,6 @@
 import { LitElement, html } from 'lit-element';
-
+import { HelloAgent } from '../agents/hello-agent.js';
 import { Shighl } from './shighl.js'
-
 
 class FriendsShighl extends LitElement {
 
@@ -23,18 +22,26 @@ class FriendsShighl extends LitElement {
 
   render(){
     return html`
+
+    <div ?hidden=${this.webId==null}>
     <h4>${this.something}</h4>
-    <button @click="${this.getAllFriends}">Get Friends</button>
-    <br>
+    Me : ${this.webId} <button @click="${this.getAllFriends}">Get Friends</button>
+    <br><br>
     ${this.friends.map((f,index) => html`
-      ${index} : ${f.webId}<br>
+      ${index} : ${f.webId} <button webId="${f.webId}" @click="${this.getAllFriends}">Get Friends</button><br>
       `)}
+      </div>
       `;
+
+
     }
 
     firstUpdated(){
       this.sh = new Shighl()
       this.sh.trackSession(this.tracksessioncallback.bind(this))
+      var app = this;
+      this.agent = new HelloAgent(this.name);
+      console.log(this.agent)
     }
 
     tracksessioncallback(webId){
@@ -45,8 +52,11 @@ class FriendsShighl extends LitElement {
     }*/
   }
 
-  async getAllFriends(){
-    var friends = await this.sh.getFriends()
+  async getAllFriends(e){
+    var webId = e.target.getAttribute("webId") || this.webId
+    console.log(webId)
+    this.agent.send("PublicTypeIndex", {action:"webIdChanged", webId:webId})
+    var friends = await this.sh.getFriends(webId)
     this.updateFriends(friends)
   }
 

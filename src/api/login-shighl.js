@@ -1,5 +1,5 @@
 import { LitElement, html } from 'lit-element';
-
+import { HelloAgent } from '../agents/hello-agent.js';
 import { Shighl } from './shighl.js'
 
 
@@ -24,18 +24,24 @@ class LoginShighl extends LitElement {
   render(){
     return html`
     <h4>${this.something}</h4>
-    <button @click="${this.login}">Login</button>
-    <button @click="${this.logout}">Logout</button>
-    <button @click="${this.getName}">Get Name</button>
-    <br>
-    webId : ${this.webId}<br>
-    username : ${this.username}
+    ${this.webId == null ?
+      html`    <button @click="${this.login}">Login</button>`
+      :html`
+      <button @click="${this.logout}">Logout</button>
+      <button @click="${this.getName}">Get Name</button>
+      <br>
+      webId : ${this.webId}<br>
+      username : ${this.username}
+      `
+    }
     `;
   }
 
   firstUpdated(){
     this.sh = new Shighl()
     console.log(this.sh)
+    this.agent = new HelloAgent(this.name);
+    console.log(this.agent)
     this.sh.testCallBack(this.cb)
     this.sh.trackSession(this.tracksessioncallback.bind(this))
     console.log("webid",this.sh.getWebId)
@@ -48,6 +54,8 @@ class LoginShighl extends LitElement {
   tracksessioncallback(webId){
     console.log(webId)
     this.webId = webId
+    this.agent.send("PublicTypeIndex", {action:"webIdChanged", webId:webId})
+
   }
 
   login(){
@@ -55,7 +63,7 @@ class LoginShighl extends LitElement {
   }
 
   logout(){
-    this.sh.logout(this.whenlogout)
+    this.sh.logout(this.whenlogout.bind(this))
   }
 
   whenlogin(webId){

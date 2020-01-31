@@ -45,9 +45,10 @@ export class Shighl {
   }
 
 
-  async getFriends(){
-    console.log(this.webId)
-    for await (const fwebid of data.user.friends){
+  async getFriends(webId = this.webId){
+    console.log(webId)
+    this.friends = []
+    for await (const fwebid of data[webId].friends){
       //  console.log(friend)
       var friend = {}
       friend.webId = `${fwebid}`
@@ -66,6 +67,48 @@ export class Shighl {
     }catch(e){
       return e
     }
+  }
+
+
+  async getPublicTypeIndex(webId){
+    console.log(webId)
+    var pti = {}
+    pti.url = await data[webId].publicTypeIndex
+    try{
+      if (`${pti.url}` != "undefined"){
+        pti.instances = []
+        for await (const subject of data[pti.url].subjects){
+          //  console.log(`${subject}`);
+          if (`${pti.url}` != `${subject}`) {
+            const s = {subject: `${subject}`}
+            for await (const property of subject.properties)
+            {
+              if (`${property}` == "http://www.w3.org/ns/solid/terms#instance")    {
+                //  console.log( "--",`${property}`);
+                const instance = await data[subject][`${property}`]
+                const classe = await data[subject].solid$forClass
+                //  console.log( "--nn",`${instance}`);
+                s.predicate = `${property}`
+                s.object = `${instance}`
+                s.classe = `${classe}`
+                s.shortClasse = this.localName(s.classe)
+              }
+            }
+            pti.instances.push(s)
+          }
+        }
+      }
+    }catch(e){
+      console.log(e)
+    }
+    return pti
+  }
+
+  localName(str){
+    var ln = str.substring(str.lastIndexOf('#')+1);
+    //console.log(ln)
+    ln == str ? ln = str.substring(str.lastIndexOf('/')+1) : "";
+    return ln
   }
 
   testCallBack(cb){
