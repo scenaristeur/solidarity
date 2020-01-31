@@ -1,4 +1,3 @@
-console.log("hello")
 import * as auth from 'solid-auth-client';
 import data from "@solid/query-ldflex";
 
@@ -6,6 +5,7 @@ export class Shighl {
 
   constructor() {
     this.webId = null
+    this.friends = []
   }
 
   trackSession(cb) {
@@ -40,38 +40,37 @@ export class Shighl {
     }
   }
 
-
-
-
-
   get getWebId(){
     return this.webId
   }
 
-  testCallBack(cb){
-    var test = 12
-    cb(test)
+
+  async getFriends(){
+    console.log(this.webId)
+    for await (const fwebid of data.user.friends){
+      //  console.log(friend)
+      var friend = {}
+      friend.webId = `${fwebid}`
+      this.friends = [... this.friends, friend]
+    }
+    return this.friends
   }
 
 
-  get amortization() {
-    let monthlyPayment = this.monthlyPayment;
-    let monthlyRate = this.rate / 100 / 12;
-    let balance = this.principal;
-    let amortization = [];
-    for (let y=0; y<this.years; y++) {
-      let interestY = 0;
-      let principalY = 0;
-      for (let m=0; m<12; m++) {
-        let interestM = balance * monthlyRate;
-        let principalM = monthlyPayment - interestM;
-        interestY = interestY + interestM;
-        principalY = principalY + principalM;
-        balance = balance - principalM;
-      }
-      amortization.push({principalY, interestY, balance});
+  async getName(){
+    console.log(this.webId)
+    try {
+      const fullname = await data.user.vcard$fn;
+      console.log(`\nNAME: ${fullname}`);
+      return `${fullname}`
+    }catch(e){
+      return e
     }
-    return amortization;
+  }
+
+  testCallBack(cb){
+    var test = "this is a test for your callback"
+    cb(test)
   }
 
 }
