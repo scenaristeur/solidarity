@@ -2,9 +2,10 @@ const path = require('path');
 
 module.exports = {
   entry: {
-    "app-element": './src/component/app-element.js',
-  //  "app-mini": './src/component/app-mini.js',
+    //  "app-element": './src/component/app-element.js',
+    //  "app-mini": './src/component/app-mini.js',
     "app-base": './src/base/app-element.js',
+    "app-api": './src/api/app-api.js',
     /*"login-element": './src/component/login-element.js',
     "chats-element": './src/component/chats-element.js',
     "messages-element": './src/component/messages-element.js',

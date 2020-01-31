@@ -11,6 +11,10 @@ npm run start
 your browser must open on http://localhost:9000
 
 
+
+
+
+
 #media queries
 https://www.w3schools.com/css/css_rwd_mediaqueries.asp
 
@@ -23,7 +27,7 @@ https://github.com/solid/solid-panes/blob/master/Documentation/conventions.md#ch
 To create a chat conversation, create a document, e.g., `/chat.ttl`, and add the following triples to it:
 
 ```turtle
-</chat.ttl#this> a          mee:LongChat .
+</chat.ttl#this> a          mee:LongChat
 </chat.ttl#this> dc:author  </profile/card#me> .
 </chat.ttl#this> dc:created "2018-07-06T21:36:04Z"^^XML:dateTime .
 </chat.ttl#this> dc:title   "Chat channel" .
