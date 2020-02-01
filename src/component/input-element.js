@@ -109,14 +109,14 @@ class InputElement extends LitElement {
     this.agent = new HelloAgent(this.name);
     this.agent.receive = function(from, message) {
       if (message.hasOwnProperty("action")){
-      //  console.log(message)
+        //  console.log(message)
         switch(message.action) {
           case "reply":
           app.reply(message.replyTo)
           break;
           case "discoverChanged":
           app.discover= this.discover
-        //  console.log(this.discover)
+          //  console.log(this.discover)
           break;
 
           default:
@@ -129,11 +129,11 @@ class InputElement extends LitElement {
 
 
   async reply(replyTo){
-  //  console.log(replyTo)
+    //  console.log(replyTo)
     this.replyTo = replyTo.url
     var notifDestInbox = await data[replyTo.maker].inbox
     this.notifDestInbox = `${notifDestInbox}`
-  //  console.log(this.notifDestInbox)
+    //  console.log(this.notifDestInbox)
     this.discover = replyTo.discover
   }
 
@@ -170,13 +170,16 @@ class InputElement extends LitElement {
       if (content.length > 0){
         var dateObj = new Date();
         var messageId = "#Msg"+dateObj.getTime()
-        var month = ("0" + dateObj.getUTCMonth() + 1).slice(-2); //months from 1-12
+        var month = ("0" + (dateObj.getUTCMonth() + 1)).slice(-2); //months from 1-12
         var day = ("0" + dateObj.getUTCDate()).slice(-2);
         var year = dateObj.getUTCFullYear();
         var path = this.discover.folder+[year, month, day, ""].join("/")
+        console.log(path)
+
         var url = path+"chat.ttl"+messageId
         var date = dateObj.toISOString()
         var index = this.discover.folder+"index.ttl#this"
+        console.log(date)
         await data[url].dct$created.add(date)
         await data[url].sioc$content.add(content)
         await data[url].foaf$maker.add(namedNode(`${webid}`))
@@ -225,7 +228,7 @@ class InputElement extends LitElement {
       this.postType = "InstantMessage"
       var buttons = this.shadowRoot.querySelectorAll("#radioBtn a")
       buttons.forEach(function(b){
-      //  console.log(b)
+        //  console.log(b)
         b.classList.remove("active")
         b.classList.add("notActive")
       })

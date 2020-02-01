@@ -1,6 +1,7 @@
 import { LitElement, html } from 'lit-element';
 import { HelloAgent } from '../agents/hello-agent.js';
-import { Shighl } from './shighl.js'
+import  Shighl  from 'shighl'
+
 
 class PublictypeindexShighl extends LitElement {
 

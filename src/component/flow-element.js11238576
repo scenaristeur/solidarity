@@ -71,7 +71,7 @@ class FlowElement extends LitElement {
 
       console.log("lastmod",`${lastmod}`);
       var dateObj = new Date(lastmod);
-      var month = ("0" + dateObj.getUTCMonth() + 1).slice(-2); //months from 1-12
+      var month = ("0" + (dateObj.getUTCMonth() + 1)).slice(-2); //months from 1-12
       var day = ("0" + dateObj.getUTCDate()).slice(-2);
       var year = dateObj.getUTCFullYear();
 

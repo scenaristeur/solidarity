@@ -1,11 +1,30 @@
 import * as auth from 'solid-auth-client';
 import data from "@solid/query-ldflex";
 
-export class Shighl {
+class Shighl {
+  /**
+  * @param {SolidAuthClient} auth - An auth client, for instance solid-auth-client or solid-auth-cli
+  * @param {SolidFileClientOptions} [options]
+  */
+  constructor () {
+    console.log("Shighl loaded")
+      this.webId = null
+      this.friends = []
+    }
 
-  constructor() {
-    this.webId = null
-    this.friends = []
+  async test(){
+    var name = await data['https://spoggy.solid.community/profile/card#me'].vcard$fn
+    console.log(`${name}`);
+  }
+
+  async readName (url) {
+    try {
+      const fullname = await data.user.vcard$fn;
+      console.log(`\nNAME: ${fullname}`);
+      return `${fullname}`
+    }catch(e){
+      return e
+    }
   }
 
   trackSession(cb) {
@@ -196,3 +215,5 @@ export class Shighl {
   }
 
 }
+
+export default Shighl

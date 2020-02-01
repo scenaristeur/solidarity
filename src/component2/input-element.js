@@ -65,7 +65,7 @@ The input
 
       var dateObj = new Date();
       var messageId = "#Msg"+dateObj.getTime()
-      var month = ("0" + dateObj.getUTCMonth() + 1).slice(-2); //months from 1-12
+      var month = ("0" + (dateObj.getUTCMonth() + 1)).slice(-2); //months from 1-12
       var day = ("0" + dateObj.getUTCDate()).slice(-2);
       var year = dateObj.getUTCFullYear();
       var path = this.discover.folder+[year, month, day, ""].join("/")

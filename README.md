@@ -11,7 +11,13 @@ npm run start
 your browser must open on http://localhost:9000
 
 
+# when developping module shighl
 
+import  Shighl  from '../../node_modules/shighl/src/Shighl.js'
+
+then when published & installed
+
+import  Shighl  from 'shighl'
 
 
 
@@ -20,6 +26,9 @@ https://www.w3schools.com/css/css_rwd_mediaqueries.asp
 
 # interessant stacking sticky
 https://codepen.io/ncerminara/full/VdLpzd
+
+# chat modele
+https://bootsnipp.com/tags/chat
 
 ## Chat from mashlib-dev  / workspaces/solid-panes/Documentation/conventions.md
 https://github.com/solid/solid-panes/blob/master/Documentation/conventions.md#chat

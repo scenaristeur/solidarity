@@ -80,7 +80,7 @@ ${this.something} :
 
     resetDiscover(){
       var dateObj = new Date();
-      var month = ("0" + dateObj.getUTCMonth() + 1).slice(-2); //months from 1-12
+      var month = ("0" + (dateObj.getUTCMonth() + 1)).slice(-2); //months from 1-12
       var day = ("0" + dateObj.getUTCDate()).slice(-2);
       var year = dateObj.getUTCFullYear();
       this.discover.year = year
