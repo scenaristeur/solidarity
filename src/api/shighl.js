@@ -91,6 +91,7 @@ export class Shighl {
                 s.predicate = `${property}`
                 s.object = `${instance}`
                 s.classe = `${classe}`
+                //  s.path = `${instance}`.split("/")
                 s.shortClasse = this.localName(s.classe)
               }
             }
@@ -102,6 +103,84 @@ export class Shighl {
       console.log(e)
     }
     return pti
+  }
+
+  async getPages(folder){
+    var pages = {}
+    var years = []
+    for await (const year of data[folder]['ldp$contains']){
+      //  console.log("YEAR",`${year}`);
+      if ( `${year}`.endsWith('/')){
+        var localyear = this.localName(`${year}`.slice(0, -1))
+        years.push(localyear)
+      }
+    }
+    //  console.log(years)
+    var last_year = Math.max(...years)
+
+    //MONTH
+    var months = []
+    for await (const month of data[folder+last_year+'/']['ldp$contains']){
+      //  console.log("MONTH",`${month}`);
+      if ( `${month}`.endsWith('/')){
+        var localmonth = this.localName(`${month}`.slice(0, -1))
+        months.push(localmonth)
+      }
+    }
+    //  console.log(months)
+    var last_month = ("0" + Math.max(...months)).slice(-2)
+
+    //DAY
+    var days = []
+    for await (const day of data[folder+last_year+'/'+last_month+'/']['ldp$contains']){
+      //  console.log("DAY",`${day}`);
+      if ( `${day}`.endsWith('/')){
+        var localday = this.localName(`${day}`.slice(0, -1))
+        days.push(localday)
+      }
+    }
+    //console.log(days)
+    var last_day = ("0" + Math.max(...days)).slice(-2)
+    //  console.log("Last day",last_day)
+
+    pages.years = years.sort()
+    pages.months = months.sort()
+    pages.days = days.sort()
+    pages.year = last_year
+    pages.month = last_month
+    pages.day = last_day
+    pages.folder = folder
+    return pages
+  }
+
+  async getMessages(pages){
+    var messages = []
+    console.log(pages)
+    var path = pages.folder+[pages.year,pages.month,pages.day,""].join('/')
+    //  console.log(path)
+    //console.log("Clear")
+    await data.clearCache()
+    let chatfile = await data[path]['ldp$contains'];
+    //  console.log("ChatFile",`${chatfile}`);
+
+    for await (const subject of data[chatfile].subjects){
+      //  console.log("subject", `${subject}` );
+      if (( `${subject}` != pages.folder) && ( `${subject}` != chatfile) && ( `${subject}` != pages.instance)){ // ne semble pas fonctionner ??
+        messages = [... messages, `${subject}`]
+        //console.log(docs)
+      }
+    }
+    //  console.log(docs)
+    messages.sort().reverse()
+    console.log(messages)
+    return messages
+  }
+
+  async messageDetails(msgurl){
+    console.log(msgurl)
+    var details = {}
+    details.date = await data[msgurl]['http://purl.org/dc/terms/created']
+    return details
   }
 
   localName(str){

@@ -29,11 +29,24 @@ class PublictypeindexShighl extends LitElement {
     <table>
     ${this.publicTypeIndex.instances.map((i,index) => html`
       <tr>
-      <td>${index}</td><td>${i.shortClasse}</td><td><a href="${i.object}" target="_blank">${i.object}</a></td>
+      <td>${index}</td>
+      <td>${i.shortClasse}</td>
+      <td>${i.name}</td>
+      <td><button instance="${i.object}" classe="${i.shortClasse}" @click="${this.open}">Open</button></td>
+      <td><a href="${i.object}" target="_blank">${i.object}</a></td>
+
       </tr>
       `)}
       </table>
       `;
+    }
+
+
+    open(e){
+      var instance = e.target.getAttribute("instance")
+      var classe = e.target.getAttribute("classe")
+      console.log(instance, classe)
+      this.agent.send("Main", {action: "instanceChanged", instance: instance, classe: classe})
     }
 
     firstUpdated(){
