@@ -1,0 +1,74 @@
+
+
+    /* Extra small devices (portrait phones, less than 576px)*/
+    @media (max-width: 575.98px) {
+      .nav-brand{
+        /*font-size: 80px;*/
+      }
+    }
+
+    /*Small devices (landscape phones, 576px and up)*/
+    @media (min-width: 576px) {
+      .nav-brand{
+        /*  font-size: 80px;*/
+      }
+    }
+
+    /*Medium devices (tablets, 768px and up)*/
+    @media (min-width: 768px) {
+      /*div{
+      border: 10px solid #ccc;
+      height: 200px;
+    }*/
+  }
+
+
+  /*Large devices (desktops, 992px and up)*/
+  @media (min-width: 992px) {
+    /*div{
+    border: 10px solid #ccc;
+    height: 200px;
+  }*/
+}
+
+
+/* Extra large devices (large desktops, 1200px and up)*/
+@media (min-width: 1200px) {
+  /*div{
+  border: 10px solid #ccc;
+  height: 200px;
+}*/
+}
+
+
+#collapsibleNavbar{
+  background-color: #17a2b8;
+  z-index:5;
+  max-width: 300px;
+  width:100%;
+  position: fixed;
+  top: 80px;
+  right:30px;
+  overflow-y: auto;
+  transition: visibility .3s ease-in-out, -webkit-transform .3s ease-in-out;
+  transition: transform .3s ease-in-out, visibility .3s ease-in-out;
+  transition: transform .3s ease-in-out, visibility .3s ease-in-out, -webkit-transform .3s ease-in-out;
+}
+.fa-1x {
+  font-size: 1.5rem;
+}
+.navbar-toggler.toggler-example {
+  cursor: pointer;
+}
+.user_img{
+  height: 32px;
+  width: 32px;
+  border:1.5px solid #f5f6fa;
+}
+.border-10 {
+  border-width:10px !important;
+}
+nav {
+  width: 100%
+
+}
