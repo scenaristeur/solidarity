@@ -1,0 +1,118 @@
+<!doctype html>
+<!--https://swiperjs.com/get-started/-->
+<html lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+  <title>Solidarity</title>
+  <link rel="shortcut icon" type="image/png" href="favicon.png">
+  <link rel="manifest" href="./manifest.json">
+
+  <link href="css/bootstrap/bootstrap.min.css" rel="stylesheet" >
+  <link href="css/fontawesome/css/all.css" rel="stylesheet">
+  <!--   <script src="vendor/jquery/jquery.slim.min.js"></script>-->
+  <link rel="stylesheet" href="https://unpkg.com/swiper/css/swiper.min.css">
+
+  <style>
+  .swiper-container {
+    width: 100%;
+    height: 100%;
+  }
+</style>
+
+</head>
+<body>
+
+
+  <div class="container-fluid">
+    <div class="col shadow-lg p-3 mt-3 ml-n1 mr-n1 bg-white" style="height:96vh;width:100vw;border-radius: 25px;">
+
+        <banner-element name="Banner"></banner-element>
+
+
+      <!-- Slider main container -->
+      <div class="swiper-container">
+        <!-- Additional required wrapper -->
+        <div class="swiper-wrapper">
+          <!-- Slides -->
+          <div class="swiper-slide">
+            <inbox-element name="Inbox">Inbox</inbox-element>
+            <contacts-element name="Contacts">Contacts</contacts-element>
+          </div>
+
+          <div class="swiper-slide">
+            <chat-element name="Chat">Chat</chat-element>
+          </div>
+          <div class="swiper-slide">
+            <notes-element name="Notes">Notes</notes-element>
+          </div>
+          <div class="swiper-slide">
+            <holacratie-element name="Holacratie">Holacratie</holacratie-element>
+          </div>
+          <div class="swiper-slide">
+            <!--<app-element name="Base">
+            <div style="position:absolute; top:50%; left:50%; margin-top:-100px; margin-left: -64px; width:140px; height:128px; text-align:center">
+            <img src="images/pc/preloader/Preloader_4.gif"/>
+            <br> <span style="font-size:9px">L O A D I N G &nbsp;&nbsp;&nbsp; S O L I D A R I T Y</span>
+          </div>
+        </app-element>-->
+      </div>
+
+    </div>
+    <!-- If we need pagination -->
+    <div class="swiper-pagination"></div>
+
+    <!-- If we need navigation buttons -->
+    <div class="swiper-button-prev"></div>
+    <div class="swiper-button-next"></div>
+
+    <!-- If we need scrollbar -->
+    <div class="swiper-scrollbar"></div>
+  </div>
+
+</div>
+</div>
+
+
+
+
+<!--  <script src="app-hola.js"></script>-->
+<script src="banner-element.js"></script>
+<script src="inbox-element.js"></script>
+<script src="notes-element.js"></script>
+<script src="chat-element.js"></script>
+<script src="holacratie-element.js"></script>
+<script src="contacts-element.js"></script>
+
+<script src="https://unpkg.com/swiper/js/swiper.min.js"></script>
+
+</body>
+<!--<script src="js/bootstrap.bundle.min.js"></script>-->
+<script>
+//https://stackoverflow.com/questions/31512504/html5-notification-not-working-in-mobile-chrome
+navigator.serviceWorker.register('sw.js');
+</script>
+<script>
+var mySwiper = new Swiper ('.swiper-container', {
+  // Optional parameters
+  direction: 'horizontal',
+  loop: true,
+  // If we need pagination
+  pagination: {
+    el: '.swiper-pagination',
+  },
+
+  // Navigation arrows
+  navigation: {
+    nextEl: '.swiper-button-next',
+    prevEl: '.swiper-button-prev',
+  },
+
+  // And if we need scrollbar
+  scrollbar: {
+    el: '.swiper-scrollbar',
+  },
+})
+</script>
+</html>
