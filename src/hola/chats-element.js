@@ -56,7 +56,7 @@ class ChatsElement extends LitElement {
         </ul>
         `
         :html`
-        <i class="fas fa-hourglass-half"></i> Loading instances... Please wait & if it's too long refresh...
+        <i class="fas fa-hourglass-half"></i> Loading instances... Please wait...
         `
       }
 

@@ -19,7 +19,7 @@ then when published & installed
 
 import  Shighl  from 'shighl'
 
-
+   REduce the profile image https://images.weserv.nl/docs/-->
 
 #media queries
 https://www.w3schools.com/css/css_rwd_mediaqueries.asp

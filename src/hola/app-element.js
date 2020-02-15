@@ -1,40 +1,29 @@
 import { LitElement, html } from 'lit-element';
+import { HelloAgent } from '../agents/hello-agent.js';
+
 import Swiper from 'swiper';
 
 import './banner-element.js'
 import './inbox-element.js'
 import './chat-element.js'
 import './contacts-element.js'
-import { HelloAgent } from '../agents/hello-agent.js';
+import './dialog-element.js'
 
 class AppElement extends LitElement {
 
   static get properties() {
     return {
       name: {type: String},
-      something: {type: String},
     };
   }
 
   constructor() {
     super();
-    this.something = "App Element"
-  }
-
-  script() {
-    let script = document.createElement('script');
-    //  script.onload = this.onLoad.bind(this);
-    script.src = 'https://unpkg.com/swiper/js/swiper.min.js';
-    return script;
-  }
-
-  onLoad() {
-    alert('loaded');
   }
 
   render(){
     return html`
-    <link rel="stylesheet" href="https://unpkg.com/swiper/css/swiper.min.css">
+    <link rel="stylesheet" href="./css/swiper.min.css">
     <link href="css/fontawesome/css/all.css" rel="stylesheet">
     <link href="css/bootstrap/bootstrap.min.css" rel="stylesheet">
     <link href="css/hola.css" rel="stylesheet">
@@ -46,7 +35,7 @@ class AppElement extends LitElement {
     }
     .swiper-container {
       width: auto;
-      height: 88vh;
+      height: 100%; /*88vh;*/
     }
     .swiper-button-next, .swiper-button-prev {
     position: absolute;
@@ -108,7 +97,8 @@ class AppElement extends LitElement {
   </div>
   </div>
   </div>
-  ${this.script()}
+  <dialog-element name="Dialog"></dialog-element>
+
   `;
 }
 
@@ -154,28 +144,6 @@ firstUpdated(){
   el: scrollbar,
 },*/
 });
-this.agent = new HelloAgent(this.name);
-console.log(this.agent)
-this.agent.receive = function(from, message) {
-  //  console.log("messah",message)
-  if (message.hasOwnProperty("action")){
-    //  console.log(message)
-    switch(message.action) {
-      case "webIdChanged":
-      app.webIdChanged(message.webId)
-      break;
-      default:
-      console.log("Unknown action ",message)
-    }
-  }
-};
-}
-
-webIdChanged(mess){
-  this.webId = mess.webId
-  this.fullname = mess.fullname
-  this.img = mess.img
-  console.log(mess)
 }
 
 }

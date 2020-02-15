@@ -59,8 +59,10 @@ class FabElement extends LitElement {
       border-radius: 50%;
       width: 50px;
       height: 50px;
-      right: 10px; bottom: 12px;
+      right: 10px;
+
       /*
+           bottom: 32px;
       width: 50px; height: 50px;
       right: 100%; margin-right: 0px;*/
       z-index: 9;
@@ -82,14 +84,15 @@ class FabElement extends LitElement {
 
     ${this.discover != undefined ?
       html``
-      :html`Select a Channel above to participate. <br><br> `
+      :html`Select a Channel below to participate. <br><br> `
     }
 
     ${this.webId != null && this.discover != undefined ?
       html`
       <button type="button" class="btn btn-write btn-danger has-tooltip" data-placement="left" @click="${this.toggleWrite}" title="Write"> <i class="fa fa-pen"></i> </button>
       `
-      :html`You must login using your <a href="https://solidproject.org/" target="_blank">Solid WebId</a> and select a Channel to be able to post. <br><br> `
+      :html`You must login using your <a href="https://solidproject.org/" target="_blank">Solid WebId</a>
+      and select a Channel to be able to post. <br><br> `
     }
 
     <!--

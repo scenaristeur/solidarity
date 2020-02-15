@@ -1,5 +1,6 @@
 import { LitElement, html } from 'lit-element';
 import { HelloAgent } from '../agents/hello-agent.js';
+import  Shighl  from 'shighl'
 import './login-element.js'
 
 class BannerElement extends LitElement {
@@ -7,13 +8,17 @@ class BannerElement extends LitElement {
   static get properties() {
     return {
       name: {type: String},
-      something: {type: String},
+      webId: {type: String},
+      fullname: {type: String},
+      img: {type: String},
     };
   }
 
   constructor() {
     super();
-    this.something = "BannerElement"
+    this.webId = null
+    this.fullname = null
+    this.img = null
   }
 
   render(){
@@ -24,19 +29,14 @@ class BannerElement extends LitElement {
 
     <div class="row shadow-lg p-3 mt-n3 bg-white"
     style="box-shadow: inset 0px 5px 45px -35px #000000;height:64px;border-radius: 25px 25px 0px 0px;">
-    <!--https://developer.mozilla.org/fr/docs/Web/CSS/Mod%C3%A8le_de_bo%C3%AEte_CSS/G%C3%A9n%C3%A9rateur_box-shadow-->
-
 
     <nav class="navbar navbar-light bg-white height:50px  p-0 mt-n3">
     <a class="navbar-brand" href="#">Solidarity</a>
-    <!--<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-    </button>-->
+
     <div class="navbar-text">
     ${this.fullname}
     ${this.img != null ?
       html`
-      <!-- REduce the profile image https://images.weserv.nl/docs/-->
       <img class="rounded-circle user_img" src="//images.weserv.nl/?url=${this.img}&w=32&h=32" title="${this.webId}" alt="Can not access image profile">
       `
       :html`<i class="fas fa-user-circle fa-1x" title="${this.webId}"></i>`
@@ -73,26 +73,17 @@ class BannerElement extends LitElement {
     </span>-->
     </nav>
 
-
-
     </div>
-
-
-
-
-
-
     `;
   }
 
   firstUpdated(){
     var app = this;
+    this.sh = new Shighl()
+    this.sh.test()
     this.agent = new HelloAgent(this.name);
-    console.log(this.agent)
     this.agent.receive = function(from, message) {
-      //  console.log("messah",message)
       if (message.hasOwnProperty("action")){
-        //  console.log(message)
         switch(message.action) {
           case "webIdChanged":
           app.webIdChanged(message.webId)
@@ -104,14 +95,29 @@ class BannerElement extends LitElement {
     };
   }
 
-  webIdChanged(webId){
+  async webIdChanged(webId){
     this.webId = webId
     if (webId != null){
-      this.updateProfile();
-    }else{
+      let user = new this.sh.user(webId)
+      console.log(user)
+      this.fullname = await user.name
+      this.img = await user.photo
+      console.log("USER NAME : ", `${this.fullname}`)
+      console.log("USER PHOTO : ", `${this.img}`)
+/*
+      this.friends = await user.friends
+      for (const f of this.friends){
+        console.log(f)
+      }*/
 
+
+    }else{
+      this.fullname = null
+      this.img = null
     }
   }
+
+
 
   clickmenu(e){
     console.log(e)

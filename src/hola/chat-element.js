@@ -94,6 +94,7 @@ ${this.discover.folder != undefined ?
 
 </div>
 
+<div id="scroller" class="col overflow-auto" style="height: 60vh;">
 <ul class="list-group  list-group-flush">
 
 ${this.documents.map((d, index) =>
@@ -108,6 +109,7 @@ ${this.documents.map((d, index) =>
 }
 `)}
 </ul>
+</div>
 
 
 `;

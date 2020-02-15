@@ -79,9 +79,14 @@ class ChatLineElement extends LitElement {
     <div class="row">
     <font face="Arial, Helvetica, sans-serif" style="color:#A5A5A5; font-size:13px;font-weight:bold;">
     <div class="col text-left"  style="top:20px">${new Date(this.date).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</div> </font>
-    <div class="col text-right" style="top:20px">
-    <i class="fas fa-reply" @click="${this.reply}"></i>
-    <i class="fas fa-ellipsis-v"></i></div>
+    <div class="col text-right" >
+    <button class="btn btn-primary btn-sm"
+    @click="${this.reply}">
+    <i class="fas fa-reply" ></i>
+    </button>
+    <!--<i class="fas fa-reply" @click="${this.reply}"></i>
+    <i class="fas fa-ellipsis-v"></i>
+    --></div>
     </div>
     </div>
 

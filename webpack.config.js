@@ -4,8 +4,8 @@ module.exports = {
   entry: {
   //  "app-element": './src/component/app-element.js',
     //  "app-mini": './src/component/app-mini.js',
-    "app-base": './src/base/app-element.js',
-    "app-api": './src/api/app-api.js',
+  //  "app-base": './src/base/app-element.js',
+  //  "app-api": './src/api/app-api.js',
     "app-hola": './src/hola/app-element.js',
   /*  "banner-element": './src/hola/banner-element.js',
     "notes-element": './src/hola/notes-element.js',
