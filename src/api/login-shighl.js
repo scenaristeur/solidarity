@@ -1,6 +1,9 @@
 import { LitElement, html } from 'lit-element';
 import { HelloAgent } from '../agents/hello-agent.js';
-import { Shighl } from './shighl.js'
+//import { Shighl } from './shighl.js'
+import  Shighl  from 'shighl'
+//import  Shighl  from '../../node_modules/shighl/src/Shighl.js'
+
 
 
 class LoginShighl extends LitElement {
