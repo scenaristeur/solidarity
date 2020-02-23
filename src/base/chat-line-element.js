@@ -58,7 +58,7 @@ class ChatLineElement extends LitElement {
     </a>
     </div>
 
-    <div class="col" style="margin-left: -37px;margin-top: -3px;">
+    <div class="col" style="margin-left: -37px; margin-top: -3px;">
     <div style="position:absolute; width:auto; height:auto;  text-align:left;">
     <font face="" style="color:#855FFA;
     font-size:13px;font-weight:bold;">
@@ -77,7 +77,7 @@ class ChatLineElement extends LitElement {
 
     <div class="col-2">
     <div class="row">
-    <font face="" style="color:#A5A5A5; font-size:13px;font-weight:bold;">
+    <font face="" style="color:#A5A5A5; font-size:13px; font-weight:bold;">
     <div class="col text-left"  style="top:20px">${new Date(this.date).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</div> </font>
     <div class="col text-right" style="top:20px">
     <i class="fas fa-reply" @click="${this.reply}"></i>

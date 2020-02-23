@@ -121,6 +121,7 @@ SOFTWARE.
                     <div style="font-size:15px; display:inline-block; vertical-align:13px; margin-right:10px; text-align: right; "><span id="div_banner__account__loggedin__name">Jules</span></div>
                     
                     <div class="ui simple dropdown item">
+                        <!-- <div id="div_banner__account__loggedin__noavatar" style="width:40px; height:40px; display:inline-block; background-image:url('images/no-avatar.png'); opacity: 0.3; background-size: cover"></div> -->
                         <div id="div_banner__account__loggedin__avatar" style="width:40px; height:40px; display:inline-block; background-image:url(''); background-size: cover"></div>
                         <div class="menu">
                           <div class="item" onclick="solid_login__logout()">Logout</div>
@@ -283,7 +284,16 @@ SOFTWARE.
             <!-- chat viewport white background -->
             <div id="div_chatviewportbg" style="position:absoloute; left:0px; top:0px; margin-left:10px; margin-top:-5px; width:1008px; height:800px; background-color:#ffffff;"></div>
         </div>
-        <div id="div_chatviewport_inputconsole" style="position:absolute; left:237px; top:856px; width:963px; height:auto;">
+        
+        
+        <!-- CHAT INPUT-CONSOLE -->
+        
+        <!-- avatar -->
+        <div id="div_inputconsole__loggedin__avatar_container" style="position:absolute; position:absolute; left:271px; top:856px;">
+            <div id="div_inputconsole__loggedin__avatar" style="width:40px; height:40px; display:inline-block; background-image:url(''); background-size: cover"></div>
+        </div>
+        
+        <div id="div_chatviewport_inputconsole" style="position:absolute; left:276px; top:856px; width:963px; height:auto;">
             <div class="ui form">
               <div class="field">
                   <textarea id="frm_lc_text_input" onkeypress="solid_long_chat_reply__onEnterCheck();" name="frm_text_input" rows="2"></textarea>
@@ -300,9 +310,7 @@ SOFTWARE.
     <div id="div__index_splash_pc" style="display:none-; position:absolute; width:100%; height:100%; left:0px; top:0px">
         <div style="width:100%; height:100%; z-index:10000; background-image: url('images/pc/splash/splash.jpg'); background-size: cover"></div>
         <div style="position:absolute; left:0px; top:66%; width:100%; text-align: center">
-            <span style="font-size:114px; color:#ffffff; font-weight: bold">
-                SOLIDARITY
-            </span>
+            <span style="font-size:114px; color:#ffffff; font-weight: bold">SOLIDARITY</span><span id="sp_lblSplashVersion" style="font-size:9px; color:#ffffff; font-weight: bold"></span>
             <br>
             <div style="padding-top:25px;"></div>
             <span style="font-size:36px; color:#ffffff; font-weight: bold;  opacity:.5">
@@ -311,7 +319,7 @@ SOFTWARE.
             <br>
             <div style="padding-top:50px;"></div>
             <span style="font-size:25px;color: #ffffff;">
-                <z onclick="javascript:navigation__helpPages();" style="cursor: pointer">Find out more about Solidarity</z> &nbsp;&nbsp; | &nbsp;&nbsp; <a href="javascript:init__splash_enterClicked();">< E N T E R ></a>
+                <z onclick="javascript:navigation__findOutMore();" style="cursor: pointer">Find out more about Solidarity</z> &nbsp;&nbsp; | &nbsp;&nbsp; <a href="javascript:init__splash_enterClicked();">< E N T E R ></a>
             </span>                
         </div>
     </div>    
