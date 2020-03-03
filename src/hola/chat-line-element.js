@@ -2,6 +2,7 @@ import { LitElement, html } from 'lit-element';
 
 import { HelloAgent } from '../agents/hello-agent.js';
 import data from "@solid/query-ldflex";
+import '@intcreator/markdown-element';
 
 class ChatLineElement extends LitElement {
 
@@ -68,11 +69,14 @@ class ChatLineElement extends LitElement {
     <div style="position:relative;
     padding-top:15px; padding-bottom: 5px; width:auto; height:auto;
     text-align:left;">
-    <font face="Arial, Helvetica, sans-serif" style="color:#303030; font-size:13px;font-weight:bold;line-height:.5px">
-    <span>
-    ${this.content}
-    </span>
-    </font> </div>
+    <font face="Arial, Helvetica, sans-serif"
+    style="color:#303030;
+    font-size:13px;
+    font-weight:bold;
+    line-height:.5px">
+    <markdown-element markdown="${this.content}"></markdown-element>
+    </font>
+    </div>
     </div>
 
     <div class="col-2">
@@ -105,170 +109,170 @@ class ChatLineElement extends LitElement {
     </a>
 
     ${this.types.length > 0 ?
-    html `${this.types.map((t, index) =>
-    html`<button type="button" class="btn btn-outline-dark btn-sm">${this.localName(t)}</button>
-    `)}
-    `
-    :html``
-  }
-
-  ${this.comments.length > 0 ?
-  html `
-  <div class="row font-weight-light">
-  ${this.comments.length} com: ${this.comments.map((c, index) => html`
-  <a href="${c}" target="_blank">${index}</a>
-  `)}
-  </div>
-  `
-  :html``
-}
-</div>
-<div class="col">
-${this.parentItem != "" && this.parentItem != "undefined" ?
-html `<a href="${this.parentItem}" target="_blank">Parent</a><br>`
-:html``
-}
-</div>
-</div>-->
-</div>
-
-
-
-
-
-
-
-
-
-
-`;
-}
-
-firstUpdated(){
-  var app = this;
-
-  this.agent = new HelloAgent(this.name);
-  this.agent.receive = function(from, message) {
-    if (message.hasOwnProperty("action")){
-      switch(message.action) {
-        case "webIdChanged":
-        app.webIdChanged(message.webId)
-        break;
-        default:
-        console.log("Unknown action ",message)
-      }
-    }
-  };
-  this.updateDocument()
-}
-
-
-openmenu(e){
-  var cibleName = e.target.getAttribute("menu")
-  var menu = this.shadowRoot.getElementById(cibleName)
-  menu.classList.contains("d-none") ? menu.classList.remove("d-none") : menu.classList.add("d-none")
-}
-
-reply(e){
-  console.log(this.url, this.agent, this.maker)
-  //this.agent.send("Input", {action: "reply", replyTo: {url: this.url, maker: this.maker}})
-  this.agent.send("Dialog", {action : "toggle", params: {action:"reply", replyTo: {url: this.url, maker: this.maker, discover: this.discover}}})
-}
-
-
-async updateDocument(){
-  var app = this
-  var doc=[]
-  try {
-    var webid = await data.user
-    console.log(`${webid}`)
-    this.webId=`${webid}`
-  }catch(e){
-    this.webId = null
-  }
-
-
-  //filtre les messages
-  if (this.url.split('#')[1].startsWith('Msg')){
-    for await (const property of data[this.url].properties)
-    {
-      //  console.log("Prop",`${property}`)
-      switch(`${property}`) {
-        case "http://xmlns.com/foaf/0.1/maker":
-        var maker = await data[this.url][`${property}`]
-        var makername = await data[`${maker}`].vcard$fn
-        var makerimg = await data[`${maker}`].vcard$hasPhoto || "";
-        app.maker = `${maker}`
-        app.makername = `${makername}`
-        app.makerimg = `${makerimg}`
-        break;
-        case "http://purl.org/dc/terms/created":
-        var date = await data[this.url][`${property}`]
-        app.date = `${date}`
-        break;
-        case "http://rdfs.org/sioc/ns#content":
-        var content = await data[this.url][`${property}`]
-        app.content = `${content}`
-        break;
-        case "http://www.w3.org/2000/01/rdf-schema#type":
-        for await (const type of data[this.url][`${property}`])
-        {
-          //  console.log("Type",`${type}`)
-          app.types = [... app.types, `${type}`]
-        }
-        break;
-        case "http://schema.org/parentItem":
-        case "http://schema.org/target":
-        var parentItem = await data[this.url][`${property}`]
-        app.parentItem = `${parentItem}`
-        break;
-        case "http://schema.org/comment":
-        for await (const comment of data[this.url][`${property}`])
-        {
-          //  console.log("Comment",`${comment}`)
-          app.comments = [... app.comments, `${comment}`]
-        }
-        break;
-
-        default:
-        //  console.log("default", this.url)
-        var values = []
-        for await (const val of data[this.url][`${property}`])
-        {
-          /*if(`${val}` == "http:/schema.org/AgreeAction" && `${val}` == "http:/schema.org/DisagreeAction"){
-          d.likeAction = true
-        }*/
-        values.push(`${val}`)
-        console.log(`${values}`)
+      html `${this.types.map((t, index) =>
+        html`<button type="button" class="btn btn-outline-dark btn-sm">${this.localName(t)}</button>
+        `)}
+        `
+        :html``
       }
 
-      this.other = [... this.other, {property: `${property}` , values: values}]
+      ${this.comments.length > 0 ?
+        html `
+        <div class="row font-weight-light">
+        ${this.comments.length} com: ${this.comments.map((c, index) => html`
+          <a href="${c}" target="_blank">${index}</a>
+          `)}
+          </div>
+          `
+          :html``
+        }
+        </div>
+        <div class="col">
+        ${this.parentItem != "" && this.parentItem != "undefined" ?
+        html `<a href="${this.parentItem}" target="_blank">Parent</a><br>`
+        :html``
+      }
+      </div>
+      </div>-->
+      </div>
+
+
+
+
+
+
+
+
+
+
+      `;
+    }
+
+    firstUpdated(){
+      var app = this;
+
+      this.agent = new HelloAgent(this.name);
+      this.agent.receive = function(from, message) {
+        if (message.hasOwnProperty("action")){
+          switch(message.action) {
+            case "webIdChanged":
+            app.webIdChanged(message.webId)
+            break;
+            default:
+            console.log("Unknown action ",message)
+          }
+        }
+      };
+      this.updateDocument()
+    }
+
+
+    openmenu(e){
+      var cibleName = e.target.getAttribute("menu")
+      var menu = this.shadowRoot.getElementById(cibleName)
+      menu.classList.contains("d-none") ? menu.classList.remove("d-none") : menu.classList.add("d-none")
+    }
+
+    reply(e){
+      console.log(this.url, this.agent, this.maker)
+      //this.agent.send("Input", {action: "reply", replyTo: {url: this.url, maker: this.maker}})
+      this.agent.send("Dialog", {action : "toggle", params: {action:"reply", replyTo: {url: this.url, maker: this.maker, discover: this.discover}}})
+    }
+
+
+    async updateDocument(){
+      var app = this
+      var doc=[]
+      try {
+        var webid = await data.user
+        console.log(`${webid}`)
+        this.webId=`${webid}`
+      }catch(e){
+        this.webId = null
+      }
+
+
+      //filtre les messages
+      if (this.url.split('#')[1].startsWith('Msg')){
+        for await (const property of data[this.url].properties)
+        {
+          //  console.log("Prop",`${property}`)
+          switch(`${property}`) {
+            case "http://xmlns.com/foaf/0.1/maker":
+            var maker = await data[this.url][`${property}`]
+            var makername = await data[`${maker}`].vcard$fn
+            var makerimg = await data[`${maker}`].vcard$hasPhoto || "";
+            app.maker = `${maker}`
+            app.makername = `${makername}`
+            app.makerimg = `${makerimg}`
+            break;
+            case "http://purl.org/dc/terms/created":
+            var date = await data[this.url][`${property}`]
+            app.date = `${date}`
+            break;
+            case "http://rdfs.org/sioc/ns#content":
+            var content = await data[this.url][`${property}`]
+            app.content = `${content}`
+            break;
+            case "http://www.w3.org/2000/01/rdf-schema#type":
+            for await (const type of data[this.url][`${property}`])
+            {
+              //  console.log("Type",`${type}`)
+              app.types = [... app.types, `${type}`]
+            }
+            break;
+            case "http://schema.org/parentItem":
+            case "http://schema.org/target":
+            var parentItem = await data[this.url][`${property}`]
+            app.parentItem = `${parentItem}`
+            break;
+            case "http://schema.org/comment":
+            for await (const comment of data[this.url][`${property}`])
+            {
+              //  console.log("Comment",`${comment}`)
+              app.comments = [... app.comments, `${comment}`]
+            }
+            break;
+
+            default:
+            //  console.log("default", this.url)
+            var values = []
+            for await (const val of data[this.url][`${property}`])
+            {
+              /*if(`${val}` == "http:/schema.org/AgreeAction" && `${val}` == "http:/schema.org/DisagreeAction"){
+              d.likeAction = true
+            }*/
+            values.push(`${val}`)
+            console.log(`${values}`)
+          }
+
+          this.other = [... this.other, {property: `${property}` , values: values}]
+        }
+
+      }
+    }
+    else{
+      console.log("je ne traite pas encore les messages document de type",this.url)
     }
 
   }
-}
-else{
-  console.log("je ne traite pas encore les messages document de type",this.url)
-}
 
-}
-
-localDate(d){
-  //  console.log(d)
-  d = new Date(d).toLocaleTimeString(this.lang)
-  //  console.log(d)
-  return d
-}
-localName(str){
-  if(str != undefined){
-    var ln = str.substring(str.lastIndexOf('#')+1);
-    ln == str ? ln = str.substring(str.lastIndexOf('/')+1) : "";
-    //  ln == "me" ? ln =  : "";
-  }else{
-    ln = "--"
+  localDate(d){
+    //  console.log(d)
+    d = new Date(d).toLocaleTimeString(this.lang)
+    //  console.log(d)
+    return d
   }
-  return ln
-}
+  localName(str){
+    if(str != undefined){
+      var ln = str.substring(str.lastIndexOf('#')+1);
+      ln == str ? ln = str.substring(str.lastIndexOf('/')+1) : "";
+      //  ln == "me" ? ln =  : "";
+    }else{
+      ln = "--"
+    }
+    return ln
+  }
 
 }
 

@@ -2,6 +2,7 @@ import { LitElement, html } from 'lit-element';
 import data from "@solid/query-ldflex";
 import { namedNode } from '@rdfjs/data-model';
 import { HelloAgent } from '../agents/hello-agent.js';
+import * as EasyMDE from 'easymde'
 
 class InputElement extends LitElement {
 
@@ -29,6 +30,8 @@ class InputElement extends LitElement {
     return html`
     <link href="css/fontawesome/css/all.css" rel="stylesheet">
     <link href="css/bootstrap/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/easymde/dist/easymde.min.css">
+
     <!--<script src="vendor/jquery/jquery.slim.min.js"></script>
     <script src="js/bootstrap.bundle.min.js"></script>-->
     <style>
@@ -59,7 +62,7 @@ class InputElement extends LitElement {
     <!--<div class="input-group-append">
     <span class="input-group-text attach_btn"><i class="fas fa-paperclip"></i></span>
     </div>-->
-    <textarea name="" class="form-control type_msg"  id="textarea" @keydown=${this.keydown} placeholder="Type your message..."></textarea>
+    <textarea id="textarea" @keydown=${this.keydown} placeholder="Type your message..."></textarea>
     <!--<div class="input-group-append">
     <span class="input-group-text send_btn"><i class="fas fa-location-arrow"></i></span>
     </div>-->
@@ -104,17 +107,18 @@ class InputElement extends LitElement {
 
   firstUpdated(){
     var app = this;
+    this.easyMDE = new EasyMDE({element: this.shadowRoot.getElementById('textarea')});
     this.agent = new HelloAgent(this.name);
     this.agent.receive = function(from, message) {
       if (message.hasOwnProperty("action")){
-      //  console.log(message)
+        //  console.log(message)
         switch(message.action) {
           case "reply":
           app.reply(message.replyTo)
           break;
           case "discoverChanged":
           app.discover= this.discover
-        //  console.log(this.discover)
+          //  console.log(this.discover)
           break;
 
           default:
@@ -127,11 +131,11 @@ class InputElement extends LitElement {
 
 
   async reply(replyTo){
-  //  console.log(replyTo)
+    //  console.log(replyTo)
     this.replyTo = replyTo.url
     var notifDestInbox = await data[replyTo.maker].inbox
     this.notifDestInbox = `${notifDestInbox}`
-  //  console.log(this.notifDestInbox)
+    //  console.log(this.notifDestInbox)
     this.discover = replyTo.discover
   }
 
@@ -164,7 +168,7 @@ class InputElement extends LitElement {
       console.log(`${webid}`)
       this.webId = `${webid}`
 
-      var content = this.shadowRoot.getElementById("textarea").value.trim()
+      var content = this.easyMDE.value().trim()
       if (content.length > 0){
         var dateObj = new Date();
         var messageId = "#Msg"+dateObj.getTime()
@@ -215,7 +219,7 @@ class InputElement extends LitElement {
 
         }
         this.agent.send("Dialog", {action:"close"})
-        this.shadowRoot.getElementById("textarea").value = ""
+        this.easyMDE.value("")
         //  this.shadowRoot.getElementById("inlineRadio1").checked = true
 
       }
@@ -223,7 +227,7 @@ class InputElement extends LitElement {
       this.postType = "InstantMessage"
       var buttons = this.shadowRoot.querySelectorAll("#radioBtn a")
       buttons.forEach(function(b){
-      //  console.log(b)
+        //  console.log(b)
         b.classList.remove("active")
         b.classList.add("notActive")
       })
