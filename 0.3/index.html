@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- gTagIns=templates\html\_dummy.html  @LINES_TO_MERGE=24, TEMPLATE_OFFSET=2 @ -->
-<!-- 
+<!--
 MIT License
 Copyright (c) 2019 Julian Cole
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -27,14 +27,13 @@ SOFTWARE.
     <title>Solidarity</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" type="image/png" href="favicon.png">
-    <!-- gTagIns=templates\html\_scripts.html  @LINES_TO_MERGE=30, TEMPLATE_OFFSET=11 @ -->
+    <!-- gTagIns=templates\html\_scripts.html  @LINES_TO_MERGE=27, TEMPLATE_OFFSET=11 @ -->
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="css/semantic.min.css">
-    <!-- <link rel="stylesheet" href="css/easymde.min.css"> -->
-    
+
     <script src="js/rdflib.min.js"></script>
     <script src="js/solid-file-client.bundle.js"></script>
-    
+
     <script src="https://cdn.jsdelivr.net/gh/scenaristeur/shighl@master/dist/vendor/solid-auth-client.bundle.js"> </script>
     <script src="https://cdn.jsdelivr.net/gh/scenaristeur/shighl@master/dist/vendor/solid-query-ldflex.bundle.js"> </script>
     <script src="https://cdn.jsdelivr.net/gh/scenaristeur/shighl@master/dist/window/shighl.bundle.js"> </script>
@@ -52,13 +51,11 @@ SOFTWARE.
     <script src="js/semantic.min.js"></script>
     <script src="js/jsencrypt.js"></script>
     <script src="js/sha256.js"></script>
-    <!-- <script src="js/easymde.min.js"></script> -->
-    <script src="https://cdn.rawgit.com/showdownjs/showdown/1.0.1/dist/showdown.min.js"></script>
-    
+
     <script src="js/solidarity.min.js"></script>
-    
-    
-    
+
+
+
     <style>
 	/* gCSSIns=templates\css\main.css @LNKD=21 */
         css_svg {
@@ -66,7 +63,7 @@ SOFTWARE.
                     background-repeat: no-repeat;
         }
         css_chat_row {
-            float:left; 
+            float:left;
             width:auto;
             height:auto;
             background-color:#f0f000-;
@@ -77,8 +74,8 @@ SOFTWARE.
         css_cont_item {
             position:absolute;
         }
-        
-        
+
+
         fc_communities_lbl {
             color:#ff0000
         }
@@ -88,20 +85,20 @@ SOFTWARE.
             line-height: 0.9em;
         }
     </style>
-    
+
     <script>
        $(document).ready(function() {
 	    // see 'responsive.js'
 	    window.onresize();
 	    init();
-	}); 
-    </script>    
-    
+	});
+    </script>
+
 </head>
 <body style="margin: 0 0; background-color: #f7f7f7;">
     <div id="div_pc" style="display:none; width:100%; height:100%; background-color:#d0d0d0-; margin: auto-;">
-    
-        <div id="div_pc_base_frame" style="width:100%; height:700px; position:relative">
+
+        <div style="width:100%; height:700px; position:relative">
             <!-- banner top -->
             <div style="width:100%; height:36px; position:absolute; left:0px; top:0px; background-image: url('images/pc/baseframe/banner_2.png'); background-repeat: repeat-x"></div>
             <!-- banner top-left corner -->
@@ -118,15 +115,15 @@ SOFTWARE.
             <div id="uix_baseframe_frame_bl" style="width:47px; height:47px; position:absolute; left:0px; top:0px; background-image: url('images/pc/baseframe/frame_bl.png'); background-repeat: no-repeat"></div>
             <div id="uix_baseframe_frame_br" style="width:48px; height:47px; position:absolute; left:0px; top:0px; background-image: url('images/pc/baseframe/frame_br.png'); background-repeat: no-repeat"></div>
         </div>
-        
+
         <!-- top banner menu -->
         <div id="div_banner__account" style="position:absolute; top:0px; left:0px; width:100%; height:100px; ">
-                        
+
             <div style="float:right; margin-right:50px; margin-top:44px;">
-                
+
                 <div id="div_banner__account__loggedin" style="display:none">
                     <div style="font-size:15px; display:inline-block; vertical-align:13px; margin-right:10px; text-align: right; "><span id="div_banner__account__loggedin__name">Jules</span></div>
-                    
+
                     <div class="ui simple dropdown item">
                         <!-- <div id="div_banner__account__loggedin__noavatar" style="width:40px; height:40px; display:inline-block; background-image:url('images/no-avatar.png'); opacity: 0.3; background-size: cover"></div> -->
                         <div id="div_banner__account__loggedin__avatar" style="width:40px; height:40px; display:inline-block; background-image:url(''); background-size: cover"></div>
@@ -136,14 +133,14 @@ SOFTWARE.
                         </div>
                      </div>
                 </div>
-                
+
                 <div id="div_banner__account__loggedout" style="display:none-">
                     <button class="ui button" onclick="solid_login__login();">Login</button>
                 </div>
-                
+
             </div>
         </div>
-        
+
         <div style="position:absolute; top:54px; left:49px;">
             <span style="font-size:19px; color:#333333; font-weight: bold">
                 S O L I D A R I T Y
@@ -154,9 +151,9 @@ SOFTWARE.
             </span>
             -->
         </div>
-        
-        
-        
+
+
+
         <!-- left hand menu -->
         <div style="position:absolute; left:43px; top:150px; width:150px">
             <!--
@@ -177,24 +174,24 @@ SOFTWARE.
             </div>
             <div style="position: relative;  cursor: pointer" onclick="javascript:navigation__peopleModeClicked('friends');">
                 <i class="circular big user icon" style="color:#4dce74 !important; margin-top:10px;"></i><span style="font-weight:bold; margin-left:5px;">Friends</span>
-            </div>            
+            </div>
             -->
-            
+
             <div id="div_left_hand_ui" style="margin-top:-8px; margin-left:4px">
                 <div style="font-size:17px; font-weight: bold">
                     Channels<span id="lbl_channel_count"></span>
                 </div>
-                
+
                 <div id="div_pc_channel_list" style="padding-top:5px;">
                     <!-- component goes in here! -->
                 </div>
-                
+
             </div>
-            
+
         </div>
-        
-        
-        
+
+
+
         <!-- LH tabs -->
         <!--
         <div id="div_main_left_tab_bars" style="position:absolute; left:210px; top:100px">
@@ -210,8 +207,8 @@ SOFTWARE.
               </a>
               <a class="item" data-tab="tab_polls" onclick="navigation_tabs_onclick("polls");">
                 Polls
-              </a>                
-            </div> 
+              </a>
+            </div>
         -->
             <!-- we have to add this to make the tabs change in the ui -->
        <!--
@@ -221,7 +218,7 @@ SOFTWARE.
             <div class="ui tab" data-tab="tab_polls"></div>
         </div>
         -->
-        
+
         <!-- burger bar -->
         <div id="div_main_tab_burger" style="position:absolute; left:1185px; top:114px;">
                 <div class="ui simple dropdown item">
@@ -230,19 +227,19 @@ SOFTWARE.
                           <div class="item" onclick="modals__add_channel_show()">Add Channel</div>
                           <div id="div_remove_channel" class="item" onclick="modals__manage_channels_show()">Remove Channel</div>
                         </div>
-                </div>            
-                
-        </div>        
-        
-        
-        
-        
-        <!-- 
+                </div>
+
+        </div>
+
+
+
+
+        <!--
         *******************************************************
         * MODALS
         *******************************************************
         -->
-        
+
         <!-- ADD CHANNEL -->
         <div id="modal_add_channel" class="ui modal" style="width:400px;">
             <div class="header">Add Channel</div>
@@ -276,22 +273,22 @@ SOFTWARE.
             <div class="actions">
               <div class="ui ok button">Done</div>
             </div>
-        </div>        
-        
-        
+        </div>
+
+
         <!-- PREFERENCES -->
         <div id="modal_preferences" class="ui modal" style="width:400px;">
             <div class="header">Preferences</div>
             <div class="content">
                 <form class="ui form">
-                    
+
                     <div class="field">
                         <div class="ui checkbox">
                           <input id="cb_preferences_use_sounds" type="checkbox" tabindex="0" class="hidden">
                           <label>Use sound for incoming message</label>
-                        </div>                        
+                        </div>
                     </div>
-                    
+
                     <div class="grouped fields">
                         <label for="fruit">Message date format:</label>
                         <div class="field">
@@ -307,14 +304,14 @@ SOFTWARE.
                           </div>
                         </div>
                     </div>
-                    
+
                     <div class="field">
                         <div class="ui checkbox">
                           <input id="cb_preferences_use_message_verification" type="checkbox" tabindex="0" class="hidden">
                           <label>Use Message Verification</label>
-                        </div>                        
-                    </div>                    
-                    
+                        </div>
+                    </div>
+
                     <!--
                     <div class="ui form">
                       <div class="field">
@@ -323,51 +320,51 @@ SOFTWARE.
                             <textarea id="ta_preferences_private_key"></textarea>
                         </span>
                       </div>
-                    </div>                                        
+                    </div>
                     -->
-                    
+
                 </form>
             </div>
             <div class="actions">
               <div class="ui ok button">Done</div>
             </div>
-        </div>        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         <!-- chatviewport-->
         <div style="position:absolute; left:200px; top:150px;">
             <div id="div_chatter_container" style="float:left; width:1198px; height:592px; background-color:#f0f000-;  opacity:1; padding-left:15px; padding-top:30px;  overflow-y: scroll; overflow-x: hidden">
@@ -376,27 +373,27 @@ SOFTWARE.
             <!-- chat viewport white background -->
             <div id="div_chatviewportbg" style="position:absoloute; left:0px; top:0px; margin-left:10px; margin-top:-5px; width:1008px; height:800px; background-color:#ffffff;"></div>
         </div>
-        
-        
+
+
         <!-- CHAT INPUT-CONSOLE -->
-        
+
         <!-- avatar -->
         <div id="div_inputconsole__loggedin__avatar_container" style="display:none; position:absolute; left:271px; top:856px;">
             <div style="position:absolute; left:0px; top:0px; width:40px; height:40px; display:inline-block; background-image:url('images/no-avatar.png'); background-size: cover; opacity:0.3"></div>
             <div id="div_inputconsole__loggedin__avatar" style="position:absolute; left:0px; top:0px; width:40px; height:40px; display:inline-block; background-image:url(''); background-size: cover"></div>
         </div>
-        
+
         <div id="div_chatviewport_inputconsole" style="position:absolute; left:276px; top:856px; width:963px; height:auto;">
             <div class="ui form">
               <div class="field">
                   <textarea id="frm_lc_text_input" onkeypress="solid_long_chat_reply__onEnterCheck();" name="frm_text_input" rows="2"></textarea>
               </div>
-            </div>    
+            </div>
         </div>
-        
-        
-        
-        <div style="float:left; width:718px; height:auto; background-color:#f0f000-"></div>    
+
+
+
+        <div style="float:left; width:718px; height:auto; background-color:#f0f000-"></div>
         <div style="clear:fix"></div>
     </div>
     <!-- splash screen -->
@@ -408,29 +405,24 @@ SOFTWARE.
             <div style="padding-top:25px;"></div>
             <span style="font-size:36px; color:#ffffff; font-weight: bold;  opacity:.5">
                 A Solid based community discussion App.
-            </span>                
+            </span>
             <br>
             <div style="padding-top:50px;"></div>
             <span style="font-size:25px;color: #ffffff;">
-                <z onclick="javascript:navigation__findOutMore();" style="cursor: pointer">Find out more about Solidarity</z> &nbsp;&nbsp; | &nbsp;&nbsp; <a href="javascript:init__splash_enterClicked();">< E N T E R ></a>
-            </span>                
+                <z onclick="javascript:navigation__findOutMore();" style="cursor: pointer">Find out more about Solidarity</z> &nbsp;&nbsp; | &nbsp;&nbsp; <a href="javascript:init__splash_enterClicked();">< E N T E R ></a> <br>
+                <a href="./archive">< Legacy M O B I L E ></a>
+            </span>
         </div>
-    </div>    
-    
-    
-    
-    <div id="div_tab" style="display:none;">
-        
-        <div id="div_tablet_banner" style="position:absolute; top:0px; left:0px; width:100%; height:50px; background-color:#ffffff; border-bottom: 1px solid #cccccc"></div>        
-        
-        
     </div>
-    <div id="div_mob" style="display:none; position:relative">
-        
-        <div id="div_mobile_banner" style="position:absolute; top:0px; left:0px; width:100%; height:50px; background-color:#ffffff; border-bottom: 1px solid #cccccc"></div>
-        
-        
-        
+
+
+
+    <div id="div_tab" style="display:none;">
+        << tablet version goes here >>
+    </div>
+    <div id="div_mob" style="display:none; width:100%; height:auto; background-color: #800000-; position:relative">
+
+        << mob version goes here >>
         <!--
         <div id="div_mob__header_base" style="width:100%; height:58px; background-color:#2d2d2d; position:fixed; left:0px; top:0px"></div>
         <div id="div_mob__header_controls" style="width:100%; height:58px; position:fixed; left:0px; top:0px;">
@@ -447,19 +439,19 @@ SOFTWARE.
             </div>
             <div style="margin-top:15px; margin-right:20px;float:right;" onclick="javascript:UIX.Mobile.UserMenuShow();">
                 <img src="images/mobile/user.png"/>
-            </div>        
+            </div>
             <div style="margin-top:11px; margin-right:20px;float:right" onclick="javascript:UIX.Mobile.MainMenuShow();">
                 <img src="images/mobile/gear.png"/>
-            </div>    
+            </div>
         </div>
         <div style="clear:both"></div>
-        
+
         <div id="mobile_burger_menu_slideout" style="display:none-; position:absolute; left:0px; top:0px; width:auto; height:auto; background-color:#ff0000-; overflow: hidden">
             <div id="mobile_burger_menu_slideout_bg" style="width:0px; height:0px; position:absolute; left:0px; top:0px; background-color:#ffffff"></div>
             <div id="mobile_burger_menu_slideout_template" style="width:100%; height:100%; position:absolute; left:0px; top:0px;">
                    <mobile menu...
             </div>
-        </div>    
+        </div>
         -->
     </div>
 </body>
