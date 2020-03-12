@@ -24,19 +24,18 @@ SOFTWARE.
     <base href="">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>SOLIDARITY</title>
+    <title>Solidarity</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" type="image/png" href="favicon.png">
-    <!-- gTagIns=templates\html\_scripts.html  @LINES_TO_MERGE=31, TEMPLATE_OFFSET=11 @ -->
+    <!-- gTagIns=templates\html\_scripts.html  @LINES_TO_MERGE=30, TEMPLATE_OFFSET=11 @ -->
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="css/semantic.min.css">
     <!-- <link rel="stylesheet" href="css/easymde.min.css"> -->
     
     <script src="js/rdflib.min.js"></script>
-    <!-- <script src="js/solid-file-client.bundle.js"></script> -->
-    <!--<script src="https://cdn.jsdelivr.net/gh/scenaristeur/shighl@master/dist/vendor/solid-auth-client.bundle.js"> </script>-->
-    <script src="https://cdn.jsdelivr.net/npm/solid-auth-client@2.3.0/dist-lib/solid-auth-client.bundle.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/solid-file-client@1.0.0/dist/window/solid-file-client.bundle.js"></script>
+    <script src="js/solid-file-client.bundle.js"></script>
+    
+    <script src="https://cdn.jsdelivr.net/gh/scenaristeur/shighl@master/dist/vendor/solid-auth-client.bundle.js"> </script>
     <script src="https://cdn.jsdelivr.net/gh/scenaristeur/shighl@master/dist/vendor/solid-query-ldflex.bundle.js"> </script>
     <script src="https://cdn.jsdelivr.net/gh/scenaristeur/shighl@master/dist/window/shighl.bundle.js"> </script>
     <!--
@@ -134,7 +133,6 @@ SOFTWARE.
                         <div class="menu" style="margin-left:-50px !important;">
                           <div class="item" onclick="solid_login__logout()">Logout</div>
                           <div class="item" onclick="preferences__show()">Preferences</div>
-                          <div class="item" onclick="status__show()">Set Status</div>
                         </div>
                      </div>
                 </div>
@@ -182,18 +180,7 @@ SOFTWARE.
             </div>            
             -->
             
-            
-            
             <div id="div_left_hand_ui" style="margin-top:-8px; margin-left:4px">
-                
-                <div style="font-size:17px; font-weight: bold">
-                    Friends<span id="lbl_friends_count"></span>
-                </div>                
-                
-                <div id="div_pc_friends_list" style="padding-top:5px; padding-bottom:25px;">
-                    <!-- component goes in here! -->
-                </div>                
-                
                 <div style="font-size:17px; font-weight: bold">
                     Channels<span id="lbl_channel_count"></span>
                 </div>
@@ -201,6 +188,7 @@ SOFTWARE.
                 <div id="div_pc_channel_list" style="padding-top:5px;">
                     <!-- component goes in here! -->
                 </div>
+                
             </div>
             
         </div>
@@ -248,6 +236,102 @@ SOFTWARE.
         
         
         
+        
+        <!-- 
+        *******************************************************
+        * MODALS
+        *******************************************************
+        -->
+        
+        <!-- ADD CHANNEL -->
+        <div id="modal_add_channel" class="ui modal" style="width:400px;">
+            <div class="header">Add Channel</div>
+            <div class="content">
+                <form class="ui form">
+                  <div class="field" style="width:300px">
+                    <label>Channel Name (case sensitive)</label>
+                    <input id="frm_add_channel_name" onkeypress="solid_channels__onEnterCheck(1);" type="text" name="first-name" placeholder="eg. Solidarity">
+                  </div>
+                  <div class="field" style="width:300px">
+                      <label>Channel URL</label>
+                    <input  id="frm_add_channel_url" onkeypress="solid_channels__onEnterCheck(2);" type="text" name="last-name" placeholder="eg. https://solidarity.inrupt.net">
+                  </div>
+                  <div id="div_modal_add_channel_validating" class="ui yellow message" style="visibility:hidden-; width:300px"><span><i class="asterisk loading icon"></i></span><span> Verifying..</span></div>
+                  <div id="div_modal_add_channel_success" class="ui green message" style="visibility:hidden-; width:300px"><span><i class="thumbs up icon"></i></span><span> Success!</span></div>
+                </form>
+            </div>
+            <div class="actions">
+              <div class="ui ok button">OK</div>
+              <div class="ui cancel button">Cancel</div>
+            </div>
+        </div>
+        <!-- MANAGE CHANNELS -->
+        <div id="modal_manage_channels" class="ui modal" style="width:250px;">
+            <div class="header">Remove Channel</div>
+            <div class="content">
+                <div id="div_remove_favourite_channel_list" class="ui list" style="text-align:right;">
+                  <!-- <div class="item" style="font-size:20px;">Solidarity<i class="times circle icon" style="color:red; margin-left:5px; margin-top:2px"></i></div> -->
+                </div>
+            </div>
+            <div class="actions">
+              <div class="ui ok button">Done</div>
+            </div>
+        </div>        
+        
+        
+        <!-- PREFERENCES -->
+        <div id="modal_preferences" class="ui modal" style="width:400px;">
+            <div class="header">Preferences</div>
+            <div class="content">
+                <form class="ui form">
+                    
+                    <div class="field">
+                        <div class="ui checkbox">
+                          <input id="cb_preferences_use_sounds" type="checkbox" tabindex="0" class="hidden">
+                          <label>Use sound for incoming message</label>
+                        </div>                        
+                    </div>
+                    
+                    <div class="grouped fields">
+                        <label for="fruit">Message date format:</label>
+                        <div class="field">
+                          <div class="ui radio checkbox">
+                            <input id="cb_preferences_timeformat_1" type="radio" name="fruit" checked="" tabindex="0" class="hidden">
+                            <label>'Feb 24th 2020, 8:10 am'</label>
+                          </div>
+                        </div>
+                        <div class="field">
+                          <div class="ui radio checkbox">
+                            <input id="cb_preferences_timeformat_0" type="radio" name="fruit" tabindex="0" class="hidden">
+                            <label>'about 3 hours ago'</label>
+                          </div>
+                        </div>
+                    </div>
+                    
+                    <div class="field">
+                        <div class="ui checkbox">
+                          <input id="cb_preferences_use_message_verification" type="checkbox" tabindex="0" class="hidden">
+                          <label>!Use Message Verification</label>
+                        </div>                        
+                    </div>                    
+                    
+                    <!--
+                    <div class="ui form">
+                      <div class="field">
+                        <label>Private Key (1024 bit RSA Private Key in Base64 Format)</label>
+                        <span style="font-size:10px">
+                            <textarea id="ta_preferences_private_key"></textarea>
+                        </span>
+                      </div>
+                    </div>                                        
+                    -->
+                    
+                </form>
+            </div>
+            <div class="actions">
+              <div class="ui ok button">Done</div>
+            </div>
+        </div>        
         
         
         
@@ -306,7 +390,7 @@ SOFTWARE.
             <div style="float:right; margin-right:8px; margin-top:9px;">
                     
                 <div id="div_tab_banner__account__loggedin" style="display:none">
-                    <div style="font-size:15px; display:inline-block; vertical-align:10px; margin-right:10px; text-align: right; "><span id="div_tab_banner__account__loggedin__name">Jules</span></div>
+                    <div style="font-size:15px; display:inline-block; vertical-align:10px; margin-right:10px; text-align: right; "><span id="div_banner__account__loggedin__name">Jules</span></div>
                     
                     <div class="ui simple dropdown item">
                         <!-- <div id="div_banner__account__loggedin__noavatar" style="width:40px; height:40px; display:inline-block; background-image:url('images/no-avatar.png'); opacity: 0.3; background-size: cover"></div> -->
@@ -391,7 +475,7 @@ SOFTWARE.
             <div style="float:right; margin-right:8px; margin-top:9px;">
                     
                 <div id="div_mob_banner__account__loggedin" style="display:none">
-                    <div style="font-size:15px; display:inline-block; vertical-align:10px; margin-right:10px; text-align: right; "><span id="div_mob_banner__account__loggedin__name"></span></div>
+                    <div style="font-size:15px; display:inline-block; vertical-align:10px; margin-right:10px; text-align: right; "><span id="div_banner__account__loggedin__name">Jules</span></div>
                     
                     <div class="ui simple dropdown item">
                         <!-- <div id="div_banner__account__loggedin__noavatar" style="width:40px; height:40px; display:inline-block; background-image:url('images/no-avatar.png'); opacity: 0.3; background-size: cover"></div> -->
@@ -504,13 +588,13 @@ SOFTWARE.
         <div style="position:absolute; left:0px; top:58%; width:100%; text-align: center">
             <span style="font-size:70px; color:#ffffff; font-weight: bold">SOLIDARITY</span><span id="sp_lblSplashVersionTab" style="font-size:9px; color:#ffffff; font-weight: bold"></span>
             <br>
-            <div style="padding-top:11px;"></div>
-            <span style="font-size:25px; color:#ffffff; font-weight: bold;  opacity:.5">
+            <div style="padding-top:15px;"></div>
+            <span style="font-size:23px; color:#ffffff; font-weight: bold;  opacity:.5">
                 A Solid based community discussion App.
             </span>                
             <br>
             <div style="padding-top:35px;"></div>
-            <span style="font-size:18px;color: #ffffff;">
+            <span style="font-size:15px;color: #ffffff;">
                 <z onclick="javascript:navigation__findOutMore();" style="cursor: pointer">Find out more about Solidarity</z> &nbsp;&nbsp; | &nbsp;&nbsp; <a href="javascript:init__splash_enterClicked();">< E N T E R ></a>
             </span>
         </div>
@@ -520,16 +604,16 @@ SOFTWARE.
     <div id="div_index_splash_mob" style="display:none; position:absolute; width:100%; height:100%; left:0px; top:0px">
         <div style="width:100%; height:100%; z-index:10000; background-image: url('images/pc/splash/splash.jpg'); background-size: cover"></div>
         <div style="position:absolute; left:0px; top:56%; width:100%; text-align: center">
-            <span style="font-size:49px; color:#ffffff; font-weight: bold">SOLIDARITY</span><span id="sp_lblSplashVersionMob" style="font-size:9px; color:#ffffff; font-weight: bold"></span>
+            <span style="font-size:47px; color:#ffffff; font-weight: bold">SOLIDARITY</span><span id="sp_lblSplashVersionMob" style="font-size:9px; color:#ffffff; font-weight: bold"></span>
             <br>
-            <div style="padding-top:3px;"></div>
-            <span style="font-size:18px; color:#ffffff; font-weight: bold;  opacity:.5">
+            <div style="padding-top:0   px;"></div>
+            <span style="font-size:14px; color:#ffffff; font-weight: bold;  opacity:.5">
                 A Solid based community discussion App.
             </span>                
             <br>
-            <div style="padding-top:31px;"></div>
-            <span style="font-size:18px;color: #ffffff;">
-                <z onclick="javascript:navigation__findOutMore();" style="cursor: pointer">Find out more about Solidarity</z> <br><br> <a href="javascript:init__splash_enterClicked();">< E N T E R ></a>
+            <div style="padding-top:19px;"></div>
+            <span style="font-size:10px;color: #ffffff;">
+                <z onclick="javascript:navigation__findOutMore();" style="cursor: pointer">Find out more about Solidarity</z> &nbsp;&nbsp; | &nbsp;&nbsp; <a href="javascript:init__splash_enterClicked();">< E N T E R ></a>
             </span>
         </div>
     </div>    
@@ -543,160 +627,7 @@ SOFTWARE.
     
     
     
-   
     
-    
-        <!-- 
-        *******************************************************
-        * MODALS
-        *******************************************************
-        -->
-        
-        <!-- ADD CHANNEL -->
-        <div id="modal_add_channel" class="ui modal" style="width:400px;">
-            <div class="header">Add Channel</div>
-            <div class="content">
-                <form class="ui form">
-                  <div class="field" style="width:300px">
-                    <label>Channel Name (case sensitive)</label>
-                    <input id="frm_add_channel_name" onkeypress="solid_channels__onEnterCheck(1);" type="text" name="first-name" placeholder="eg. Solidarity">
-                  </div>
-                  <div class="field" style="width:300px">
-                      <label>Channel URL</label>
-                    <input  id="frm_add_channel_url" onkeypress="solid_channels__onEnterCheck(2);" type="text" name="last-name" placeholder="eg. https://solidarity.inrupt.net">
-                  </div>
-                  <div id="div_modal_add_channel_validating" class="ui yellow message" style="visibility:hidden-; width:300px"><span><i class="asterisk loading icon"></i></span><span> Verifying..</span></div>
-                  <div id="div_modal_add_channel_success" class="ui green message" style="visibility:hidden-; width:300px"><span><i class="thumbs up icon"></i></span><span> Success!</span></div>
-                  <div id="div_modal_add_channel_fail" class="ui red message" style="visibility:hidden-; width:300px"><span><i class="exclamation icon"></i></span><span> Fail!</span></div>
-                </form>
-            </div>
-            <div class="actions">
-              <div id="btn_prefs_verify_channel" class="ui verify button">Verify URL</div>
-              <div class="ui ok button">OK</div>
-              <div class="ui cancel button">Cancel</div>
-            </div>
-        </div>
-        <!-- MANAGE CHANNELS -->
-        <div id="modal_manage_channels" class="ui modal" style="width:250px;">
-            <div class="header">Remove Channel</div>
-            <div class="content">
-                <div id="div_remove_favourite_channel_list" class="ui list" style="text-align:right;">
-                  <!-- <div class="item" style="font-size:20px;">Solidarity<i class="times circle icon" style="color:red; margin-left:5px; margin-top:2px"></i></div> -->
-                </div>
-            </div>
-            <div class="actions">
-              <div class="ui ok button">Done</div>
-            </div>
-        </div>        
-        
-        
-        <!-- PREFERENCES -->
-        <div id="modal_preferences" class="ui modal" style="width:400px;">
-            <div class="header">Preferences</div>
-            <div class="content">
-                <form class="ui form">
-                    
-                    <div class="field">
-                        <div class="ui checkbox">
-                          <input id="cb_preferences_use_sounds" type="checkbox" tabindex="0" class="hidden">
-                          <label>Use sound for incoming message</label>
-                        </div>                        
-                    </div>
-                    
-                    <div class="grouped fields">
-                        <label for="fruit">Preferred date format:</label>
-                        <div class="field">
-                          <div class="ui radio checkbox">
-                            <input id="cb_preferences_timeformat_1" type="radio" name="fruit" checked="" tabindex="0" class="hidden">
-                            <label>'Feb 24th 2020, 8:10 am'</label>
-                          </div>
-                        </div>
-                        <div class="field">
-                          <div class="ui radio checkbox">
-                            <input id="cb_preferences_timeformat_0" type="radio" name="fruit" tabindex="0" class="hidden">
-                            <label>'about 3 hours ago'</label>
-                          </div>
-                        </div>
-                    </div>
-                    
-                    <div class="field">
-                        <div class="ui checkbox">
-                          <input id="cb_preferences_use_message_verification" type="checkbox" tabindex="0" class="hidden">
-                          <label>!Use Message Verification</label>
-                        </div>                        
-                    </div>                    
-                    
-                    <!--
-                    <div class="ui form">
-                      <div class="field">
-                        <label>Private Key (1024 bit RSA Private Key in Base64 Format)</label>
-                        <span style="font-size:10px">
-                            <textarea id="ta_preferences_private_key"></textarea>
-                        </span>
-                      </div>
-                    </div>                                        
-                    -->
-                    
-                </form>
-            </div>
-            <div class="actions">
-              <div class="ui ok button">Done</div>
-            </div>
-        </div>        
-        
-        
-        
-        
-        <!-- SET STATUS -->
-        <div id="modal_status" class="ui modal" style="width:300px;">
-            <div class="header">Status</div>
-            <div class="content">
-                <form class="ui form">
-                    <div class="grouped fields">
-                        <label for="fruit">Solidarity Online Status</label>
-                        <div class="field">
-                          <div class="ui radio checkbox">
-                            <input id="cb_status_busy" type="radio" name="fruit" tabindex="2" class="hidden">
-                            <label><a class="ui red empty circular label"></a>&nbsp; Busy</label>
-                          </div>
-                        </div>                                                
-                        <div class="field">
-                          <div class="ui radio checkbox">
-                            <input id="cb_status_online" type="radio" name="fruit" checked="" tabindex="0" class="hidden">
-                            <label><a class="ui green empty circular label"></a>&nbsp; Online</label>
-                          </div>
-                        </div>
-                        <div class="field">
-                          <div class="ui radio checkbox">
-                            <input id="cb_status_away" type="radio" name="fruit" tabindex="1" class="hidden">
-                            <label><a class="ui yellow empty circular label"></a>&nbsp; Away</label>
-                          </div>
-                        </div>
-                        <div class="field">
-                          <div class="ui radio checkbox">
-                            <input id="cb_status_offline" type="radio" name="fruit" tabindex="1" class="hidden">
-                            <label><a class="ui grey empty circular label"></a>&nbsp; Offline</label>
-                          </div>
-                        </div>                        
-                    </div>                    
-                </form>
-            </div>
-            <div class="actions">
-              <div class="ui ok button">OK</div>
-              <div class="ui cancel button">Cancel</div>
-            </div>
-        </div>
-        
-        <div id="logged_in_pc" style="display:none; position:absolute; left:0px; top:0px; width:324px; height:90px;">
-            <div style="position:relative; width:100%; height:100%">
-                <div style="position:absolute; left:0px; top:0px; width:100%; height:100%; background-color:#000000"></div>
-                <div style="position:absolute; width:100%; height:auto; left:0px; top:32px; text-align: center">
-                    <i class="user large icon" style="color:white"></i>
-                    <span id="logged_in_pc_msg" style="font-size:20px; color:#ffffff; margin-left:6px; vertical-align:-5px">Jules is now online</span>
-                </div>
-            </div>
-        </div>
-        
     
 </body>
 </html>
