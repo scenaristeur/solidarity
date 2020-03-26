@@ -61,7 +61,7 @@ SOFTWARE.
     
     
     <style>
-	/* gCSSIns=templates\css\main.css @LNKD=21 */
+	/* gCSSIns=templates\css\main.css @LNKD=23 */
         css_svg {
                     background-size:contain;
                     background-repeat: no-repeat;
@@ -83,6 +83,8 @@ SOFTWARE.
         fc_communities_lbl {
             color:#ff0000
         }
+        
+        
         html {
             font-family: 'Roboto', sans-serif;
             font-weight: 300;
@@ -121,13 +123,10 @@ SOFTWARE.
         </div>
         
         <!-- top banner menu -->
-        <div id="div_banner__account" style="position:absolute; top:0px; left:0px; width:100%; height:100px; ">
-                        
+        <div id="div_banner__account" style="position:absolute; top:0px; left:0px; width:100%; height:100px; ">            
             <div style="float:right; margin-right:50px; margin-top:44px;">
-                
                 <div id="div_banner__account__loggedin" style="display:none">
-                    <div style="font-size:15px; display:inline-block; vertical-align:13px; margin-right:10px; text-align: right; "><span id="div_banner__account__loggedin__name">Jules</span></div>
-                    
+                    <div style="font-size:15px; display:inline-block; vertical-align:13px; margin-right:10px; text-align: right; "><a id="pc_online_status" class="ui red empty circular label" style="vertical-align:-1px;"></a>&nbsp;&nbsp;<span id="div_banner__account__loggedin__name">Jules</span></div>
                     <div class="ui simple dropdown item">
                         <!-- <div id="div_banner__account__loggedin__noavatar" style="width:40px; height:40px; display:inline-block; background-image:url('images/no-avatar.png'); opacity: 0.3; background-size: cover"></div> -->
                         <div id="div_banner__account__loggedin__avatar" style="width:40px; height:40px; display:inline-block; background-image:url(''); background-size: cover"></div>
@@ -138,11 +137,9 @@ SOFTWARE.
                         </div>
                      </div>
                 </div>
-                
                 <div id="div_banner__account__loggedout" style="display:none-">
                     <button class="ui button" onclick="solid_login__login();">Login</button>
                 </div>
-                
             </div>
         </div>
         
@@ -273,7 +270,7 @@ SOFTWARE.
         <div id="div_chatviewport_inputconsole" style="position:absolute; left:276px; top:856px; width:963px; height:auto;">
             <div class="ui form">
               <div class="field">
-                  <textarea id="frm_lc_text_input" onkeypress="solid_long_chat_reply__onEnterCheck();" name="frm_text_input" rows="2"></textarea>
+                  <textarea id="frm_lc_text_input" onkeypress="solid_long_chat_reply__onEnterCheck();" name="frm_text_input" placeholder="Say something.. Solidarity chatter supports Showdown markdown" rows="2"></textarea>
               </div>
             </div>    
         </div>
@@ -360,7 +357,7 @@ SOFTWARE.
         <div id="div_tab_chatviewport_inputconsole" style="position:absolute; left:35px; top:856px; width:963px; height:auto;">
             <div class="ui form">
               <div class="field">
-                  <textarea id="frm_tab_lc_text_input" onkeypress="solid_long_chat_reply__onEnterCheck();" name="frm_tab_text_input" rows="2"></textarea>
+                  <textarea id="frm_tab_lc_text_input" onkeypress="solid_long_chat_reply__onEnterCheck();" name="frm_tab_text_input" placeholder="Say something.. Solidarity chatter supports Showdown markdown" rows="2"></textarea>
               </div>
             </div>    
         </div>        
@@ -379,11 +376,26 @@ SOFTWARE.
     
     
     
-    
+    <div id="div_mob__channels_select" class="ui sidebar inverted vertical menu">
+          <div style="margin-left:15px; margin-top:25px; margin-bottom:25px;">
+            <span style="font-size:22px; color:white;"> Select Channel </span>              
+          </div>
+          <div id="div_mob__channels_select__container">
+              <!-- place dynamic menu items in here -->
+          </div>
+    </div>
+    <div id="div_mob__some_other_menu" class="ui sidebar inverted vertical menu">
+            <a class="active item" onclick="_(0)">
+                Something
+            </a>
+            <a class="item" onclick="_(1)">
+                Something else
+            </a> 
+    </div>
     
     <div id="div_mob" style="display:none;">
         
-        <div id="div_mob_banner" style="position:absolute; top:0px; left:0px; width:100%; height:50px; background-color:#ffffff; border-bottom: 1px solid #cccccc"></div>        
+        <div id="div_mob_banner" class="pusher" style="position:absolute; top:0px; left:0px; width:100%; height:50px; background-color:#ffffff; border-bottom: 1px solid #cccccc"></div>        
         
         <!-- top banner menu -->
         <div id="div_mob_banner__account" style="position:absolute; top:0px; left:0px; width:100%; height:50px;">
@@ -411,9 +423,29 @@ SOFTWARE.
         </div>
         
         <div style="position:absolute; top:16px; left:15px;">
-            <span style="font-size:15px; color:#333333; font-weight: bold">
-                S O L I D A R I T Y
-            </span>
+            
+            <div class="ui simple dropdown item" style="float:left">
+                <div><i class="bars icon" style="color:#333333 !important; margin-top:0px;"></i></div>
+                <div class="menu" style="margin-left:0px !important;">
+                    <div class="item" onclick="navigation__mob__channels_select()">Channels</div>
+                    <div class="" onclick="_()"><hr style="width:80%"></div>
+                    <div class="item" onclick="_()">!Chatter</div>
+                    <div class="item" onclick="_()">!Questions</div>
+                    <div class="item" onclick="_()">!Topics</div>
+                    <div class="item" onclick="_()">!Polls</div>
+                    <div class="" onclick="_()"><hr style="width:80%"></div>
+                    <div class="item" onclick="_()">!Inbox</div>
+                    <div class="" onclick="_()"><hr style="width:80%"></div>
+                    <div class="item" onclick="modals__add_channel_show()">Add Channel</div>
+                    <div class="item" onclick="modals__manage_channels_show()">Remove Channel</div>
+                </div>                
+            </div>
+            <div style="float:left; margin-left:6px;">
+                <span style="font-size:15px; color:#333333; font-weight: bold">
+                    S O L I D A R I T Y
+                </span>
+            </div>
+            <div style="clear:both"></div>
         </div>        
         
         
@@ -441,7 +473,7 @@ SOFTWARE.
         <div id="div_mob_chatviewport_inputconsole" style="position:absolute; left:35px; top:856px; width:963px; height:auto;">
             <div class="ui form">
               <div class="field">
-                  <textarea id="frm_mob_lc_text_input" onkeypress="solid_long_chat_reply__onEnterCheck();" name="frm_mob_text_input" rows="2"></textarea>
+                  <textarea id="frm_mob_lc_text_input" onkeypress="solid_long_chat_reply__onEnterCheck();" name="frm_mob_text_input" placeholder="Say something.. Solidarity chatter supports Showdown markdown" rows="2"></textarea>
               </div>
             </div>    
         </div>        
@@ -477,6 +509,8 @@ SOFTWARE.
         </div>    
         -->
     </div>
+    
+    
     
     
     
@@ -686,6 +720,7 @@ SOFTWARE.
               <div class="ui cancel button">Cancel</div>
             </div>
         </div>
+        
         
         <div id="logged_in_pc" style="display:none; position:absolute; left:0px; top:0px; width:324px; height:90px;">
             <div style="position:relative; width:100%; height:100%">
