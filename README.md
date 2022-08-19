@@ -124,7 +124,7 @@ ${this.persons.map((p) => html`
 
 
   # Structure of the App
-  * nodejs
+  * [nodejs](https://www.scaler.com/topics/javascript/install-node-js/)
 
   initialise a nodejs app
   ```
